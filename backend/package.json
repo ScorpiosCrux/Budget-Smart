@@ -2,12 +2,12 @@
   "name": "yycrentsapi",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "start": "node build/server.js",
-    "dev": "concurrently \"tsc --watch\" \"nodemon -q build/index.js\""
+    "start": "node build/index.js",
+    "dev": "concurrently \"tsc --watch\" \"nodemon -q build/src/index.js\""
   },
   "author": "",
   "license": "ISC",
