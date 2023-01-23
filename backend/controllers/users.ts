@@ -1,21 +1,12 @@
 import { Request, Response } from "express";
-import mongoose from "mongoose";
-const Schema = mongoose.Schema;
-// const passportLocalMongoose = require('passport-local-mongoose')
-
-const UserSchema = new Schema({
-	email: {
-		type: String,
-		required: true,
-		unique: true, // not a validation btw
-	},
-});
-
-// UserSchema.plugin(passportLocalMongoose);
-
-export const user1 = mongoose.model("User", UserSchema);
+import User from "../models/users.js";
 
 export const registerNewUser = async (req: Request, res: Response) => {
+	try {
+		const { email, password } = req.body;
+		const newUser = new User({email, password})
+		const registeredUser = await User.register(newUser, password);
+		res.send("User Registerd");
+	} catch (error) {}
 	console.log("RegisterNewUser");
-	res.send("Hello");
 };
