@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import axios from "axios";
 
-const Login = () => {
+const Register = () => {
 	const [registerUsername, setRegisterUsername] = useState("");
 	const [registerPassword, setRegisterPassword] = useState("");
 
@@ -46,7 +46,7 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default Register;
 
 const LoginWrapper = styled.div`
 	display: flex;
