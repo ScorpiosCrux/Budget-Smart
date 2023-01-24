@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
 	},
 });
 
+// Username and Password is added here.
 UserSchema.plugin(passport);
 
 export default mongoose.model("User", UserSchema)
