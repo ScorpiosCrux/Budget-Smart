@@ -5,24 +5,28 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import User from "../models/users.js";
 import userRoutes from "../routes/users.js";
-import cors from "cors"
-import cookieParser from "cookie-parser"
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 
 const port = 4000;
 const app: Express = express();
 
 function initExpressApp() {
+	app.use(bodyParser.json());
 	app.use(express.urlencoded({ extended: true }));
-	app.use(cors({
-		origin: "http://localhost:3000",
-		credentials: true
-	}))
-	app.use(cookieParser("thisIsMyGreatSecretOnGitHub"))
+	app.use(
+		cors({
+			origin: "http://localhost:3000",
+			credentials: true,
+		})
+	);
+	app.use(cookieParser("thisIsMyGreatSecretOnGitHub"));
 }
 
 async function connectDB() {
 	try {
-		mongoose.set('strictQuery', false)
+		mongoose.set("strictQuery", false);
 		await mongoose.connect("mongodb://127.0.0.1:27017/yyc-rents");
 		console.log("Database Connected!");
 	} catch (error) {
