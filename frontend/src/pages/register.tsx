@@ -2,10 +2,23 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
 import { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
 	const [registerUsername, setRegisterUsername] = useState("");
 	const [registerPassword, setRegisterPassword] = useState("");
+
+	const register = () => {
+		axios({
+			method: "post",
+			data: {
+				registerUsername,
+				registerPassword,
+			},
+			withCredentials: true,
+			url: "http://localhost:4000/register",
+		}).then((res) => console.log(res));
+	};
 
 	return (
 		<LoginWrapper>
@@ -25,7 +38,9 @@ const Login = () => {
 					autoComplete="current-password"
 					onChange={(e) => setRegisterPassword(e.target.value)}
 				/>
-				<Button variant="outlined">Register</Button>
+				<Button variant="outlined" onClick={register}>
+					Register
+				</Button>
 			</form>
 		</LoginWrapper>
 	);
