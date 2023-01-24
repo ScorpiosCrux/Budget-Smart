@@ -5,15 +5,15 @@ import { useState } from "react";
 import axios from "axios";
 
 const Register = () => {
-	const [registerUsername, setRegisterUsername] = useState("");
-	const [registerPassword, setRegisterPassword] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
 	const register = () => {
 		axios({
 			method: "post",
 			data: {
-				registerUsername,
-				registerPassword,
+				email,
+				password,
 			},
 			withCredentials: true,
 			url: "http://localhost:4000/register",
@@ -27,16 +27,16 @@ const Register = () => {
 				<TextField
 					id="username-input"
 					label="Email"
-					type="text"
+					type="email"
 					autoComplete="current-email"
-					onChange={(e) => setRegisterUsername(e.target.value)}
+					onChange={(e) => setEmail(e.target.value)}
 				/>
 				<TextField
 					id="password-input"
 					label="Password"
 					type="password"
 					autoComplete="current-password"
-					onChange={(e) => setRegisterPassword(e.target.value)}
+					onChange={(e) => setPassword(e.target.value)}
 				/>
 				<Button variant="outlined" onClick={register}>
 					Register

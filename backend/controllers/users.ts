@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import User from "../models/users.js";
 
 export const registerNewUser = async (req: Request, res: Response) => {
-	console.log(req.body);
 	try {
 		const { email, password } = req.body;
 		const username = email;
@@ -12,7 +11,6 @@ export const registerNewUser = async (req: Request, res: Response) => {
 	} catch (error) {
 		console.log(error);
 	}
-	console.log("RegisterNewUser");
 };
 
 export const loginUserForm = (req: Request, res: Response) => {
