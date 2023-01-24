@@ -5,12 +5,19 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import User from "../models/users.js";
 import userRoutes from "../routes/users.js";
+import cors from "cors"
+import cookieParser from "cookie-parser"
 
 const port = 4000;
 const app: Express = express();
 
 function initExpressApp() {
 	app.use(express.urlencoded({ extended: true }));
+	app.use(cors({
+		origin: "http://localhost:3000",
+		credentials: true
+	}))
+	app.use(cookieParser("thisIsMyGreatSecretOnGitHub"))
 }
 
 async function connectDB() {

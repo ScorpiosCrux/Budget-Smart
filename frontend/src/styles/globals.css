@@ -1,0 +1,35 @@
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+html,
+body {
+	max-width: 100vw;
+	height: 100%;
+	overflow-x: hidden;
+}
+
+body {
+	color: black;
+	font-family: "Kanit", sans-serif;
+}
+
+.layout {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.content {
+	display: flex;
+	flex-grow: 1;
+	justify-content: center;
+
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
