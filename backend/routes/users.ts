@@ -9,6 +9,6 @@ router.route("/register").get(Users.registerNewUser).post(Users.registerNewUser)
 router
 	.route("/login")
 	.get(Users.loginUserForm)
-	.post(passport.authenticate("local", { failureRedirect: "/", failureMessage: true }), Users.loginUser);
+	.post(Users.loginUser);
 
 export default router;
