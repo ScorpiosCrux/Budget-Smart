@@ -10,6 +10,7 @@ export const registerNewUser = async (req: Request, res: Response) => {
 		res.send("User Registerd");
 	} catch (error) {
 		console.log(error);
+		res.send("User already exists!")
 	}
 };
 
