@@ -3,11 +3,10 @@ import session from "express-session";
 import mongoose from "mongoose";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { start } from "repl";
 import User from "../models/users.js";
 import userRoutes from "../routes/users.js";
 
-const port = 3000;
+const port = 4000;
 const app: Express = express();
 
 function initExpressApp() {
