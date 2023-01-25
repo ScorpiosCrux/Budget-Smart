@@ -5,19 +5,20 @@ import { useState } from "react";
 import axios from "axios";
 
 const Login = () => {
-	const [loginUsername, setLoginUsername] = useState("");
-	const [loginPassword, setLoginPassword] = useState("");
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const [userData, setUserData] = useState(null);
 
 	const login = () => {
 		axios({
 			method: "post",
 			data: {
-				loginUsername,
-				loginPassword,
+				username,
+				password,
 			},
 			withCredentials: true,
 			url: "http://localhost:4000/login",
-		}).then((res) => console.log(res));
+		}).then((res) => setUserData(res.data));
 	};
 
 	return (
@@ -29,14 +30,14 @@ const Login = () => {
 					label="Email"
 					type="text"
 					autoComplete="current-email"
-					onChange={(e) => setLoginUsername(e.target.value)}
+					onChange={(e) => setUsername(e.target.value)}
 				/>
 				<TextField
 					id="password-input"
 					label="Password"
 					type="password"
 					autoComplete="current-password"
-					onChange={(e) => setLoginPassword(e.target.value)}
+					onChange={(e) => setPassword(e.target.value)}
 				/>
 				<Button variant="outlined" onClick={login}>
 					Login

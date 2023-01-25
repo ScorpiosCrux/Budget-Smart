@@ -21,7 +21,6 @@ function initExpressApp() {
 			credentials: true,
 		})
 	);
-	app.use(cookieParser("thisIsMyGreatSecretOnGitHub"));
 }
 
 async function connectDB() {
@@ -46,15 +45,17 @@ function enableSessions() {
 		},
 	};
 	app.use(session(sessionConfig));
+	app.use(cookieParser("thisIsMyGreatSecretOnGitHub"));
 }
 
 // https://www.youtube.com/watch?v=IUw_TgRhTBE 26:48 move to seperate file if desired
 function enablePassport() {
-	app.use(passport.initialize())
+	app.use(passport.initialize());
+	app.use(passport.session());
 	passport.use(new LocalStrategy(User.authenticate()));
 	// use static serialize and deserialize of model for passport session support
 
-	// basically makes a cookie for the session 
+	// basically makes a cookie for the session
 	passport.serializeUser(User.serializeUser());
 	passport.deserializeUser(User.deserializeUser());
 }
