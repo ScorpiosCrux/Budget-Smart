@@ -18,7 +18,10 @@ const Login = () => {
 			},
 			withCredentials: true,
 			url: "http://localhost:4000/login",
-		}).then((res) => setUserData(res.data));
+		}).then((res) => {
+			setUserData(res.data);
+			console.log(res.data);
+		});
 	};
 
 	return (
