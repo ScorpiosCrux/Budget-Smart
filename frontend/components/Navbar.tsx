@@ -8,10 +8,10 @@ const Navbar = () => {
 				<Link href={"/"}> YYC Rents </Link>
 			</LogoWrapper>
 			<Links>
-				<NavLink href={"/"}>HOME</NavLink>
-				<NavLink href={"/about"}>ABOUT</NavLink>
-				<NavLink href={"/projects"}>PROJECTS</NavLink>
-				<NavLink href={"/contact"}>CONTACT</NavLink>
+				<NavLink href={"/"}>Home</NavLink>
+				<NavLink href={"/login"}>Login</NavLink>
+				<NavLink href={"/register"}>Register</NavLink>
+
 			</Links>
 		</Wrapper>
 	);
