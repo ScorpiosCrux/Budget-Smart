@@ -50,6 +50,7 @@ function enableSessions() {
 
 // https://www.youtube.com/watch?v=IUw_TgRhTBE 26:48 move to seperate file if desired
 function enablePassport() {
+	app.use(passport.initialize())
 	passport.use(new LocalStrategy(User.authenticate()));
 	// use static serialize and deserialize of model for passport session support
 
