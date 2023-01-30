@@ -1,15 +1,18 @@
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
+import { UserContext } from "contexts/UserContext";
 
 const Login = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const [userData, setUserData] = useState(null);
+	const { userId, setUser } = useContext(UserContext);
+
 
 	const login = () => {
+		console.log("Login Request Sent!")
 		axios({
 			method: "post",
 			data: {
@@ -19,8 +22,17 @@ const Login = () => {
 			withCredentials: true,
 			url: "http://localhost:4000/login",
 		}).then((res) => {
-			setUserData(res.data);
-			console.log(res.data);
+			console.log("Login Request Response: ")
+			console.log(res.data)
+
+			console.log("Set User")
+			
+			// ! tell TS that the function is not null!
+			setUser() 
+
+			if (res.data.user) {
+				console.log("Logged In User: " + res.data.user);
+			}
 		});
 	};
 
