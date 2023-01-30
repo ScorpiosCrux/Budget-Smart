@@ -10,9 +10,8 @@ const Login = () => {
 	const [password, setPassword] = useState("");
 	const { userId, setUser } = useContext(UserContext);
 
-
 	const login = () => {
-		console.log("Login Request Sent!")
+		console.log("Login Request Sent!");
 		axios({
 			method: "post",
 			data: {
@@ -22,16 +21,9 @@ const Login = () => {
 			withCredentials: true,
 			url: "http://localhost:4000/login",
 		}).then((res) => {
-			console.log("Login Request Response: ")
-			console.log(res.data)
-
-			console.log("Set User")
-			
-			// ! tell TS that the function is not null!
-			setUser() 
-
-			if (res.data.user) {
-				console.log("Logged In User: " + res.data.user);
+			if (res.data._id) {
+				console.log("Set User");
+				setUser(res.data._id);
 			}
 		});
 	};

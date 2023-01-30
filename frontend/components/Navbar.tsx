@@ -1,18 +1,31 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
+import axios from "axios";
+import { useContext } from "react";
+
+import { UserContext } from "contexts/UserContext";
 
 const Navbar = () => {
+	const { userId, setUser } = useContext(UserContext);
+
 	return (
 		<Wrapper>
 			<LogoWrapper>
 				<Link href={"/"}> YYC Rents </Link>
 			</LogoWrapper>
 			<Links>
-				<NavLink href={"/"}>Home</NavLink>
-				<NavLink href={"/login"}>Login</NavLink>
-				<NavLink href={"/register"}>Register</NavLink>
-				<NavLink href={"/user"}>User</NavLink>
-
+				{userId !== "-1" ? (
+					<>
+						<NavLink href={"/"}>Home</NavLink>
+						<NavLink href={"/user"}>{userId}</NavLink>
+						{/* <NavLink href={"/" onclick={}}>Logout</NavLink> */}
+					</>
+				) : (
+					<>
+						<NavLink href={"/login"}>Login</NavLink>
+						<NavLink href={"/register"}>Register</NavLink>
+					</>
+				)}
 			</Links>
 		</Wrapper>
 	);
@@ -58,6 +71,5 @@ const Icon = styled.img<{ url: string }>`
 	display: flex;
 	align-items: center;
 `;
-
 
 export default Navbar;
