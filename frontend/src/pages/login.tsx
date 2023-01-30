@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { UserContext } from "contexts/UserContext";
 
 const Login = () => {
-	const router = useRouter()
+	const router = useRouter();
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const { setUser } = useContext(UserContext);
@@ -20,11 +20,15 @@ const Login = () => {
 				password,
 			},
 			withCredentials: true,
-			url: "http://localhost:4000/login",
+			url: "http://localhost:4000/api/auth/login",
 		}).then((res) => {
-			if (res.data._id) {
+			console.log(res.status);
+			console.log(res.data);
+			if (res.status === 200) {
 				setUser(res.data._id);
-				router.push("/")
+				router.push("/");
+			} else if (res.status === 401) {
+				console.log("Username or Password incorrect!");
 			}
 		});
 	};

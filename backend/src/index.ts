@@ -65,7 +65,7 @@ function addRoutes() {
 		res.send("Hello World!!");
 	});
 
-	app.use("/", userRoutes);
+	app.use("/api/auth", userRoutes);
 }
 
 function startUp() {

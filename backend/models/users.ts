@@ -7,6 +7,9 @@ const UserSchema = new mongoose.Schema({
 		required: true,
 		unique: true, // does not validate
 	},
+	displayName: {
+		type: String,
+	}
 });
 
 // Username and Password is added here.

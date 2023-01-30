@@ -7,16 +7,18 @@ export const registerNewUser = async (req: Request, res: Response) => {
 	try {
 		const { email, password } = req.body;
 		const username = email;
+
 		const newUser = new User({ email, username, password });
 		const registeredUser = await User.register(newUser, password);
+
 		req.login(registeredUser, (err) => {
-			if (err) return console.log("error");
-			res.setHeader("Content-Type", "application/json");
-			return res.end(JSON.stringify({ success: true }));
+			if (err) return res.status(500).json(err);
+			return res.status(201).json({ _id: registeredUser._id, email: registeredUser.email });
 		});
 	} catch (error) {
 		console.log(error);
-		res.send("User already exists!");
+		if (error.name === "UserExistsError") res.status(409).json({ error: error.name });
+		else res.status(500).json({ error: error.name });
 	}
 };
 
@@ -25,7 +27,9 @@ export const loginUserForm = (req: Request, res: Response) => {
 };
 
 export const loginUser = (req: Request, res: Response) => {
-	res.send("Logged In!");
+	const _id = req.user["_id"];
+	const email = req.user["email"];
+	return res.status(200).json({ _id: _id, email: email });
 };
 
 export const userInfo = (req: Request, res: Response) => {

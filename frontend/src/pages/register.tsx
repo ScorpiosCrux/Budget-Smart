@@ -1,12 +1,16 @@
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
+import { UserContext } from "contexts/UserContext";
 
 const Register = () => {
+	const router = useRouter();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const { setUser } = useContext(UserContext);
 
 	const register = () => {
 		axios({
@@ -16,8 +20,19 @@ const Register = () => {
 				password,
 			},
 			withCredentials: true,
-			url: "http://localhost:4000/register",
-		}).then((res) => console.log(res));
+			url: "http://localhost:4000/api/auth/register",
+		})
+			.then((res) => {
+				console.log(res);
+				if (res.status === 201) {
+					setUser(res.data._id);
+					router.push("/");
+				}
+			})
+			.catch((error) => {
+				if (error.response.status === 409) console.log(error.response.data);
+				else console.log(error.response.data);
+			});
 	};
 
 	return (
