@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import User from "../models/users.js";
 import passport from "passport";
-import { getToken, COOKIE_OPTIONS, getRefreshToken } from "../src/authenticate.js";
+import { getToken, COOKIE_OPTIONS, getRefreshToken } from "../authenticate.js";
 
 export const registerNewUser = async (req: Request, res: Response) => {
 	try {
