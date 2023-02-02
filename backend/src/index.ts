@@ -9,10 +9,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import JwtStrategy from "./strategies/JwtStrategy.js";
 
 dotenv.config();
 const port = 4000;
 const app: Express = express();
+JwtStrategy(passport)
 
 function initExpressApp() {
 	app.use(bodyParser.json());
@@ -39,7 +41,7 @@ async function connectDB() {
 
 function enableSessions() {
 	const sessionConfig = {
-		secret: "thisIsMyGreatSecretOnGitHub",
+		secret: process.env.SECRET_COOKIE,
 		resave: false,
 		saveUninitialized: true,
 		cookie: {
@@ -54,7 +56,7 @@ function enableSessions() {
 // https://www.youtube.com/watch?v=IUw_TgRhTBE 26:48 move to seperate file if desired
 function enablePassport() {
 	app.use(passport.initialize());
-	app.use(passport.session());
+	// app.use(passport.session());
 
 	/* 
 		Uses a username/password local strategy created by passport-local-mongoose.
@@ -82,7 +84,7 @@ function addRoutes() {
 function startUp() {
 	initExpressApp();
 	connectDB();
-	enableSessions();
+	// enableSessions();
 	enablePassport();
 	addRoutes();
 	app.listen(port, () => {
