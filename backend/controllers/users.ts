@@ -18,11 +18,8 @@ export const registerNewUser = async (req: Request, res: Response) => {
 		// Save user into DB
 		const registeredUser = await User.register(user, password);
 
-		req.login(registeredUser, (err) => {
-			if (err) return res.status(500).json(err);
-			res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS)
-			return res.status(201).json({ _id: registeredUser._id, email: registeredUser.email, token: token });
-		});
+		res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
+		return res.status(201).json({ _id: registeredUser._id, email: registeredUser.email, token: token });
 	} catch (error) {
 		console.log(error);
 		if (error.name === "UserExistsError") res.status(409).json({ error: error.name });
