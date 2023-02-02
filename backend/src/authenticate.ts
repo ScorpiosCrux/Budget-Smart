@@ -1,6 +1,8 @@
 import passport from "passport";
 import jwt from "jsonwebtoken";
 import { CookieOptions } from "express";
+import dotenv from "dotenv"
+dotenv.config();
 
 const dev = process.env.NODE_ENV !== "production";
 
@@ -10,7 +12,7 @@ export const COOKIE_OPTIONS: CookieOptions = {
 	// secure cookies do not work correctly (in postman)
 	secure: !dev,
 	signed: true,
-	maxAge: eval(process.env.REFRESH_TOKEN_EXPIRY) * 1000,
+	maxAge:  parseInt(process.env.REFRESH_TOKEN_EXPIRY) * 1000,
 	sameSite: 'none',
 };
 
