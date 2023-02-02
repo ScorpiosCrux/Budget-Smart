@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/users.js";
 import passport from "passport";
-import { nextTick } from "process";
 
 export const registerNewUser = async (req: Request, res: Response) => {
 	try {
