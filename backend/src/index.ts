@@ -3,18 +3,23 @@ import session from "express-session";
 import mongoose from "mongoose";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import User from "../models/users.js";
-import userRoutes from "../routes/users.js";
+import User from "./models/users.js";
+import userRoutes from "./routes/users.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import JwtStrategy from "./strategies/JwtStrategy.js";
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: __dirname + "/.env" });
 const port = 4000;
 const app: Express = express();
-JwtStrategy(passport)
+JwtStrategy(passport);
 
 function initExpressApp() {
 	app.use(bodyParser.json());

@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp .env build/.env",
     "start": "node build/index.js",
-    "dev": "concurrently \"tsc --watch\" \"nodemon -q build/src/index.js\""
+    "dev": "concurrently \"tsc --watch\" \"nodemon -q build/index.js\""
   },
   "author": "",
   "license": "ISC",
