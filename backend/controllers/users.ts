@@ -1,18 +1,27 @@
 import { Request, Response } from "express";
 import User from "../models/users.js";
 import passport from "passport";
+import { getToken, COOKIE_OPTIONS, getRefreshToken } from "../src/authenticate.js";
 
 export const registerNewUser = async (req: Request, res: Response) => {
 	try {
+		// Get Inputs
 		const { email, password } = req.body;
 		const username = email;
 
-		const newUser = new User({ email, username, password });
-		const registeredUser = await User.register(newUser, password);
+		// Create User, token, refreshToken and append to user
+		const user = new User({ email, username, password });
+		const token = getToken({ _id: user._id });
+		const refreshToken = getRefreshToken({ _id: user._id });
+		user.refreshToken.push({ refreshToken });
+
+		// Save user into DB
+		const registeredUser = await User.register(user, password);
 
 		req.login(registeredUser, (err) => {
 			if (err) return res.status(500).json(err);
-			return res.status(201).json({ _id: registeredUser._id, email: registeredUser.email });
+			res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS)
+			return res.status(201).json({ _id: registeredUser._id, email: registeredUser.email, token: token });
 		});
 	} catch (error) {
 		console.log(error);

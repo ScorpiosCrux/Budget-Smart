@@ -4,7 +4,7 @@ import User from "../../models/users.js";
 
 const opts = {
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: process.env.JWT_SECRET,
+	secretOrKey: process.env.SECRET_JWT,
 };
 
 // Used by the authenticated requests to deserialize the user,
