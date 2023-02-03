@@ -44,10 +44,13 @@ async function connectDB() {
 	}
 }
 
+/* 
+	https://stackoverflow.com/questions/40381401/when-to-use-saveuninitialized-and-resave-in-express-session
+*/
 function enableSessions() {
 	const sessionConfig = {
 		secret: process.env.SECRET_COOKIE,
-		resave: false,
+		resave: true,
 		saveUninitialized: true,
 		cookie: {
 			httpOnly: true, // Should be set to true to prevent XSS. This is the default for express
@@ -61,7 +64,7 @@ function enableSessions() {
 // https://www.youtube.com/watch?v=IUw_TgRhTBE 26:48 move to seperate file if desired
 function enablePassport() {
 	app.use(passport.initialize());
-	// app.use(passport.session());
+	app.use(passport.session());
 
 	/* 
 		Uses a username/password local strategy created by passport-local-mongoose.
@@ -89,7 +92,7 @@ function addRoutes() {
 function startUp() {
 	initExpressApp();
 	connectDB();
-	// enableSessions();
+	enableSessions();
 	enablePassport();
 	addRoutes();
 	app.listen(port, () => {
