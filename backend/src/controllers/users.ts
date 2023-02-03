@@ -98,6 +98,5 @@ export const refreshToken = (req: Request, res: Response) => {
 };
 
 export const userInfo = (req: Request, res: Response) => {
-	console.log(req.user);
 	res.send(req.user);
 };
