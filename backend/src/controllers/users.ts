@@ -97,6 +97,46 @@ export const refreshToken = (req: Request, res: Response) => {
 	}
 };
 
+export const logoutUser = (req: Request, res: Response) => {
+	const { signedCookies = {} } = req;
+	const { refreshToken } = signedCookies;
+
+	/* 
+		If _id does not exist, then user might not be logged in
+		as req.user is empty!
+	*/
+	try {
+		const { _id } = req.user;
+	} catch (error) {
+		res.status(500).json({ error: "User not logged in!" + error });
+	}
+
+	User.findById(req.user._id).then(
+		(user) => {
+			const tokenIndex = user.refreshToken.findIndex(
+				(item: { refreshToken: any }) => item.refreshToken === refreshToken
+			);
+
+			if (tokenIndex !== -1) {
+				user.refreshToken.id(user.refreshToken[tokenIndex]._id).remove();
+			}
+			user.save((err: any, user: any) => {
+				if (err) {
+					res.statusCode = 500;
+					res.send(err);
+				} else {
+					res.clearCookie("refreshToken", COOKIE_OPTIONS);
+					res.send({ success: true });
+				}
+			});
+		},
+		(error) => {
+			console.log("Could not logout user!");
+			console.log(error);
+		}
+	);
+};
+
 export const userInfo = (req: Request, res: Response) => {
 	res.send(req.user);
 };
