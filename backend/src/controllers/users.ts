@@ -34,7 +34,21 @@ export const loginUserForm = (req: Request, res: Response) => {
 export const loginUser = (req: Request, res: Response) => {
 	const _id = req.user["_id"];
 	const email = req.user["email"];
-	return res.status(200).json({ _id: _id, email: email });
+
+	const token = getToken({ _id: _id });
+	const refreshToken = getRefreshToken({ _id: _id });
+
+	User.findById(_id).then((user) => {
+		user.refreshToken.push({ refreshToken });
+		user.save((err: any, user: any) => {
+			if (err) {
+				return res.status(500).json({ error: err });
+			}
+		});
+	});
+
+	res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
+	return res.status(200).json({ _id: _id, email: email, token });
 };
 
 export const userInfo = (req: Request, res: Response) => {
