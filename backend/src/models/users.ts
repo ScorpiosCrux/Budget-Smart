@@ -1,12 +1,20 @@
 import mongoose from "mongoose";
 import passport from "passport-local-mongoose";
 
+declare global {
+	namespace Express {
+		interface User {
+			_id: string;
+		}
+	}
+}
+
 const SessionSchema = new mongoose.Schema({
 	refreshToken: {
-	  type: String,
-	  default: "",
+		type: String,
+		default: "",
 	},
-  })
+});
 
 const UserSchema = new mongoose.Schema({
 	email: {
@@ -20,21 +28,21 @@ const UserSchema = new mongoose.Schema({
 	},
 	authStrategy: {
 		type: String,
-		default: "local"
+		default: "local",
 	},
 	refreshToken: {
 		type: [SessionSchema], // supports multiple sign ins from multiple devices at the same time
-	}
+	},
 });
 
 UserSchema.set("toJSON", {
 	transform: function (doc, ret, options) {
-		delete ret.refreshToken
-		return ret
-	}
-})
+		delete ret.refreshToken;
+		return ret;
+	},
+});
 
 // Username and Password is added here.
 UserSchema.plugin(passport);
 
-export default mongoose.model("User", UserSchema)
+export default mongoose.model("User", UserSchema);
