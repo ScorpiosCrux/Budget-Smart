@@ -4,13 +4,14 @@ import { CookieOptions } from "express";
 import dotenv from "dotenv"
 dotenv.config();
 
-const dev = process.env.NODE_ENV !== "production";
+// const dev = process.env.NODE_ENV !== "production";
 
 export const COOKIE_OPTIONS: CookieOptions = {
 	httpOnly: true,
 	// Since localhost is not having https protocol,
 	// secure cookies do not work correctly (in postman)
-	secure: !dev,
+	// enable this if you want to try it in Chrome/React
+	secure: true,
 	signed: true,
 	maxAge:  parseInt(process.env.REFRESH_TOKEN_EXPIRY) * 1000,
 	sameSite: 'none',
