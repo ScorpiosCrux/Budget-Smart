@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { UserContext } from "contexts/UserContext";
 import * as yup from "yup";
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 
 const loginSchema = yup.object().shape({
 	email: yup.string().email().required("required"),
@@ -25,9 +25,10 @@ interface Values {
 
 const Login = () => {
 	const { setUser } = useContext(UserContext);
+	const [errorMsg, setErrorMsg] = useState<null | string>(null);
 	const router = useRouter();
 
-	const login = (values: Values) => {
+	const login = (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
 		axios({
 			method: "post",
 			data: {
@@ -35,33 +36,31 @@ const Login = () => {
 				password: values.password,
 			},
 			withCredentials: true,
-			url: "http://localhost:4000/api/auth/login",
-		}).then((res) => {
-			console.log(res.status);
-			console.log(res.data);
-			if (res.status === 200) {
-				setUser(res.data._id);
-				router.push("/");
-			} else if (res.status === 401) {
-				console.log("Username or Password incorrect!");
-			}
-		});
+			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/login",
+		})
+			.then((res) => {
+				console.log(res.status);
+				console.log(res.data);
+				if (res.status === 200) {
+					setUser(res.data._id);
+					router.push("/");
+				} else {
+					console.log("Some Error as Occured!");
+				}
+			})
+			.catch((error) => {
+				setErrorMsg("Username or Password incorrect!");
+				setSubmitting(false);
+			});
 	};
 
 	return (
 		<LoginWrapper>
 			<Formik initialValues={initialValuesLogin} validationSchema={loginSchema} onSubmit={login}>
-				{({
-					values,
-					errors,
-					touched,
-					handleChange,
-					handleBlur,
-					handleSubmit,
-					isSubmitting,
-				}) => (
+				{({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
 					<form onSubmit={handleSubmit}>
 						<h1>Sign In</h1>
+						{errorMsg && <p>{errorMsg}</p>}
 						<TextField
 							label="Email"
 							type="email"
