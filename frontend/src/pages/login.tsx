@@ -5,19 +5,34 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { UserContext } from "contexts/UserContext";
+import * as yup from "yup";
+import { Formik } from "formik";
+
+const loginSchema = yup.object().shape({
+	email: yup.string().email().required("required"),
+	password: yup.string().required("required"),
+});
+
+const initialValuesLogin = {
+	email: "",
+	password: "",
+};
+
+interface Values {
+	email: string;
+	password: string;
+}
 
 const Login = () => {
-	const router = useRouter();
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
 	const { setUser } = useContext(UserContext);
+	const router = useRouter();
 
-	const login = () => {
+	const login = (values: Values) => {
 		axios({
 			method: "post",
 			data: {
-				username,
-				password,
+				username: values.email,
+				password: values.password,
 			},
 			withCredentials: true,
 			url: "http://localhost:4000/api/auth/login",
@@ -35,26 +50,46 @@ const Login = () => {
 
 	return (
 		<LoginWrapper>
-			<form action="/login" method="post">
-				<h1>Sign In</h1>
-				<TextField
-					id="username-input"
-					label="Email"
-					type="text"
-					autoComplete="current-email"
-					onChange={(e) => setUsername(e.target.value)}
-				/>
-				<TextField
-					id="password-input"
-					label="Password"
-					type="password"
-					autoComplete="current-password"
-					onChange={(e) => setPassword(e.target.value)}
-				/>
-				<Button variant="outlined" onClick={login}>
-					Login
-				</Button>
-			</form>
+			<Formik initialValues={initialValuesLogin} validationSchema={loginSchema} onSubmit={login}>
+				{({
+					values,
+					errors,
+					touched,
+					handleChange,
+					handleBlur,
+					handleSubmit,
+					isSubmitting,
+				}) => (
+					<form onSubmit={handleSubmit}>
+						<h1>Sign In</h1>
+						<TextField
+							label="Email"
+							type="email"
+							id="email"
+							name="email"
+							onChange={handleChange}
+							onBlur={handleBlur}
+							error={Boolean(touched.email) && Boolean(errors.email)}
+							helperText={touched.email && errors.email}
+							value={values.email}
+						/>
+
+						<TextField
+							label="Password"
+							type="password"
+							id="password"
+							onChange={handleChange}
+							onBlur={handleBlur}
+							error={Boolean(touched.password) && Boolean(errors.password)}
+							helperText={touched.password && errors.password}
+							value={values.password}
+						/>
+						<Button variant="outlined" disabled={isSubmitting} type={"submit"}>
+							{isSubmitting ? "Logging In" : "Login"}
+						</Button>
+					</form>
+				)}
+			</Formik>
 		</LoginWrapper>
 	);
 };
