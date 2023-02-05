@@ -1,13 +1,26 @@
 import React, { Component, createContext, useState } from "react";
 
-interface UserContextType {
-	userId: string;
-	setUser: (_id: string) => void;
+interface User {
+	_id: string;
+	email: string;
+	displayName: string;
+	username: string;
+	token: string;
 }
 
-const defaultState = {
-	userId: "-1",
+const defaultState: User = {
+	_id: "",
+	email: "",
+	displayName: "",
+	username: "",
+	token: "",
 };
+
+interface UserContextType {
+	userContext: User;
+	setUserContext: React.Dispatch<React.SetStateAction<User>>;
+	updateToken: (token: string) => void;
+}
 
 // ! tells the consumers that it won't be null
 export const UserContext = createContext<UserContextType>(null!);
@@ -17,14 +30,13 @@ type Props = {
 };
 
 const UserContextProvider = ({ children }: Props) => {
-	const [userId, setUserId] = useState<string>(defaultState.userId);
+	const [userContext, setUserContext] = useState<User>(defaultState);
 
-	const setUser = (_id: string) => {
-		setUserId(_id);
-		console.log("Set User");
+	const updateToken = (token: string) => {
+		userContext.token = token;
 	};
 
-	return <UserContext.Provider value={{ userId, setUser }}>{children}</UserContext.Provider>;
+	return <UserContext.Provider value={{ userContext, setUserContext, updateToken }}>{children}</UserContext.Provider>;
 };
 
 export default UserContextProvider;

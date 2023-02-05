@@ -24,7 +24,7 @@ interface Values {
 }
 
 const Login = () => {
-	const { setUser } = useContext(UserContext);
+	const { setUserContext } = useContext(UserContext);
 	const [errorMsg, setErrorMsg] = useState<null | string>(null);
 	const router = useRouter();
 
@@ -42,7 +42,7 @@ const Login = () => {
 				console.log(res.status);
 				console.log(res.data);
 				if (res.status === 200) {
-					setUser(res.data._id);
+					setUserContext(res.data);
 					router.push("/");
 				} else {
 					console.log("Some Error as Occured!");

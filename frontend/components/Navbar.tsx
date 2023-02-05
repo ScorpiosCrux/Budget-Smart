@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { UserContext } from "contexts/UserContext";
 
 const Navbar = () => {
-	const { userId, setUser } = useContext(UserContext);
+	const { userContext, setUserContext } = useContext(UserContext);
 
 	return (
 		<Wrapper>
@@ -14,16 +14,17 @@ const Navbar = () => {
 				<Link href={"/"}> YYC Rents </Link>
 			</LogoWrapper>
 			<Links>
-				{userId !== "-1" ? (
+				{userContext._id !== "" ? (
 					<>
-						<NavLink href={"/"}>Home</NavLink>
-						<NavLink href={"/user"}>{userId}</NavLink>
+						<NavLink href={"/dashboard"}>Dashboard</NavLink>
+						<NavLink href={"/user"}>{userContext._id}</NavLink>
 						{/* <NavLink href={"/" onclick={}}>Logout</NavLink> */}
 					</>
 				) : (
 					<>
 						<NavLink href={"/login"}>Login</NavLink>
 						<NavLink href={"/register"}>Register</NavLink>
+						{console.log(userContext.token)}
 					</>
 				)}
 			</Links>
