@@ -4,7 +4,7 @@ import User from "../models/users.js";
 export default (passport: any) => {
 	const opts = {
 		jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-		secretOrKey: 'Dj6y4T6nkJv8t3vJMUH6XYKhVwgULECz',
+		secretOrKey: process.env.SECRET_JWT,
 	};
 
 	// Used by the authenticated requests to deserialize the user,

@@ -19,7 +19,6 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: __dirname + "/.env" });
 const port = 4000;
 const app: Express = express();
-JwtStrategy(passport);
 
 function initExpressApp() {
 	app.use(bodyParser.json());
@@ -44,41 +43,16 @@ async function connectDB() {
 	}
 }
 
-/* 
-	https://stackoverflow.com/questions/40381401/when-to-use-saveuninitialized-and-resave-in-express-session
-*/
-function enableSessions() {
-	const sessionConfig = {
-		secret: process.env.SECRET_COOKIE,
-		resave: true,
-		saveUninitialized: true,
-		cookie: {
-			httpOnly: true, // Should be set to true to prevent XSS. This is the default for express
-			// expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // Add a week to Date.now(). Date.now is in milliseconds
-			maxAge: 1000 * 60 * 60 * 24 * 7,
-		},
-	};
-	app.use(session(sessionConfig));
-}
-
 // https://www.youtube.com/watch?v=IUw_TgRhTBE 26:48 move to seperate file if desired
 function enablePassport() {
-	// app.use(passport.initialize());
-	// app.use(passport.session());
+	app.use(passport.initialize());
 
 	/* 
 		Uses a username/password local strategy created by passport-local-mongoose.
 		Called during login / signup
 	*/
 	passport.use(new LocalStrategy(User.authenticate()));
-	// use static serialize and deserialize of model for passport session support
-
-	/* 
-		Basically creates a cookie for the session
-		Called ...when...
-	*/
-	// passport.serializeUser(User.serializeUser());
-	// passport.deserializeUser(User.deserializeUser());
+	JwtStrategy(passport);
 }
 
 function addRoutes() {
@@ -92,7 +66,6 @@ function addRoutes() {
 function startUp() {
 	initExpressApp();
 	connectDB();
-	// enableSessions();
 	enablePassport();
 	addRoutes();
 	app.listen(port, () => {
