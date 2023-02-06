@@ -11,14 +11,13 @@ const Navbar = () => {
 	return (
 		<Wrapper>
 			<LogoWrapper>
-				<Link href={"/"}> YYC Rents </Link>
+				<Link href={"/"}> Smart Budget </Link>
 			</LogoWrapper>
 			<Links>
 				{userContext._id !== "" ? (
 					<>
-						<NavLink href={"/dashboard"}>Dashboard</NavLink>
 						<NavLink href={"/user"}>{userContext._id}</NavLink>
-						{/* <NavLink href={"/" onclick={}}>Logout</NavLink> */}
+						<NavLink href={"/logout"}>Logout</NavLink>
 					</>
 				) : (
 					<>
