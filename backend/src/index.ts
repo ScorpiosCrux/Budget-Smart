@@ -63,8 +63,8 @@ function enableSessions() {
 
 // https://www.youtube.com/watch?v=IUw_TgRhTBE 26:48 move to seperate file if desired
 function enablePassport() {
-	app.use(passport.initialize());
-	app.use(passport.session());
+	// app.use(passport.initialize());
+	// app.use(passport.session());
 
 	/* 
 		Uses a username/password local strategy created by passport-local-mongoose.
@@ -77,8 +77,8 @@ function enablePassport() {
 		Basically creates a cookie for the session
 		Called ...when...
 	*/
-	passport.serializeUser(User.serializeUser());
-	passport.deserializeUser(User.deserializeUser());
+	// passport.serializeUser(User.serializeUser());
+	// passport.deserializeUser(User.deserializeUser());
 }
 
 function addRoutes() {
@@ -92,7 +92,7 @@ function addRoutes() {
 function startUp() {
 	initExpressApp();
 	connectDB();
-	enableSessions();
+	// enableSessions();
 	enablePassport();
 	addRoutes();
 	app.listen(port, () => {
