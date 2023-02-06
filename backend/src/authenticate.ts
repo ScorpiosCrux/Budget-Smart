@@ -21,8 +21,8 @@ export const COOKIE_OPTIONS: CookieOptions = {
 	Used to create the JWT
 */
 export const getToken = (user: string | object | Buffer) => {
-	return jwt.sign(user, process.env.SECRET_JWT, {
-		expiresIn: eval(process.env.SESSION_EXPIRY),
+	return jwt.sign(user, 'Dj6y4T6nkJv8t3vJMUH6XYKhVwgULECz', {
+		// expiresIn: eval(process.env.SESSION_EXPIRY),
 	});
 };
 
@@ -31,7 +31,7 @@ export const getToken = (user: string | object | Buffer) => {
 */
 export const getRefreshToken = (user: string | object | Buffer) => {
 	const refreshToken = jwt.sign(user, process.env.SECRET_REFRESH_TOKEN, {
-		expiresIn: eval(process.env.REFRESH_TOKEN_EXPIRY),
+		// expiresIn: eval(process.env.REFRESH_TOKEN_EXPIRY),
 	});
 	return refreshToken;
 };

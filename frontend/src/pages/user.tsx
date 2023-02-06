@@ -5,7 +5,6 @@ import { useState, useContext } from "react";
 import { UserContext } from "contexts/UserContext";
 import axios from "axios";
 
-
 type UserResponse = {
 	_id: string;
 	username: string;
@@ -16,23 +15,26 @@ const Profile = () => {
 	const [data, setData] = useState<UserResponse>({ _id: "", username: "" });
 
 	const getUser = () => {
-		// axios({
-		// 	method: "GET",
-		// 	withCredentials: true,
-		// 	url: "http://localhost:4000/user",
-		// }).then((res: any) => {
-		// 	const { _id, username } = res.data;
-		// 	setData({ _id, username });
-		// 	console.log(userContext);
-		// });
-		console.log("userContext")
-		console.log(userContext)
+		console.log("Old Token");
+		console.log(userContext.token);
+		axios({
+			method: "GET",
+			withCredentials: true,
+			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/user",
+			headers: {
+				authorization: "Bearer " + userContext.token,
+			},
+		}).then((res) => {
+			console.log(res.data);
+		});
+
+		console.log("userContext");
+		console.log(userContext);
 	};
 
 	return (
 		<>
 			<h1>User is:</h1>
-			<p>{userContext._id}</p>
 			<Button variant="outlined" onClick={getUser}>
 				Get User Info
 			</Button>

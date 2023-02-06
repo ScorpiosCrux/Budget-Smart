@@ -56,6 +56,7 @@ export const refreshToken = (req: Request, res: Response) => {
 	const { refreshToken } = signedCookies;
 
 	if (refreshToken) {
+		// console.log(refreshToken)
 		try {
 			const payload = jwt.verify(refreshToken, process.env.SECRET_REFRESH_TOKEN);
 			const userId = payload["_id"];
@@ -68,7 +69,7 @@ export const refreshToken = (req: Request, res: Response) => {
 
 					if (tokenIndex === -1) {
 						res.statusCode = 401;
-						res.send("Unauthorized");
+						res.send("refreshToken invalid");
 					} else {
 						const token = getToken({ _id: userId });
 						// If the refresh token exists, then create new one and replace it.
@@ -85,15 +86,15 @@ export const refreshToken = (req: Request, res: Response) => {
 						});
 					}
 				} else {
-					res.statusCode = 401;
-					res.send("Unauthorized");
+					res.statusCode = 500;
+					res.send("Something went wrong!");
 				}
 			});
 		} catch (error) {
-			return res.status(401).json({ error: error });
+			return res.status(500).json({ error: error });
 		}
 	} else {
-		return res.status(401).json({ error: "Unauthorized" });
+		return res.status(500).json({ error: "Something went wrong! Refresh Token Missing" });
 	}
 };
 
@@ -138,5 +139,12 @@ export const logoutUser = (req: Request, res: Response) => {
 };
 
 export const userInfo = (req: Request, res: Response) => {
-	res.send(req.user);
+	const { signedCookies = {} } = req;
+	const { refreshToken } = signedCookies;
+	console.log(refreshToken);
+
+	User.findById(req.user._id).then((user) => {
+		const info = user.toJSON();
+		res.status(200).json(info);
+	});
 };
