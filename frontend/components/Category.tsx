@@ -2,8 +2,6 @@ import type { CSSProperties, FC } from "react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "./Dashboard";
 
-
-
 const style: CSSProperties = {
 	height: "12rem",
 	width: "12rem",
@@ -20,7 +18,9 @@ const style: CSSProperties = {
 const Category: FC = () => {
 	const [{ canDrop, isOver }, drop] = useDrop(() => ({
 		accept: ItemTypes.TRANSACTION,
-		drop: () => alert("test"),
+		drop: () => ({
+			name: `Dustbin`,
+		}),
 		collect: (monitor) => ({
 			isOver: monitor.isOver(),
 			canDrop: monitor.canDrop(),

@@ -8,9 +8,22 @@ interface Props {
 	price: string;
 }
 
+interface DropResult {
+	allowedDropEffect: string;
+	dropEffect: string;
+	name: string;
+}
+
 const Transaction = (props: Props) => {
 	const [{ isDragging }, drag] = useDrag(() => ({
 		type: ItemTypes.TRANSACTION,
+		item: props, // unsure how the item is used here
+		end(item, monitor) {
+			const dropResult = monitor.getDropResult() as DropResult;
+			if (item && dropResult) {
+				alert(`You moved ${props.description} into ${dropResult.name}!`);
+			}
+		},
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
