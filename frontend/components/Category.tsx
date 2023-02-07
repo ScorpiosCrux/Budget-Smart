@@ -1,21 +1,14 @@
 import type { CSSProperties, FC } from "react";
 import { useDrop } from "react-dnd";
+import styled from "styled-components";
 import { ItemTypes } from "./Dashboard";
 
-const style: CSSProperties = {
-	height: "12rem",
-	width: "12rem",
-	marginRight: "1.5rem",
-	marginBottom: "1.5rem",
-	color: "white",
-	padding: "1rem",
-	textAlign: "center",
-	fontSize: "1rem",
-	lineHeight: "normal",
-	float: "left",
-};
+interface Props {
+	category: string;
+	price: number;
+}
 
-const Category: FC = () => {
+const Category = (props: Props) => {
 	const [{ canDrop, isOver }, drop] = useDrop(() => ({
 		accept: ItemTypes.TRANSACTION,
 		drop: () => ({
@@ -36,10 +29,27 @@ const Category: FC = () => {
 	}
 
 	return (
-		<div ref={drop} style={{ ...style, backgroundColor }}>
-			{isActive ? "Release to drop" : "Drag a box here"}
-		</div>
+		<StyledCategory ref={drop} backgroundColor={backgroundColor}>
+			<span className="category-title">{props.category}</span>
+			<div>
+				<span>Total: </span>
+				<span>${props.price}</span>
+			</div>
+		</StyledCategory>
 	);
 };
 
 export default Category;
+
+const StyledCategory = styled.div<{backgroundColor: string}>`
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 2px dotted black;
+	background-color: ${p => p.backgroundColor};
+
+	.category-title {
+		text-transform: uppercase;
+	}
+`;

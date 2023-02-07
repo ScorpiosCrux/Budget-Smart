@@ -35,13 +35,7 @@ const Dashboard = () => {
 					<div>
 						<h2>Categories</h2>
 						<div className="categories">
-							<div className="category">
-								<span className="category-title">Food</span>
-								<div>
-									<span>Total: </span>
-									<span>$400.32</span>
-								</div>
-							</div>
+							
 							<div className="category">
 								<h3 className="category-title">Utilities</h3>
 							</div>
@@ -49,7 +43,7 @@ const Dashboard = () => {
 								<h3 className="category-title">Tech</h3>
 							</div>
 
-							<Category />
+							<Category category="food" price={32}/>
 						</div>
 					</div>
 				</div>
@@ -114,16 +108,7 @@ const DashboardContainer = styled.div`
 	}
 
 	.categories {
-		.category {
-			height: 40px;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			border-bottom: 2px dotted black;
-		}
 
-		.category-title {
-			text-transform: uppercase;
-		}
+		
 	}
 `;
