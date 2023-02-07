@@ -1,7 +1,14 @@
 import { useDrag } from "react-dnd";
+import styled from "styled-components";
 import { ItemTypes } from "./Dashboard";
 
-const Transaction = () => {
+interface Props {
+	date: string;
+	description: string;
+	price: string;
+}
+
+const Transaction = (props: Props) => {
 	const [{ isDragging }, drag] = useDrag(() => ({
 		type: ItemTypes.TRANSACTION,
 		collect: (monitor) => ({
@@ -9,19 +16,17 @@ const Transaction = () => {
 		}),
 	}));
 	return (
-		<tr
-			ref={drag}
-			style={{
-				opacity: isDragging ? 0.5 : 1,
-				fontSize: 25,
-				fontWeight: "bold",
-				cursor: "move",
-			}}>
-			<td>Feb 6, 2023</td>
-			<td>APPLE.COM/BILL</td>
-			<td>$17.32</td>
-		</tr>
+		<TransactionRow ref={drag} isDragging={isDragging}>
+			<td>{props.date}</td>
+			<td>{props.description}</td>
+			<td>{props.price}</td>
+		</TransactionRow>
 	);
 };
 
 export default Transaction;
+
+const TransactionRow = styled.tr<{ isDragging: boolean }>`
+	opacity: ${(p) => (p.isDragging ? 0.5 : 1)};
+	cursor: move;
+`;

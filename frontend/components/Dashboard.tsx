@@ -27,8 +27,8 @@ const Dashboard = () => {
 									<th>Transaction Description</th>
 									<th>Price</th>
 								</tr>
-								
-								<Transaction />
+
+								<Transaction date="Feb 6, 2023" description="Test" price="$32.32" />
 							</tbody>
 						</table>
 					</div>
