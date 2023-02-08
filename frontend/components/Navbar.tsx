@@ -17,11 +17,15 @@ const Navbar = () => {
 
 			<div className="links">
 				<div className="nav-button">
-					<img src="home.svg" alt="home" />
+					<StyledLink href={"/"}>
+						<img src="home.svg" alt="home" />
+					</StyledLink>
 				</div>
 
 				<div className="nav-button">
-					<img src="sort.svg" alt="home" />
+					<StyledLink href={"/sort"}>
+						<img src="sort.svg" alt="home" />
+					</StyledLink>
 				</div>
 			</div>
 			<UserLinks>
@@ -54,6 +58,14 @@ const UserLinks = styled.div`
 const NavLink = styled(Link)`
 	font-weight: 200;
 	font-size: 20px;
+`;
+
+const StyledLink = styled(Link)`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 const StyledNavbar = styled.nav`
