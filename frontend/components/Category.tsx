@@ -12,7 +12,7 @@ const Category = (props: Props) => {
 	const [{ canDrop, isOver }, drop] = useDrop(() => ({
 		accept: ItemTypes.TRANSACTION,
 		drop: () => ({
-			name: `Dustbin`,
+			name: `${props.category}`,
 		}),
 		collect: (monitor) => ({
 			isOver: monitor.isOver(),

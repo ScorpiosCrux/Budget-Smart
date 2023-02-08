@@ -30,6 +30,9 @@ const Transaction = (props: Props) => {
 	}));
 	return (
 		<TransactionRow ref={drag} isDragging={isDragging}>
+			<td>
+				<img src="draggable.svg" alt="draggable icon" />
+			</td>
 			<td>{props.date}</td>
 			<td>{props.description}</td>
 			<td>{props.price}</td>
@@ -42,4 +45,8 @@ export default Transaction;
 const TransactionRow = styled.tr<{ isDragging: boolean }>`
 	opacity: ${(p) => (p.isDragging ? 0.5 : 1)};
 	cursor: move;
+
+	img {
+		height: 40px;
+	}
 `;

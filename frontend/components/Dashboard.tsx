@@ -23,11 +23,15 @@ const Dashboard = () => {
 						<table>
 							<tbody>
 								<tr>
+									<th></th>
 									<th>Date</th>
 									<th>Transaction Description</th>
 									<th>Price</th>
 								</tr>
 
+								<Transaction date="Feb 6, 2023" description="Test" price="$32.32" />
+								<Transaction date="Feb 6, 2023" description="Test" price="$32.32" />
+								<Transaction date="Feb 6, 2023" description="Test" price="$32.32" />
 								<Transaction date="Feb 6, 2023" description="Test" price="$32.32" />
 							</tbody>
 						</table>
@@ -35,15 +39,9 @@ const Dashboard = () => {
 					<div>
 						<h2>Categories</h2>
 						<div className="categories">
-							
-							<div className="category">
-								<h3 className="category-title">Utilities</h3>
-							</div>
-							<div className="category">
-								<h3 className="category-title">Tech</h3>
-							</div>
-
-							<Category category="food" price={32}/>
+							<Category category="food" price={32.00}/>
+							<Category category="tech" price={1000.85}/>
+							<Category category="utilities" price={322.32}/>
 						</div>
 					</div>
 				</div>
