@@ -5,11 +5,9 @@ export const themes = {
 	light: {
 		accent: "#2AB514",
 		background: "#EBEBEB",
-		primary: "#000000",
+		primary: "#FFF",
 		secondary: "#939393",
 	},
 
-	text: {
-		
-	}
+
 }

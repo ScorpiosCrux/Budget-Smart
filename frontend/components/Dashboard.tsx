@@ -39,9 +39,9 @@ const Dashboard = () => {
 					<div>
 						<h2>Categories</h2>
 						<div className="categories">
-							<Category category="food" price={32.00}/>
-							<Category category="tech" price={1000.85}/>
-							<Category category="utilities" price={322.32}/>
+							<Category index={0} category="food" price={32.0} />
+							<Category index={0} category="tech" price={1000.85} />
+							<Category index={0} category="utilities" price={322.32} />
 						</div>
 					</div>
 				</div>
@@ -106,7 +106,5 @@ const DashboardContainer = styled.div`
 	}
 
 	.categories {
-
-		
 	}
 `;

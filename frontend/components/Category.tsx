@@ -1,9 +1,11 @@
+import { themes } from "@/theme";
 import type { CSSProperties, FC } from "react";
 import { useDrop } from "react-dnd";
 import styled from "styled-components";
 import { ItemTypes } from "./Dashboard";
 
 interface Props {
+	index: number;
 	category: string;
 	price: number;
 }
@@ -21,7 +23,7 @@ const Category = (props: Props) => {
 	}));
 
 	const isActive = canDrop && isOver;
-	let backgroundColor = "#222";
+	let backgroundColor = themes.light.primary;
 	if (isActive) {
 		backgroundColor = "darkgreen";
 	} else if (canDrop) {
@@ -29,10 +31,25 @@ const Category = (props: Props) => {
 	}
 
 	return (
-		<StyledCategory ref={drop} backgroundColor={backgroundColor}>
-			<span className="category-title">{props.category}</span>
-			<div>
-				<span>Total: </span>
+		<StyledCategory ref={drop} index={props.index} backgroundColor={backgroundColor}>
+			<div className="category-sub-header">
+				<div className="info">
+					<img src="check.svg" alt="checkmark" />
+					<span className="title">{props.category}</span>
+				</div>
+				<div className="category-modifiers">
+					<img src="pencil.svg" alt="edit" />
+					<img src="trash.svg" alt="delete" />
+				</div>
+			</div>
+			<div className="category-content">
+				<span>Budget </span>
+				<span>${props.price}</span>
+				<span>Current Total</span>
+				<span>${props.price}</span>
+				<span>Remaining Credits</span>
+				<span>${props.price}</span>
+				<span>Remaining Per Day</span>
 				<span>${props.price}</span>
 			</div>
 		</StyledCategory>
@@ -41,15 +58,60 @@ const Category = (props: Props) => {
 
 export default Category;
 
-const StyledCategory = styled.div<{backgroundColor: string}>`
-	height: 40px;
+const StyledCategory = styled.div<{ index: number; backgroundColor: string }>`
+	width: 200px;
+	height: 128px;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
-	border-bottom: 2px dotted black;
-	background-color: ${p => p.backgroundColor};
 
-	.category-title {
+	border-right: ${(p) => (p.index % 2 == 0 ? "1px solid black" : "none")};
+	border-bottom: 1px solid black;
+	background-color: ${(p) => p.backgroundColor};
+
+	& .category-sub-header {
+		height: 30px;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px dashed ${themes.light.secondary};
+
+		& .info {
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+		}
+
+		& .category-modifiers {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+
+	& .title {
 		text-transform: uppercase;
+	}
+
+	& img {
+		margin: 0px 6px 0px 6px;
+		width: 25px;
+		aspect-ratio: 1;
+	}
+
+	.category-content {
+		width: 100%;
+		height: 100%;
+		padding: 10px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		justify-content: end;
+
+		span {
+			text-align: end;
+			font-size: 10px;
+		}
 	}
 `;

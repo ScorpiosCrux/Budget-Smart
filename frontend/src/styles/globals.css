@@ -19,18 +19,8 @@ body {
 	font-family: "Kanit", sans-serif;
 }
 
-.layout {
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-}
 
-.content {
-	display: flex;
-	flex-grow: 1;
-	justify-content: center;
 
-}
 
 a {
 	color: inherit;
