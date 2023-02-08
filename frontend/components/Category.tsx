@@ -1,5 +1,4 @@
 import { themes } from "@/theme";
-import type { CSSProperties, FC } from "react";
 import { useDrop } from "react-dnd";
 import styled from "styled-components";
 import { ItemTypes } from "./Dashboard";
@@ -44,13 +43,13 @@ const Category = (props: Props) => {
 			</div>
 			<div className="category-content">
 				<span>Budget </span>
-				<span>${props.price}</span>
+				<span className="emphasize">${props.price}</span>
 				<span>Current Total</span>
 				<span>${props.price}</span>
 				<span>Remaining Credits</span>
 				<span>${props.price}</span>
 				<span>Remaining Per Day</span>
-				<span>${props.price}</span>
+				<span className="emphasize">${props.price}</span>
 			</div>
 		</StyledCategory>
 	);
@@ -82,17 +81,28 @@ const StyledCategory = styled.div<{ index: number; backgroundColor: string }>`
 			display: flex;
 			justify-content: space-evenly;
 			align-items: center;
+			img {
+				width: 12px;
+				aspect-ratio: 1;
+			}
 		}
 
 		& .category-modifiers {
+			width: fit-content;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 		}
+
+		.category-modifiers > img {
+			margin: 0;
+		}
 	}
 
 	& .title {
-		text-transform: uppercase;
+		text-transform: capitalize;
+		font-weight: 600;
+		font-size: 15px;
 	}
 
 	& img {
@@ -106,12 +116,16 @@ const StyledCategory = styled.div<{ index: number; backgroundColor: string }>`
 		height: 100%;
 		padding: 10px;
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 60% 40%;
 		justify-content: end;
 
 		span {
 			text-align: end;
-			font-size: 10px;
+			font-size: 12px;
+		}
+
+		.emphasize {
+			font-weight: 700;
 		}
 	}
 `;
