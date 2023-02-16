@@ -10,3 +10,5 @@
 
 ## CSS Styling
 - https://www.youtube.com/watch?v=N5wpD9Ov_To
+- Not every component is a styled component because it makes it a lot harder to make changes
+	- Instead use styled components with nesting by doing & .classname
