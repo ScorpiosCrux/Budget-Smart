@@ -31,7 +31,7 @@ const Category = (props: Props) => {
 
 	return (
 		<StyledCategory ref={drop} index={props.index} backgroundColor={backgroundColor}>
-			<div className="category-sub-header">
+			<CategoryHeader>
 				<div className="info">
 					<img src="check.svg" alt="checkmark" />
 					<span className="title">{props.category}</span>
@@ -40,8 +40,8 @@ const Category = (props: Props) => {
 					<img src="pencil.svg" alt="edit" />
 					<img src="trash.svg" alt="delete" />
 				</div>
-			</div>
-			<div className="category-content">
+			</CategoryHeader>
+			<StyledContent>
 				<span>Budget </span>
 				<span className="emphasize">${props.price}</span>
 				<span>Current Total</span>
@@ -50,7 +50,7 @@ const Category = (props: Props) => {
 				<span>${props.price}</span>
 				<span>Remaining Per Day</span>
 				<span className="emphasize">${props.price}</span>
-			</div>
+			</StyledContent>
 		</StyledCategory>
 	);
 };
@@ -58,8 +58,7 @@ const Category = (props: Props) => {
 export default Category;
 
 const StyledCategory = styled.div<{ index: number; backgroundColor: string }>`
-	width: 200px;
-	height: 128px;
+	width: 50%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -69,63 +68,63 @@ const StyledCategory = styled.div<{ index: number; backgroundColor: string }>`
 	border-bottom: 1px solid black;
 	background-color: ${(p) => p.backgroundColor};
 
-	& .category-sub-header {
-		height: 30px;
-		width: 100%;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		border-bottom: 1px dashed ${themes.light.secondary};
-
-		& .info {
-			display: flex;
-			justify-content: space-evenly;
-			align-items: center;
-			img {
-				width: 12px;
-				aspect-ratio: 1;
-			}
-		}
-
-		& .category-modifiers {
-			width: fit-content;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-		}
-
-		.category-modifiers > img {
-			margin: 0;
-		}
-	}
-
-	& .title {
-		text-transform: capitalize;
-		font-weight: 600;
-		font-size: 15px;
-	}
 
 	& img {
 		margin: 0px 6px 0px 6px;
 		width: 25px;
 		aspect-ratio: 1;
 	}
+`;
 
-	.category-content {
-		width: 100%;
-		height: 100%;
-		padding: 10px;
-		display: grid;
-		grid-template-columns: 60% 40%;
-		justify-content: end;
+const CategoryHeader = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px dashed ${themes.light.secondary};
 
-		span {
-			text-align: end;
-			font-size: 12px;
+	& span {
+		text-transform: capitalize;
+		font-weight: 600;
+		font-size: 1rem;
+	}
+
+	& .info {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		& img {
+			width: 12px;
+			aspect-ratio: 1;
 		}
+	}
 
-		.emphasize {
-			font-weight: 700;
-		}
+	& .category-modifiers {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.category-modifiers > img {
+		margin: 0;
+	}
+`;
+
+const StyledContent = styled.div`
+	width: 100%;
+	height: 100%;
+	padding: 0.6rem;
+	display: grid;
+	grid-template-columns: 70% 30%;
+	justify-content: end;
+	gap: 0.5rem;
+
+	& span {
+		text-align: end;
+		font-size: 0.75rem;
+	}
+
+	.emphasize {
+		font-weight: 700;
 	}
 `;
