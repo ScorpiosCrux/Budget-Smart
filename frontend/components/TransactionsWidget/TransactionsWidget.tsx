@@ -1,16 +1,9 @@
-import { themes } from "@/theme";
-import styled from "styled-components";
-import Category from "../Category";
-
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import Transaction from "./Transaction";
-
 import StyledHeader from "../core/StyledHeader";
 import StyledContainer from "../core/StyledContainer";
 import StyledWidget from "../core/StyledWidget";
-import StyledTable from "../core/StyledTable";
 import TransactionGrid from "./TransactionGrid";
+import StyledTransactionsHeader from "./TransactionsHeader";
 
 const TransactionsWidget = () => {
 	return (
@@ -21,33 +14,14 @@ const TransactionsWidget = () => {
 			</StyledHeader>
 
 			<StyledContainer width="700px" height="700px">
-				{/* <StyledTable>
-					<tbody>
-						<tr className="table-header">
-							<th></th>
-							<th>Date</th>
-							<th>Transaction Description</th>
-							<th>Category</th>
-							<th className="price">Price</th>
-							<th></th>
-						</tr>
-
-						<Transaction
-							_id={32}
-							date="Feb 6, 2023"
-							description="APPLE.COM/STORE"
-							category="Groceries"
-							price="$3200000.32"
-						/>
-					</tbody>
-				</StyledTable> */}
-
-				<TransactionGrid>
-					<div className="date">Date</div>
-					<div className="description">Transaction Description</div>
-					<div className="category">Category</div>
-					<div className="price">Price</div>
-				</TransactionGrid>
+				<StyledTransactionsHeader>
+					<TransactionGrid>
+						<div className="date header">Date</div>
+						<div className="description header">Transaction Description</div>
+						<div className="category header">Category</div>
+						<div className="price header">Price</div>
+					</TransactionGrid>
+				</StyledTransactionsHeader>
 
 				<Transaction
 					_id={32}

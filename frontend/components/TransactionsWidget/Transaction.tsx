@@ -1,10 +1,9 @@
-import { useDrag } from "react-dnd";
-import styled from "styled-components";
-import StyledIcon from "../core/StyledIcon";
-import { DraggableRow } from "../core/StyledTable";
-import { ItemTypes } from "../Dashboard";
-import TransactionGrid from "./TransactionGrid";
 import { themes } from "@/theme";
+import styled from "styled-components";
+import { useDrag } from "react-dnd";
+import TransactionGrid from "./TransactionGrid";
+import StyledIcon from "../core/StyledIcon";
+import { ItemTypes } from "../Dashboard";
 
 interface Props {
 	_id: number;
@@ -34,6 +33,7 @@ const Transaction = (props: Props) => {
 			isDragging: !!monitor.isDragging(),
 		}),
 	}));
+
 	return (
 		<TransactionWrapper ref={drag} isDragging={isDragging}>
 			<TransactionGrid>
@@ -59,5 +59,5 @@ const TransactionWrapper = styled.div<{ isDragging: boolean }>`
 	opacity: ${(p) => (p.isDragging ? 0.5 : 1)};
 	cursor: move;
 	height: 40px;
-	border-bottom: 1px solid ${themes.light.secondary};
+	border-bottom: 1px solid ${themes.light.background};
 `;
