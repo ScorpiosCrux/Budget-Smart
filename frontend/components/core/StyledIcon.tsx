@@ -21,9 +21,7 @@ const StyledIconWrapper = styled.div<{ size: string }>`
 	align-items: center;
 
 	width: ${(props) => props.size};
-	aspect-ratio: 1;
-
-	padding: 10px;
+	height: ${(props) => props.size};
 `;
 
 const StyledIconContent = styled.img<{ innerWidth: string; innerHeight: string }>`
