@@ -1,5 +1,7 @@
 import { useDrag } from "react-dnd";
 import styled from "styled-components";
+import StyledIcon from "./core/StyledIcon";
+import { DraggableRow } from "./core/StyledTable";
 import { ItemTypes } from "./Dashboard";
 
 interface Props {
@@ -29,24 +31,20 @@ const Transaction = (props: Props) => {
 		}),
 	}));
 	return (
-		<TransactionRow ref={drag} isDragging={isDragging}>
-			<td>
-				<img src="draggable.svg" alt="draggable icon" />
+		<DraggableRow ref={drag} isDragging={isDragging}>
+			<td className="buttons">
+				<StyledIcon src="drag.svg" height="100%" innerHeight="50%" innerWidth="50%" />
 			</td>
 			<td>{props.date}</td>
 			<td>{props.description}</td>
-			<td>{props.price}</td>
-		</TransactionRow>
+			<td></td>
+			<td className="price">{props.price}</td>
+			<td className="buttons">
+				<StyledIcon src="pencil.svg" height="100%" innerHeight="80%" innerWidth="80%" />
+				<StyledIcon src="trash.svg" height="100%" innerHeight="80%" innerWidth="80%" />
+			</td>
+		</DraggableRow>
 	);
 };
 
 export default Transaction;
-
-const TransactionRow = styled.tr<{ isDragging: boolean }>`
-	opacity: ${(p) => (p.isDragging ? 0.5 : 1)};
-	cursor: move;
-
-	img {
-		height: 40px;
-	}
-`;

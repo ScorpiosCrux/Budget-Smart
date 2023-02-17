@@ -1,6 +1,11 @@
 import CategoriesWidget from "components/CategoriesWidget";
 import Layout from "components/Layout";
+import TransactionsWidget from "components/TransactionsWidget";
 import Head from "next/head";
+import styled from "styled-components";
+
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 export default function Sort() {
 	return (
@@ -11,7 +16,17 @@ export default function Sort() {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<CategoriesWidget />
+			<SortWrapper>
+				<DndProvider backend={HTML5Backend}>
+					<CategoriesWidget />
+					<TransactionsWidget />
+				</DndProvider>
+			</SortWrapper>
 		</>
 	);
 }
+
+const SortWrapper = styled.div`
+	display: flex;
+	gap: 2rem;
+`;
