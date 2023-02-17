@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { useDrag } from "react-dnd";
 import TransactionGrid from "./TransactionGrid";
 import StyledIcon from "../core/StyledIcon";
-import { ItemTypes } from "../Dashboard";
+
+
+/* MOVE THIS TO ANOTHER FILE */
+const ItemTypes = {
+	TRANSACTION: "transaction",
+};
 
 interface Props {
 	_id: number;

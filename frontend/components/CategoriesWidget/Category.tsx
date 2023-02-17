@@ -1,7 +1,7 @@
 import { themes } from "@/theme";
 import styled from "styled-components";
 import { useDrop } from "react-dnd";
-import { ItemTypes } from "../Dashboard";
+
 import { CategoryDNDHelper, CategoryInfo } from "./CategoryContents";
 
 interface Props {
@@ -9,6 +9,11 @@ interface Props {
 	category: string;
 	price: number;
 }
+
+/* MOVE THIS TO ANOTHER FILE */
+const ItemTypes = {
+	TRANSACTION: "transaction",
+};
 
 const Category = (props: Props) => {
 	const [{ canDrop, isOver }, drop] = useDrop(() => ({
