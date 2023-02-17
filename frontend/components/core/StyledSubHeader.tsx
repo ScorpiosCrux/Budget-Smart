@@ -1,4 +1,4 @@
-import { typography } from "@/theme";
+import { themes, typography } from "@/theme";
 import styled from "styled-components";
 
 const StyledSubHeader = styled.div`
@@ -10,6 +10,7 @@ const StyledSubHeader = styled.div`
 	border-bottom: 1px solid black;
 
 	& span {
+		color: ${themes.light.secondary};
 		font-size: ${typography.regular.fontSize};
 		font-weight: ${typography.regular.fontWeight};
 	}
