@@ -2,27 +2,26 @@ import { themes, typography } from "@/theme";
 import styled from "styled-components";
 
 interface Props {
-	width: string;
-	height: string;
+	size: string;
 	innerWidth: string;
 	innerHeight: string;
 }
 
 const StyledIcon = (props: Props) => {
 	return (
-		<StyledIconWrapper width={props.width} height={props.height}>
+		<StyledIconWrapper size={props.size}>
 			<StyledIconContent src="drag.svg" innerHeight={props.innerHeight} innerWidth={props.innerWidth} />
 		</StyledIconWrapper>
 	);
 };
 
-const StyledIconWrapper = styled.div<{ width: string; height: string }>`
+const StyledIconWrapper = styled.div<{ size: string }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
-	width: ${(props) => props.width};
-	height: ${(props) => props.height};
+	width: ${(props) => props.size};
+	aspect-ratio: 1;
 
 	padding: 10px;
 `;
