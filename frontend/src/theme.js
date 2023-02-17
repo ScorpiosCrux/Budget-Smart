@@ -13,15 +13,18 @@ export const themes = {
 export const typography = {
 	title: {
 		fontSize: "1.25rem",
-		fontWeight: "700"
+		fontWeight: "700",
 	},
 	regular: {
 		fontSize: "1rem",
-		fontWeight: "300"
+		fontWeight: "300",
+	},
+	small: {
+		fontSize: "0.75rem",
+		fontWeight: "300",
 	},
 	bold: {
 		fontSize: "1rem",
-		fontWeight: "600"
-	}
-}
-
+		fontWeight: "600",
+	},
+};
