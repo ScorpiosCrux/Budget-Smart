@@ -2,8 +2,7 @@ import { themes } from "@/theme";
 import styled from "styled-components";
 import Category from "./Category";
 
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+
 const CategoriesWidget = () => {
 	return (
 		<Widget>
@@ -11,12 +10,10 @@ const CategoriesWidget = () => {
 			<div className="main-container">
 				<div className="sub-header">12 days until reset</div>
 				<div className="content">
-					<DndProvider backend={HTML5Backend}>
 						<Category index={0} category="Tech" price={32} />
 						<Category index={1} category="Tech" price={32} />
 						<Category index={2} category="Tech" price={32} />
 						<Category index={3} category="Tech" price={32} />
-					</DndProvider>
 				</div>
 			</div>
 		</Widget>
