@@ -1,7 +1,8 @@
 import { themes } from "@/theme";
-import { useDrop } from "react-dnd";
 import styled from "styled-components";
-import { ItemTypes } from "./Dashboard";
+import { useDrop } from "react-dnd";
+import { ItemTypes } from "../Dashboard";
+import { CategoryDNDHelper, CategoryInfo } from "./CategoryContents";
 
 interface Props {
 	index: number;
@@ -24,13 +25,13 @@ const Category = (props: Props) => {
 	const isActive = canDrop && isOver;
 	let backgroundColor = themes.light.primary;
 	if (isActive) {
-		backgroundColor = "darkgreen";
+		backgroundColor = themes.light.accent;
 	} else if (canDrop) {
-		backgroundColor = "darkkhaki";
+		backgroundColor = themes.light.secondary;
 	}
 
 	return (
-		<StyledCategory ref={drop} index={props.index} backgroundColor={backgroundColor}>
+		<StyledCategory index={props.index}>
 			<CategoryHeader>
 				<div className="info">
 					<img src="check.svg" alt="checkmark" />
@@ -41,15 +42,25 @@ const Category = (props: Props) => {
 					<img src="trash.svg" alt="delete" />
 				</div>
 			</CategoryHeader>
-			<StyledContent>
-				<span>Budget </span>
-				<span className="emphasize">${props.price}</span>
-				<span>Current Total</span>
-				<span>${props.price}</span>
-				<span>Remaining Credits</span>
-				<span>${props.price}</span>
-				<span>Remaining Per Day</span>
-				<span className="emphasize">${props.price}</span>
+			<StyledContent ref={drop} backgroundColor={backgroundColor}>
+				{canDrop ? (
+					<CategoryDNDHelper>
+						<div>DROP</div>
+						<div>TRANSACTION</div>
+						<div>HERE</div>
+					</CategoryDNDHelper>
+				) : (
+					<CategoryInfo>
+						<span>Budget </span>
+						<span className="emphasize">${props.price}</span>
+						<span>Current Total</span>
+						<span>${props.price}</span>
+						<span>Remaining Credits</span>
+						<span>${props.price}</span>
+						<span>Remaining Per Day</span>
+						<span className="emphasize">${props.price}</span>
+					</CategoryInfo>
+				)}
 			</StyledContent>
 		</StyledCategory>
 	);
@@ -57,8 +68,9 @@ const Category = (props: Props) => {
 
 export default Category;
 
-const StyledCategory = styled.div<{ index: number; backgroundColor: string }>`
+const StyledCategory = styled.div<{ index: number }>`
 	width: 50%;
+	height: 130px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -66,8 +78,7 @@ const StyledCategory = styled.div<{ index: number; backgroundColor: string }>`
 
 	border-right: ${(p) => (p.index % 2 == 0 ? "1px solid black" : "none")};
 	border-bottom: 1px solid black;
-	background-color: ${(p) => p.backgroundColor};
-
+	background-color: ${themes.light.primary};
 
 	& img {
 		margin: 0px 6px 0px 6px;
@@ -110,21 +121,9 @@ const CategoryHeader = styled.div`
 	}
 `;
 
-const StyledContent = styled.div`
+const StyledContent = styled.div<{ backgroundColor: string }>`
 	width: 100%;
 	height: 100%;
 	padding: 0.6rem;
-	display: grid;
-	grid-template-columns: 70% 30%;
-	justify-content: end;
-	gap: 0.5rem;
-
-	& span {
-		text-align: end;
-		font-size: 0.75rem;
-	}
-
-	.emphasize {
-		font-weight: 700;
-	}
+	background-color: ${(props) => props.backgroundColor};
 `;

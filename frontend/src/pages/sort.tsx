@@ -1,4 +1,4 @@
-import CategoriesWidget from "components/CategoriesWidget";
+import CategoriesWidget from "components/CategoriesWidget/CategoriesWidget";
 import Layout from "components/Layout";
 import TransactionsWidget from "components/TransactionsWidget/TransactionsWidget";
 import Head from "next/head";

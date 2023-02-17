@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Category from "./Category";
+import Category from "./CategoriesWidget/Category";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Transaction from "./TransactionsWidget/Transaction";

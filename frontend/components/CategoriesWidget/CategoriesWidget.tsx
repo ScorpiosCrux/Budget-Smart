@@ -10,10 +10,10 @@ const CategoriesWidget = () => {
 			<div className="main-container">
 				<div className="sub-header">12 days until reset</div>
 				<div className="content">
-						<Category index={0} category="Tech" price={32} />
-						<Category index={1} category="Tech" price={32} />
-						<Category index={2} category="Tech" price={32} />
-						<Category index={3} category="Tech" price={32} />
+					<Category index={0} category="Tech" price={32} />
+					<Category index={1} category="Tech" price={32} />
+					<Category index={2} category="Tech" price={32} />
+					<Category index={3} category="Tech" price={32} />
 				</div>
 			</div>
 		</Widget>
