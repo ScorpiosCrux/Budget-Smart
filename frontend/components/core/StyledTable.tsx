@@ -2,7 +2,13 @@ import { themes, typography } from "@/theme";
 import styled from "styled-components";
 
 const StyledTable = styled.table`
-	width: 100%;
+	tbody {
+		display: grid;
+		width: 100%;
+		/* grid-template-columns: min-content 16ch auto auto 10ch min-content; */
+		grid-template-columns: repeat(6, 1fr);
+	}
+
 	border-collapse: collapse;
 
 	.table-header {
@@ -21,14 +27,13 @@ const StyledTable = styled.table`
 	}
 `;
 
-export const DraggableRow = styled.tr<{ isDragging: boolean }>`
-	opacity: ${(p) => (p.isDragging ? 0.5 : 1)};
-	cursor: move;
+export const DraggableRow = styled.tr`
+	
 	max-height: 41px;
 	height: 40px;
 	border-bottom: 1px solid ${themes.light.background};
 
-	.price{
+	.price {
 		text-align: right;
 	}
 

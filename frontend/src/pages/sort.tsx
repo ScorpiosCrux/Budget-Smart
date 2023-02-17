@@ -1,6 +1,6 @@
 import CategoriesWidget from "components/CategoriesWidget";
 import Layout from "components/Layout";
-import TransactionsWidget from "components/TransactionsWidget";
+import TransactionsWidget from "components/TransactionsWidget/TransactionsWidget";
 import Head from "next/head";
 import styled from "styled-components";
 
