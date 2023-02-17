@@ -11,7 +11,6 @@ import StyledContainer from "./core/StyledContainer";
 import StyledWidget from "./core/StyledWidget";
 import StyledTable from "./core/StyledTable";
 
-
 const TransactionsWidget = () => {
 	return (
 		<StyledWidget>
@@ -32,7 +31,13 @@ const TransactionsWidget = () => {
 							<th></th>
 						</tr>
 
-						<Transaction date="" description="" price="" />
+						<Transaction
+							_id={32}
+							date="Feb 6, 2023"
+							description="APPLE.COM/STORE"
+							category="Groceries"
+							price="$3200000.32"
+						/>
 					</tbody>
 				</StyledTable>
 			</StyledContainer>
@@ -66,4 +71,3 @@ const Widget = styled.div`
 		flex-wrap: wrap;
 	}
 `;
-

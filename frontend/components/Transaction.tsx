@@ -5,8 +5,10 @@ import { DraggableRow } from "./core/StyledTable";
 import { ItemTypes } from "./Dashboard";
 
 interface Props {
+	_id: number;
 	date: string;
 	description: string;
+	category: string;
 	price: string;
 }
 
@@ -37,7 +39,7 @@ const Transaction = (props: Props) => {
 			</td>
 			<td>{props.date}</td>
 			<td>{props.description}</td>
-			<td></td>
+			<td>{props.category}</td>
 			<td className="price">{props.price}</td>
 			<td className="buttons">
 				<StyledIcon src="pencil.svg" height="100%" innerHeight="80%" innerWidth="80%" />

@@ -29,10 +29,13 @@ const Dashboard = () => {
 									<th>Price</th>
 								</tr>
 
-								<Transaction date="Feb 6, 2023" description="Test" price="$32.32" />
-								<Transaction date="Feb 6, 2023" description="Test" price="$32.32" />
-								<Transaction date="Feb 6, 2023" description="Test" price="$32.32" />
-								<Transaction date="Feb 6, 2023" description="Test" price="$32.32" />
+								<Transaction
+									_id={32}
+									date="Feb 6, 2023"
+									description="APPLE.COM/STORE"
+									category="Groceries"
+									price="$3200000.32"
+								/>
 							</tbody>
 						</table>
 					</div>
