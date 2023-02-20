@@ -4,7 +4,22 @@ import styled from "styled-components";
 const StyledHeader = styled.div`
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	padding-bottom: 15px;
+
+	& .main {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	& .header-button {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		max-height: 2rem;
+		height: 2rem;
+	}
 
 	/* Creates Nested Style*/
 	& .title {

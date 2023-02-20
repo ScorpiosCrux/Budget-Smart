@@ -1,5 +1,3 @@
-import { themes } from "@/theme";
-import styled from "styled-components";
 import StyledContainer from "components/core/StyledContainer";
 import StyledHeader from "components/core/StyledHeader";
 import StyledWidget from "components/core/StyledWidget";
@@ -11,8 +9,10 @@ const CategoriesWidget = () => {
 	return (
 		<StyledWidget>
 			<StyledHeader>
-				<div className="title">Categories</div>
-				<span className="helper-text">drag transactions below</span>
+				<div className="main">
+					<div className="title">Categories</div>
+					<span className="helper-text">drag transactions below</span>
+				</div>
 			</StyledHeader>
 			<StyledContainer width="400px" height="700px">
 				<StyledSubHeader>

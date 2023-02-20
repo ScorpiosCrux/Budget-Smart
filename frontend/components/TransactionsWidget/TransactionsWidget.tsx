@@ -4,13 +4,21 @@ import StyledContainer from "../core/StyledContainer";
 import StyledWidget from "../core/StyledWidget";
 import TransactionGrid from "./TransactionGrid";
 import StyledTransactionsHeader from "./TransactionsHeader";
+import StyledIcon from "components/core/StyledIcon";
 
 const TransactionsWidget = () => {
 	return (
 		<StyledWidget>
 			<StyledHeader>
-				<span className="title">Transactions</span>
-				<span className="helper-text">drag to sort</span>
+				<div className="main">
+					<span className="title">Transactions</span>
+					<span className="helper-text">drag to sort</span>
+				</div>
+
+				<div className="header-button" onClick={() => alert("Clicked!")}>
+					<StyledIcon src="add.svg" height="100%" innerWidth="100%" innerHeight="100%" />
+					<span>Add Transactions</span>
+				</div>
 			</StyledHeader>
 
 			<StyledContainer width="700px" height="700px">
