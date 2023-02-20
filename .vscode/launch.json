@@ -13,6 +13,12 @@
 			"outFiles": ["${workspaceFolder}/**/*.js"],
 			"preLaunchTask": "build project",
 			"envFile": "${workspaceFolder}/backend/.env"
+		},
+		{
+			"name": "Testing JS files",
+			"request": "launch",
+			"type": "node",
+			"program": "${workspaceFolder}/backend/build/utilities/CSVConverter.js",
 		}
 	]
 }
