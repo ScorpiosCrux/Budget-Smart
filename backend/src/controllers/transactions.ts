@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import * as csv from "@fast-csv/parse";
 import Transaction from "../models/transactions.js";
 
@@ -32,9 +33,12 @@ export const importTransactions = async () => {
 		.on("end", (rowCount: number) => console.log(`Parsed ${rowCount} rows`));
 };
 
-export const getTransactions = async () => {
+export const getTransactions = async (req: Request, res: Response) => {
 	const userId = "1234";
 
 	const posts = await Transaction.find({ userId: userId });
 	console.log("Done")
+
+	return res.status(200).json(posts)
+
 };

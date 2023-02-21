@@ -5,6 +5,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import User from "./models/users.js";
 import userRoutes from "./routes/users.js";
+import transactionRoutes from "./routes/transactions.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
@@ -61,6 +62,7 @@ function addRoutes() {
 	});
 
 	app.use("/api/auth", userRoutes);
+	app.use("/api/transactions", transactionRoutes);
 }
 
 function startUp() {
