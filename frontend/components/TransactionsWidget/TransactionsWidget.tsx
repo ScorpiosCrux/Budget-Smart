@@ -1,4 +1,4 @@
-import Transaction from "./Transaction";
+import Transaction, { TransactionInterface } from "./Transaction";
 import StyledHeader from "../core/StyledHeader";
 import StyledContainer from "../core/StyledContainer";
 import StyledWidget from "../core/StyledWidget";
@@ -6,7 +6,24 @@ import TransactionGrid from "./TransactionGrid";
 import StyledTransactionsHeader from "./TransactionsHeader";
 import StyledIcon from "components/core/StyledIcon";
 
-const TransactionsWidget = () => {
+/* Move AXIOS call down? */
+interface Props {
+	posts: Array<any>;
+}
+
+const post = {
+	_id: "32",
+	date: "Feb 6, 2023",
+	description: "APPLE.COM/STORE",
+	category: "Groceries",
+	price: "$3200000.32",
+};
+
+const posts1 = [post, post];
+
+const test = true;
+
+const TransactionsWidget = (props: Props) => {
 	return (
 		<StyledWidget>
 			<StyledHeader>
@@ -31,8 +48,21 @@ const TransactionsWidget = () => {
 					</TransactionGrid>
 				</StyledTransactionsHeader>
 
-				<Transaction
-					_id={32}
+				{props.posts.map((post: TransactionInterface) => {
+					return (
+						<Transaction
+							key={post._id}
+							_id={post._id}
+							date={post.date}
+							description={post.description}
+							category={post.category}
+							price={post.price}
+						/>
+					);
+				})}
+
+				{/* <Transaction
+					_id={"32"}
 					date="Feb 6, 2023"
 					description="APPLE.COM/STORE"
 					category="Groceries"
@@ -40,12 +70,12 @@ const TransactionsWidget = () => {
 				/>
 
 				<Transaction
-					_id={32}
+					_id={"32"}
 					date="Feb 6, 2023"
 					description="APPLE.COM/STORE"
 					category="Groceries"
 					price="$3200000.32"
-				/>
+				/> */}
 			</StyledContainer>
 		</StyledWidget>
 	);

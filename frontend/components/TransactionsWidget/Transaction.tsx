@@ -10,8 +10,8 @@ const ItemTypes = {
 	TRANSACTION: "transaction",
 };
 
-interface Props {
-	_id: number;
+export interface TransactionInterface {
+	_id: string;
 	date: string;
 	description: string;
 	category: string;
@@ -24,7 +24,7 @@ interface DropResult {
 	name: string;
 }
 
-const Transaction = (props: Props) => {
+const Transaction = (props: TransactionInterface) => {
 	const [{ isDragging }, drag] = useDrag(() => ({
 		type: ItemTypes.TRANSACTION,
 		item: props, // unsure how the item is used here
@@ -48,7 +48,7 @@ const Transaction = (props: Props) => {
 				<div className="date">{props.date}</div>
 				<div className="description">{props.description}</div>
 				<div className="category">{props.category}</div>
-				<div className="price">{props.price}</div>
+				<div className="price">${props.price}</div>
 				<div className="modifiers">
 					<StyledIcon src="pencil.svg" height="40px" innerHeight="80%" innerWidth="80%" />
 					<StyledIcon src="trash.svg" height="100%" innerHeight="80%" innerWidth="80%" />

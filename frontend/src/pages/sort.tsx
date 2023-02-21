@@ -7,28 +7,35 @@ import styled from "styled-components";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Sort() {
-	const getTransactions = () => {
+	const [isLoaded, setIsLoaded] = useState(false);
+	const [posts, setPosts] = useState([{}]);
+
+	const getTransactions = () => {};
+
+	useEffect(() => {
 		axios({
 			method: "GET",
 			withCredentials: true,
 			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions",
 		})
 			.then((res) => {
-				console.log(res.status);
-				console.log(res.data);
+				setPosts(Array.from(res.data));
+				setIsLoaded(true);
 			})
 			.catch((error) => {
 				console.log("Error!");
 				console.log(error);
 			});
-	};
+	}, []);
 
+	/* This print is outdated and will basically print nothing - testing  */
 	useEffect(() => {
-		getTransactions();
-	});
+		console.log(typeof posts);
+		console.log(posts);
+	}, []);
 
 	return (
 		<>
@@ -41,7 +48,7 @@ export default function Sort() {
 			<SortWrapper>
 				<DndProvider backend={HTML5Backend}>
 					<CategoriesWidget />
-					<TransactionsWidget />
+					<TransactionsWidget posts={posts}/>
 				</DndProvider>
 			</SortWrapper>
 		</>
