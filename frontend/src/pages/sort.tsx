@@ -1,3 +1,4 @@
+import axios from "axios";
 import CategoriesWidget from "components/CategoriesWidget/CategoriesWidget";
 import Layout from "components/Layout";
 import TransactionsWidget from "components/TransactionsWidget/TransactionsWidget";
@@ -6,8 +7,29 @@ import styled from "styled-components";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useEffect } from "react";
 
 export default function Sort() {
+	const getTransactions = () => {
+		axios({
+			method: "GET",
+			withCredentials: true,
+			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions",
+		})
+			.then((res) => {
+				console.log(res.status);
+				console.log(res.data);
+			})
+			.catch((error) => {
+				console.log("Error!");
+				console.log(error);
+			});
+	};
+
+	useEffect(() => {
+		getTransactions();
+	});
+
 	return (
 		<>
 			<Head>
