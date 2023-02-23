@@ -1,13 +1,25 @@
 import Link from "next/link";
 import styled from "@emotion/styled";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { themes } from "../src/theme.js";
 
 import { UserContext } from "contexts/UserContext";
 
 const Navbar = () => {
-	const { userContext, setUserContext } = useContext(UserContext);
+	const { isLoaded, userContext, loadLocalStorage } = useContext(UserContext);
+
+	// useEffect(() => {
+	// 	console.log("Navbar load")
+	// 	loadLocalStorage();
+	// });
+
+
+	useEffect(() => {
+		console.log("Is loaded!")
+		console.log(userContext)
+		console.log("END \n \n")
+	}, [isLoaded])
 
 	return (
 		<StyledNavbar>

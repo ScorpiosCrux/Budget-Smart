@@ -21,17 +21,18 @@ const defaultState: User = {
 	loggedIn: false,
 	_id: "",
 	email: "",
-	displayName: "",
-	username: "",
+	displayName: "Test",
+	username: "Test",
 	token: "",
 };
 
 interface UserContextType {
+	isLoaded: boolean;
 	userContext: User;
-	// setUserContext: React.Dispatch<React.SetStateAction<User>>;
 	updateContext: (key: string, value: string | boolean) => void;
 	updateToken: (token: string) => void;
 	setLocalStorage: () => void;
+	loadLocalStorage: () => void;
 }
 
 // ! tells the consumers that it won't be null
@@ -42,6 +43,7 @@ type Props = {
 };
 
 const UserContextProvider = ({ children }: Props) => {
+	const [isLoaded, setIsLoaded] = useState<boolean>(false)
 	const [userContext, setUserContext] = useState<User>(defaultState);
 
 	const updateContext = (key: string, value: string | boolean) => {
@@ -72,10 +74,12 @@ const UserContextProvider = ({ children }: Props) => {
 		}
 	};
 
-	useEffect(() => {
-		console.log("Use Effect User Context")
-		const isUserLoggedIn = getLocalStorage("isLoggedIn");
-		if (isUserLoggedIn) {
+	const loadLocalStorage = () => {
+		console.log("Use Effect User Context");
+		const isUserLoggedIn = getLocalStorage("loggedIn");
+		console.log(isUserLoggedIn);
+
+		if (isUserLoggedIn === "true") {
 			// Make a copy of default state
 			let localStorageContext: User = Object.assign({}, defaultState);
 
@@ -88,21 +92,29 @@ const UserContextProvider = ({ children }: Props) => {
 
 				// if a value is null, reset userContext
 				else {
+					console.log("User Context Break!");
 					setUserContext(defaultState);
 					break;
 				}
 			}
+			console.log("User Context Filled");
+			console.log(userContext);
 		} else {
 			setUserContext(defaultState);
 		}
-	});
+	};
+
+	/* This should be called? */
+	useEffect(() => {
+		loadLocalStorage();
+	}, []);
 
 	const updateToken = (token: string) => {
 		userContext.token = token;
 	};
 
 	return (
-		<UserContext.Provider value={{ userContext, updateContext, updateToken, setLocalStorage }}>
+		<UserContext.Provider value={{ isLoaded, userContext, updateContext, updateToken, setLocalStorage, loadLocalStorage }}>
 			{children}
 		</UserContext.Provider>
 	);
