@@ -5,7 +5,6 @@ import Navbar from "./Navbar";
 import styled from "styled-components";
 import { themes } from "@/theme";
 
-
 type Props = {
 	children: JSX.Element;
 };
@@ -24,9 +23,7 @@ const Layout = ({ children }: Props) => {
 			withCredentials: true,
 			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/refreshToken",
 		})
-			.then((res) => {
-				
-			})
+			.then((res) => {})
 			.catch((res) => {
 				if (res.status === 401) {
 					// get user to login again and clear the context
@@ -35,7 +32,9 @@ const Layout = ({ children }: Props) => {
 	}, [updateToken]);
 
 	useEffect(() => {
-		verifyUser();
+		if (userContext.loggedIn === true) {
+			verifyUser();
+		}
 	}, [verifyUser]);
 
 	return (
@@ -55,10 +54,8 @@ const StyledLayout = styled.div`
 	flex-direction: column;
 
 	& .content {
-	display: flex;
-	flex-grow: 1;
-	justify-content: center;
-
-}
-`
-
+		display: flex;
+		flex-grow: 1;
+		justify-content: center;
+	}
+`;
