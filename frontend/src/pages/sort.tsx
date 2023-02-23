@@ -7,10 +7,11 @@ import styled from "styled-components";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "contexts/UserContext";
 
 export default function Sort() {
-	const [isLoaded, setIsLoaded] = useState(false);
+	const { isLoaded, userContext } = useContext(UserContext);
 	const [posts, setPosts] = useState([]);
 
 	const getTransactions = () => {
@@ -18,10 +19,12 @@ export default function Sort() {
 			method: "GET",
 			withCredentials: true,
 			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions",
+			headers: {
+				authorization: "Bearer " + userContext.token,
+			},
 		})
 			.then((res) => {
 				setPosts(Array.from(res.data));
-				setIsLoaded(true);
 			})
 			.catch((error) => {
 				console.log("Error!");
