@@ -11,7 +11,7 @@ type UserResponse = {
 };
 
 const Profile = () => {
-	const { userContext, setUserContext } = useContext(UserContext);
+	const { userContext } = useContext(UserContext);
 	const [data, setData] = useState<UserResponse>({ _id: "", username: "" });
 
 	const getUser = () => {
