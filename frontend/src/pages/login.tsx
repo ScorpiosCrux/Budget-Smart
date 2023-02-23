@@ -24,7 +24,7 @@ interface Values {
 }
 
 const Login = () => {
-	const { setUserContext } = useContext(UserContext);
+	const { userContext, updateContext, setLocalStorage } = useContext(UserContext);
 	const [errorMsg, setErrorMsg] = useState<null | string>(null);
 	const router = useRouter();
 
@@ -39,10 +39,17 @@ const Login = () => {
 			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/login",
 		})
 			.then((res) => {
-				console.log(res.status);
+				console.log("Data: ");
 				console.log(res.data);
 				if (res.status === 200) {
-					setUserContext(res.data);
+					for (const key in res.data) {
+						console.log(key)
+						console.log(res.data[key])
+						updateContext(key, res.data[key]);
+					}
+					updateContext("loggedIn", true);
+					console.log(userContext);
+					setLocalStorage();
 					router.push("/");
 				} else {
 					console.log("Some Error as Occured!");

@@ -28,7 +28,8 @@ const defaultState: User = {
 
 interface UserContextType {
 	userContext: User;
-	setUserContext: React.Dispatch<React.SetStateAction<User>>;
+	// setUserContext: React.Dispatch<React.SetStateAction<User>>;
+	updateContext: (key: string, value: string | boolean) => void;
 	updateToken: (token: string) => void;
 	setLocalStorage: () => void;
 }
@@ -42,6 +43,13 @@ type Props = {
 
 const UserContextProvider = ({ children }: Props) => {
 	const [userContext, setUserContext] = useState<User>(defaultState);
+
+	const updateContext = (key: string, value: string | boolean) => {
+		console.log("Updated UserContext");
+		let prevState = userContext;
+		prevState[key] = value;
+		setUserContext(prevState);
+	};
 
 	const setLocalStorage = () => {
 		try {
@@ -65,6 +73,7 @@ const UserContextProvider = ({ children }: Props) => {
 	};
 
 	useEffect(() => {
+		console.log("Use Effect User Context")
 		const isUserLoggedIn = getLocalStorage("isLoggedIn");
 		if (isUserLoggedIn) {
 			// Make a copy of default state
@@ -93,7 +102,7 @@ const UserContextProvider = ({ children }: Props) => {
 	};
 
 	return (
-		<UserContext.Provider value={{ userContext, setUserContext, updateToken, setLocalStorage }}>
+		<UserContext.Provider value={{ userContext, updateContext, updateToken, setLocalStorage }}>
 			{children}
 		</UserContext.Provider>
 	);
