@@ -5,6 +5,7 @@ import StyledWidget from "../core/StyledWidget";
 import TransactionGrid from "./TransactionGrid";
 import StyledTransactionsHeader from "./TransactionsHeader";
 import StyledIcon from "components/core/StyledIcon";
+import StyledTransactionsContent from "./TransactionsContent";
 
 /* Move AXIOS call down? */
 interface Props {
@@ -36,18 +37,20 @@ const TransactionsWidget = (props: Props) => {
 					</TransactionGrid>
 				</StyledTransactionsHeader>
 
-				{props.posts.map((post: TransactionInterface) => {
-					return (
-						<Transaction
-							key={post._id}
-							_id={post._id}
-							date={post.date}
-							description={post.description}
-							category={post.category}
-							price={post.price}
-						/>
-					);
-				})}
+				<StyledTransactionsContent>
+					{props.posts.map((post: TransactionInterface) => {
+						return (
+							<Transaction
+								key={post._id}
+								_id={post._id}
+								date={post.date}
+								description={post.description}
+								category={post.category}
+								price={post.price}
+							/>
+						);
+					})}
+				</StyledTransactionsContent>
 			</StyledContainer>
 		</StyledWidget>
 	);
