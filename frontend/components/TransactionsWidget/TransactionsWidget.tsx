@@ -11,18 +11,6 @@ interface Props {
 	posts: Array<any>;
 }
 
-const post = {
-	_id: "32",
-	date: "Feb 6, 2023",
-	description: "APPLE.COM/STORE",
-	category: "Groceries",
-	price: "$3200000.32",
-};
-
-const posts1 = [post, post];
-
-const test = true;
-
 const TransactionsWidget = (props: Props) => {
 	return (
 		<StyledWidget>
@@ -60,22 +48,6 @@ const TransactionsWidget = (props: Props) => {
 						/>
 					);
 				})}
-
-				{/* <Transaction
-					_id={"32"}
-					date="Feb 6, 2023"
-					description="APPLE.COM/STORE"
-					category="Groceries"
-					price="$3200000.32"
-				/>
-
-				<Transaction
-					_id={"32"}
-					date="Feb 6, 2023"
-					description="APPLE.COM/STORE"
-					category="Groceries"
-					price="$3200000.32"
-				/> */}
 			</StyledContainer>
 		</StyledWidget>
 	);

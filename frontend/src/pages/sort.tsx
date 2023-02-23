@@ -13,9 +13,7 @@ export default function Sort() {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [posts, setPosts] = useState([]);
 
-	const getTransactions = () => {};
-
-	useEffect(() => {
+	const getTransactions = () => {
 		axios({
 			method: "GET",
 			withCredentials: true,
@@ -29,14 +27,11 @@ export default function Sort() {
 				console.log("Error!");
 				console.log(error);
 			});
-	}, []);
+	};
 
-	/* This print is outdated and will basically print nothing - testing  */
 	useEffect(() => {
-		// console.log(typeof posts);
-		// console.log(posts);
-		// console.log(posts[0]._id);
-	}, [posts]);
+		getTransactions();
+	}, []);
 
 	return (
 		<>
