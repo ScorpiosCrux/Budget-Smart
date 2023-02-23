@@ -43,7 +43,7 @@ type Props = {
 };
 
 const UserContextProvider = ({ children }: Props) => {
-	const [isLoaded, setIsLoaded] = useState<boolean>(false)
+	const [isLoaded, setIsLoaded] = useState<boolean>(false);
 	const [userContext, setUserContext] = useState<User>(defaultState);
 
 	const updateContext = (key: string, value: string | boolean) => {
@@ -75,36 +75,28 @@ const UserContextProvider = ({ children }: Props) => {
 	};
 
 	const loadLocalStorage = () => {
-		console.log("Use Effect User Context");
 		const isUserLoggedIn = getLocalStorage("loggedIn");
-		console.log(isUserLoggedIn);
-
 		if (isUserLoggedIn === "true") {
 			// Make a copy of default state
-			let localStorageContext: User = Object.assign({}, defaultState);
+			let context = defaultState;
 
 			// Get values from local storage
-			for (const key in localStorageContext) {
+			for (const key in context) {
 				const value = getLocalStorage(key);
 				if (value) {
-					localStorageContext[key] = value;
-				}
-
-				// if a value is null, reset userContext
-				else {
-					console.log("User Context Break!");
-					setUserContext(defaultState);
+					context[key] = value;
+				} else {
+					context = defaultState;
 					break;
 				}
 			}
-			console.log("User Context Filled");
-			console.log(userContext);
+			setUserContext(context);
 		} else {
 			setUserContext(defaultState);
 		}
+		setIsLoaded(true);
 	};
 
-	/* This should be called? */
 	useEffect(() => {
 		loadLocalStorage();
 	}, []);
@@ -114,7 +106,8 @@ const UserContextProvider = ({ children }: Props) => {
 	};
 
 	return (
-		<UserContext.Provider value={{ isLoaded, userContext, updateContext, updateToken, setLocalStorage, loadLocalStorage }}>
+		<UserContext.Provider
+			value={{ isLoaded, userContext, updateContext, updateToken, setLocalStorage, loadLocalStorage }}>
 			{children}
 		</UserContext.Provider>
 	);

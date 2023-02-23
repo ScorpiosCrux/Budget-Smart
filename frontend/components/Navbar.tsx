@@ -9,18 +9,6 @@ import { UserContext } from "contexts/UserContext";
 const Navbar = () => {
 	const { isLoaded, userContext, loadLocalStorage } = useContext(UserContext);
 
-	// useEffect(() => {
-	// 	console.log("Navbar load")
-	// 	loadLocalStorage();
-	// });
-
-
-	useEffect(() => {
-		console.log("Is loaded!")
-		console.log(userContext)
-		console.log("END \n \n")
-	}, [isLoaded])
-
 	return (
 		<StyledNavbar>
 			<div className="logo">
@@ -41,18 +29,18 @@ const Navbar = () => {
 				</div>
 			</div>
 			<UserLinks>
-				{userContext._id !== "" ? (
-					<>
-						<NavLink href={"/user"}>{userContext._id}</NavLink>
-						<NavLink href={"/logout"}>Logout</NavLink>
-					</>
-				) : (
-					<>
-						<NavLink href={"/login"}>Login</NavLink>
-						<NavLink href={"/register"}>Register</NavLink>
-						{console.log(userContext.token)}
-					</>
-				)}
+				{isLoaded &&
+					(userContext._id !== "" ? (
+						<>
+							<NavLink href={"/user"}>{userContext._id}</NavLink>
+							<NavLink href={"/logout"}>Logout</NavLink>
+						</>
+					) : (
+						<>
+							<NavLink href={"/login"}>Login</NavLink>
+							<NavLink href={"/register"}>Register</NavLink>
+						</>
+					))}
 			</UserLinks>
 		</StyledNavbar>
 	);
