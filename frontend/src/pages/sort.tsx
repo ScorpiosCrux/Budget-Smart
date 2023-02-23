@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 export default function Sort() {
 	const [isLoaded, setIsLoaded] = useState(false);
-	const [posts, setPosts] = useState([{}]);
+	const [posts, setPosts] = useState([]);
 
 	const getTransactions = () => {};
 
@@ -33,9 +33,10 @@ export default function Sort() {
 
 	/* This print is outdated and will basically print nothing - testing  */
 	useEffect(() => {
-		console.log(typeof posts);
-		console.log(posts);
-	}, []);
+		// console.log(typeof posts);
+		// console.log(posts);
+		// console.log(posts[0]._id);
+	}, [posts]);
 
 	return (
 		<>
@@ -48,7 +49,7 @@ export default function Sort() {
 			<SortWrapper>
 				<DndProvider backend={HTML5Backend}>
 					<CategoriesWidget />
-					<TransactionsWidget posts={posts}/>
+					<TransactionsWidget posts={posts} />
 				</DndProvider>
 			</SortWrapper>
 		</>
