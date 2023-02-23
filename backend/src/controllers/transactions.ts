@@ -15,7 +15,7 @@ export const importTransactions = async () => {
 		.on("data", (row) => {
 			// Specific for TD Canada Trust
 			const transaction = new Transaction({
-				userId: "1234",
+				userId: "63f6d942e70890f81697254f",
 				date: row[0],
 				description: row[1],
 				category: "",
@@ -34,11 +34,7 @@ export const importTransactions = async () => {
 };
 
 export const getTransactions = async (req: Request, res: Response) => {
-	const userId = "1234";
-
+	const userId = req.user._id;
 	const posts = await Transaction.find({ userId: userId });
-	console.log("Done")
-
-	return res.status(200).json(posts)
-
+	return res.status(200).json(posts);
 };
