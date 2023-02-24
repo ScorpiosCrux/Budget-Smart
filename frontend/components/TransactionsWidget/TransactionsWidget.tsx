@@ -6,6 +6,7 @@ import TransactionGrid from "./TransactionGrid";
 import StyledTransactionsHeader from "./TransactionsHeader";
 import StyledIcon from "components/core/StyledIcon";
 import StyledTransactionsContent from "./TransactionsContent";
+import MenuButton from "components/buttons/AddTransactionsMenuButton";
 
 /* Move AXIOS call down? */
 interface Props {
@@ -21,10 +22,7 @@ const TransactionsWidget = (props: Props) => {
 					<span className="helper-text">drag to sort</span>
 				</div>
 
-				<div className="header-button" onClick={() => alert("Clicked!")}>
-					<StyledIcon src="add.svg" height="100%" innerWidth="100%" innerHeight="100%" />
-					<span>Add Transactions</span>
-				</div>
+				<MenuButton />
 			</StyledHeader>
 
 			<StyledContainer width="700px" height="700px">
