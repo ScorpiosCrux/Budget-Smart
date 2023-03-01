@@ -9,7 +9,7 @@ interface UserObjectKeys {
 }
 
 interface User extends UserObjectKeys {
-	loggedIn: boolean;
+	isLoggedIn: boolean;
 	_id: string;
 	email: string;
 	displayName: string;
@@ -18,7 +18,7 @@ interface User extends UserObjectKeys {
 }
 
 const defaultState: User = {
-	loggedIn: false,
+	isLoggedIn: false,
 	_id: "",
 	email: "",
 	displayName: "Test",
