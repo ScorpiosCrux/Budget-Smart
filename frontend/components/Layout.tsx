@@ -10,7 +10,7 @@ type Props = {
 };
 
 const Layout = ({ children }: Props) => {
-	const { userContext, updateToken } = useContext(UserContext);
+	const { isLoaded, userContext } = useContext(UserContext);
 
 	const verifyUser = useCallback(() => {
 		/* 
@@ -23,19 +23,29 @@ const Layout = ({ children }: Props) => {
 			withCredentials: true,
 			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/refreshToken",
 		})
-			.then((res) => {})
+			.then((res) => {
+				console.log("Refresh Token Valid");
+			})
 			.catch((res) => {
 				if (res.status === 401) {
+					console.log("Refresh Token invalid");
 					// get user to login again and clear the context
 				}
 			});
-	}, [updateToken]);
+	}, []);
 
 	useEffect(() => {
-		if (userContext.loggedIn === true) {
-			verifyUser();
+		if (isLoaded) {
+			console.log("isLoaded");
+			if (userContext.isLoggedIn) {
+				verifyUser();
+			} else {
+				console.log("User Not Logged in! Skipping refresh Token Check");
+			}
+		} else {
+			console.log("notLoaded");
 		}
-	}, [verifyUser]);
+	}, [isLoaded]);
 
 	return (
 		<StyledLayout>
