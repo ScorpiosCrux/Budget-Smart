@@ -33,7 +33,7 @@ export const getToken = (user: string | object | Buffer) => {
 */
 export const getRefreshToken = (user: string | object | Buffer) => {
 	const refreshToken = jwt.sign(user, process.env.SECRET_REFRESH_TOKEN, {
-		expiresIn: eval(process.env.REFRESH_TOKEN_EXPIRY) * 1000,
+		expiresIn: eval(process.env.REFRESH_TOKEN_EXPIRY),
 	});
 	return refreshToken;
 };
