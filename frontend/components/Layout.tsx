@@ -27,15 +27,9 @@ const Layout = ({ children }: Props) => {
 				console.log("Refresh Token Valid");
 			})
 			.catch((error) => {
-				console.log("Refresh Token invalid1");
-				console.log(error)
 				if (error.response.status === 401 || error.response.status === 500) {
-					console.log("Erorr123");
-
 					resetLocalStorage();
-					// get user to login again and clear the context
 				}
-				console.log("Erorr");
 			});
 	}, []);
 
