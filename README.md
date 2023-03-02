@@ -25,4 +25,3 @@
 
 
 ## Known Issues and Weird things:
-- UserContext's defaultState is an object an is referenced and therefore changed.

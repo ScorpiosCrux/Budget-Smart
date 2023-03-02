@@ -34,7 +34,6 @@ interface UserContextType {
 	resetLocalStorage: () => void;
 	loadLocalStorage: () => void;
 	setLocalStorage: () => void;
-
 }
 
 // ! tells the consumers that it won't be null
@@ -46,7 +45,7 @@ type Props = {
 
 const UserContextProvider = ({ children }: Props) => {
 	const [isLoaded, setIsLoaded] = useState<boolean>(false);
-	const [userContext, setUserContext] = useState<User>(defaultState);
+	const [userContext, setUserContext] = useState<User>(structuredClone(defaultState));
 
 	const updateContext = (key: string, value: string | boolean) => {
 		console.log("Updated UserContext");
@@ -69,14 +68,7 @@ const UserContextProvider = ({ children }: Props) => {
 	const resetLocalStorage = () => {
 		try {
 			console.log("Clear Local Storage!")
-			setUserContext({
-				isLoggedIn: false,
-				_id: "",
-				email: "",
-				displayName: "Test",
-				username: "Test",
-				token: "",
-			})
+			setUserContext(structuredClone(defaultState))
 			window.localStorage.clear()
 			console.log(userContext)
 		} catch (error) {
@@ -98,7 +90,7 @@ const UserContextProvider = ({ children }: Props) => {
 		const isUserLoggedIn = getLocalStorage("isLoggedIn");
 		if (isUserLoggedIn === "true") {
 			// Make a copy of default state
-			let context = defaultState;
+			let context = structuredClone(defaultState);
 
 			// Get values from local storage
 			for (const key in context) {
@@ -106,13 +98,13 @@ const UserContextProvider = ({ children }: Props) => {
 				if (value) {
 					context[key] = value;
 				} else {
-					context = defaultState;
+					context = structuredClone(defaultState);
 					break;
 				}
 			}
 			setUserContext(context);
 		} else {
-			setUserContext(defaultState);
+			setUserContext(structuredClone(defaultState));
 		}
 		setIsLoaded(true);
 	};
