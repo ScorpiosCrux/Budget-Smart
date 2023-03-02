@@ -1,0 +1,3 @@
+login
+db.users.updateOne({_id: ObjectId("63f6d942e70890f81697254f")}, {$set:{refreshToken:[]}})
+check if localStorage is cleared and everything else is reset to not logged in

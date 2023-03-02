@@ -47,6 +47,7 @@ export const loginUser = (req: Request, res: Response) => {
 		});
 	});
 
+	console.log(refreshToken)
 	res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
 	return res.status(200).json({ _id: _id, email: email, token });
 };

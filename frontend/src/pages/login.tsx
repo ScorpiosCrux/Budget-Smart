@@ -47,7 +47,7 @@ const Login = () => {
 						console.log(res.data[key])
 						updateContext(key, res.data[key]);
 					}
-					updateContext("loggedIn", true);
+					updateContext("isLoggedIn", true);
 					console.log(userContext);
 					setLocalStorage();
 					router.push("/");

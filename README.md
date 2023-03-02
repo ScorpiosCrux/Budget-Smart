@@ -22,3 +22,7 @@
 	- Instead use styled components with nesting by doing & .classname
 	- using SASS styled syntax (package does not need to be installed)
 - Seperate it when you can group it together
+
+
+## Known Issues and Weird things:
+- UserContext's defaultState is an object an is referenced and therefore changed.

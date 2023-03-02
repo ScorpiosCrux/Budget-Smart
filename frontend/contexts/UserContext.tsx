@@ -31,8 +31,10 @@ interface UserContextType {
 	userContext: User;
 	updateContext: (key: string, value: string | boolean) => void;
 	updateToken: (token: string) => void;
-	setLocalStorage: () => void;
+	resetLocalStorage: () => void;
 	loadLocalStorage: () => void;
+	setLocalStorage: () => void;
+
 }
 
 // ! tells the consumers that it won't be null
@@ -64,6 +66,24 @@ const UserContextProvider = ({ children }: Props) => {
 		}
 	};
 
+	const resetLocalStorage = () => {
+		try {
+			console.log("Clear Local Storage!")
+			setUserContext({
+				isLoggedIn: false,
+				_id: "",
+				email: "",
+				displayName: "Test",
+				username: "Test",
+				token: "",
+			})
+			window.localStorage.clear()
+			console.log(userContext)
+		} catch (error) {
+			console.log("resetLocalStorage Error!");
+		}
+	}
+
 	const getLocalStorage = (key: string) => {
 		try {
 			const value = window.localStorage.getItem(key);
@@ -75,7 +95,7 @@ const UserContextProvider = ({ children }: Props) => {
 	};
 
 	const loadLocalStorage = () => {
-		const isUserLoggedIn = getLocalStorage("loggedIn");
+		const isUserLoggedIn = getLocalStorage("isLoggedIn");
 		if (isUserLoggedIn === "true") {
 			// Make a copy of default state
 			let context = defaultState;
@@ -107,7 +127,7 @@ const UserContextProvider = ({ children }: Props) => {
 
 	return (
 		<UserContext.Provider
-			value={{ isLoaded, userContext, updateContext, updateToken, setLocalStorage, loadLocalStorage }}>
+			value={{ isLoaded, userContext, updateContext, updateToken, resetLocalStorage, setLocalStorage, loadLocalStorage }}>
 			{children}
 		</UserContext.Provider>
 	);

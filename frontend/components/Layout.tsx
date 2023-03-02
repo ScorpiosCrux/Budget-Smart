@@ -10,7 +10,7 @@ type Props = {
 };
 
 const Layout = ({ children }: Props) => {
-	const { isLoaded, userContext } = useContext(UserContext);
+	const { isLoaded, userContext, resetLocalStorage } = useContext(UserContext);
 
 	const verifyUser = useCallback(() => {
 		/* 
@@ -26,11 +26,16 @@ const Layout = ({ children }: Props) => {
 			.then((res) => {
 				console.log("Refresh Token Valid");
 			})
-			.catch((res) => {
-				if (res.status === 401) {
-					console.log("Refresh Token invalid");
+			.catch((error) => {
+				console.log("Refresh Token invalid1");
+				console.log(error)
+				if (error.response.status === 401 || error.response.status === 500) {
+					console.log("Erorr123");
+
+					resetLocalStorage();
 					// get user to login again and clear the context
 				}
+				console.log("Erorr");
 			});
 	}, []);
 
@@ -45,7 +50,7 @@ const Layout = ({ children }: Props) => {
 		} else {
 			console.log("notLoaded");
 		}
-	}, [isLoaded]);
+	}, [isLoaded, userContext]);
 
 	return (
 		<StyledLayout>
