@@ -2,13 +2,17 @@ import Layout from "components/Layout";
 import UserContextProvider from "contexts/UserContext";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
+import { AuthContextProvider } from "contexts/AuthContext";
+
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
-		<UserContextProvider>
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
-		</UserContextProvider>
+		<AuthContextProvider>
+			<UserContextProvider>
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
+			</UserContextProvider>
+		</AuthContextProvider>
 	);
 }

@@ -1,5 +1,7 @@
+/* Building your own Hooks lets you extract component login into reusable functions */
+
 import { AuthContext } from "contexts/AuthContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 
 export interface User {
@@ -10,6 +12,10 @@ export interface User {
 	username: "Test";
 	token: "";
 }
+
+/* 
+	This hook consumes the AuthContext
+*/
 
 export const useUser = () => {
 	const { user, setUser } = useContext(AuthContext);
@@ -25,5 +31,5 @@ export const useUser = () => {
 		setItem("user", "");
 	};
 
-	return {user, addUser, removeUser}
+	return { user, addUser, removeUser };
 };
