@@ -1,41 +1,11 @@
-import axios from "axios";
 import CategoriesWidget from "components/CategoriesWidget/CategoriesWidget";
-import Layout from "components/Layout";
 import TransactionsWidget from "components/TransactionsWidget/TransactionsWidget";
 import Head from "next/head";
 import styled from "styled-components";
-
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "contexts/UserContext";
 
 export default function Sort() {
-	// const { isLoaded, userContext } = useContext(UserContext);
-	// const [posts, setPosts] = useState([]);
-
-	// const getTransactions = () => {
-	// 	axios({
-	// 		method: "GET",
-	// 		withCredentials: true,
-	// 		url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions",
-	// 		headers: {
-	// 			authorization: "Bearer " + userContext.token,
-	// 		},
-	// 	})
-	// 		.then((res) => {
-	// 			setPosts(Array.from(res.data));
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log("Error!");
-	// 			console.log(error);
-	// 		});
-	// };
-
-	// useEffect(() => {
-	// 	getTransactions();
-	// }, []);
-
 	return (
 		<>
 			<Head>
@@ -47,7 +17,7 @@ export default function Sort() {
 			<SortWrapper>
 				<DndProvider backend={HTML5Backend}>
 					<CategoriesWidget />
-					<TransactionsWidget/>
+					<TransactionsWidget />
 				</DndProvider>
 			</SortWrapper>
 		</>

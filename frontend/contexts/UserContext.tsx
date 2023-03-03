@@ -5,7 +5,7 @@ import React, { Component, createContext, useEffect, useState } from "react";
 	If you use "?" then you might need to add "undefined"
 */
 interface UserObjectKeys {
-	[key: string]: string | boolean;
+	[key: string]: any;
 }
 
 interface User extends UserObjectKeys {
@@ -30,7 +30,6 @@ interface UserContextType {
 	isLoaded: boolean;
 	userContext: User;
 	updateContext: (key: string, value: string | boolean) => void;
-	updateToken: (token: string) => void;
 	resetLocalStorage: () => void;
 	loadLocalStorage: () => void;
 	setLocalStorage: () => void;
@@ -48,10 +47,11 @@ const UserContextProvider = ({ children }: Props) => {
 	const [userContext, setUserContext] = useState<User>(structuredClone(defaultState));
 
 	const updateContext = (key: string, value: string | boolean) => {
-		console.log("Updated UserContext");
 		let prevState = userContext;
 		prevState[key] = value;
 		setUserContext(prevState);
+		console.log("Updated UserContext");
+		console.log(userContext)
 	};
 
 	const setLocalStorage = () => {
@@ -110,16 +110,13 @@ const UserContextProvider = ({ children }: Props) => {
 	};
 
 	useEffect(() => {
+		console.log()
 		loadLocalStorage();
 	}, []);
 
-	const updateToken = (token: string) => {
-		userContext.token = token;
-	};
-
 	return (
 		<UserContext.Provider
-			value={{ isLoaded, userContext, updateContext, updateToken, resetLocalStorage, setLocalStorage, loadLocalStorage }}>
+			value={{ isLoaded, userContext, updateContext, resetLocalStorage, setLocalStorage, loadLocalStorage }}>
 			{children}
 		</UserContext.Provider>
 	);

@@ -4,21 +4,12 @@ import StyledContainer from "../core/StyledContainer";
 import StyledWidget from "../core/StyledWidget";
 import TransactionGrid from "./TransactionGrid";
 import StyledTransactionsHeader from "./TransactionsHeader";
-import StyledIcon from "components/core/StyledIcon";
 import StyledTransactionsContent from "./TransactionsContent";
 import MenuButton from "components/buttons/AddTransactionsMenuButton";
 import { useTransactions } from "hooks/useTransactions";
-import { useEffect } from "react";
-
-/* Move AXIOS call down? */
-// interface Props {
-// 	posts: Array<any>;
-// }
 
 const TransactionsWidget = () => {
 	const { isLoading, transactions } = useTransactions();
-
-
 
 	return (
 		<StyledWidget>
