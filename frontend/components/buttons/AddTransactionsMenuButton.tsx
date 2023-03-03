@@ -2,8 +2,14 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { useRef } from "react";
 
 export default function BasicMenu() {
+	/* 
+		In this case, useRef is used to access a DOM element directly!
+	*/
+	const inputFile = useRef<HTMLInputElement | null>(null);
+
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -11,6 +17,13 @@ export default function BasicMenu() {
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
+	};
+
+	const handleImport = () => {
+		handleClose();
+		if (inputFile) {
+			inputFile.current?.click();
+		}
 	};
 
 	return (
@@ -40,8 +53,8 @@ export default function BasicMenu() {
 				MenuListProps={{
 					"aria-labelledby": "basic-button",
 				}}>
-				<MenuItem onClick={handleClose}>
-					<input type="file" name="" id="" style={{display: 'none'}}/>
+				<MenuItem onClick={handleImport}>
+					<input type="file" name="" id="" ref={inputFile} style={{ display: "none" }} />
 					Import CSV
 				</MenuItem>
 				<MenuItem onClick={handleClose}>Manual</MenuItem>

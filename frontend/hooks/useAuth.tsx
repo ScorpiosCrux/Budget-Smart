@@ -92,14 +92,13 @@ export const useAuth = () => {
 		var isExpired = false;
 		var decodedToken: JwtPayload | null = jwt.decode(token, { complete: true });
 
-		if (!decodedToken || !(decodedToken.payload.exp)) {
+		if (!decodedToken || !decodedToken.payload.exp) {
 			console.log(decodedToken);
 			console.log("Decoding Error!");
 		} else {
 			var dateNow = new Date();
 			if (decodedToken.payload.exp * 1000 < dateNow.getTime()) {
 				isExpired = true;
-				console.log("Token Expired!")
 			}
 		}
 		return isExpired;
