@@ -11,30 +11,30 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "contexts/UserContext";
 
 export default function Sort() {
-	const { isLoaded, userContext } = useContext(UserContext);
-	const [posts, setPosts] = useState([]);
+	// const { isLoaded, userContext } = useContext(UserContext);
+	// const [posts, setPosts] = useState([]);
 
-	const getTransactions = () => {
-		axios({
-			method: "GET",
-			withCredentials: true,
-			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions",
-			headers: {
-				authorization: "Bearer " + userContext.token,
-			},
-		})
-			.then((res) => {
-				setPosts(Array.from(res.data));
-			})
-			.catch((error) => {
-				console.log("Error!");
-				console.log(error);
-			});
-	};
+	// const getTransactions = () => {
+	// 	axios({
+	// 		method: "GET",
+	// 		withCredentials: true,
+	// 		url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions",
+	// 		headers: {
+	// 			authorization: "Bearer " + userContext.token,
+	// 		},
+	// 	})
+	// 		.then((res) => {
+	// 			setPosts(Array.from(res.data));
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log("Error!");
+	// 			console.log(error);
+	// 		});
+	// };
 
-	useEffect(() => {
-		getTransactions();
-	}, []);
+	// useEffect(() => {
+	// 	getTransactions();
+	// }, []);
 
 	return (
 		<>
@@ -47,7 +47,7 @@ export default function Sort() {
 			<SortWrapper>
 				<DndProvider backend={HTML5Backend}>
 					<CategoriesWidget />
-					<TransactionsWidget posts={posts} />
+					<TransactionsWidget/>
 				</DndProvider>
 			</SortWrapper>
 		</>

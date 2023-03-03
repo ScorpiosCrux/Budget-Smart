@@ -7,13 +7,19 @@ import StyledTransactionsHeader from "./TransactionsHeader";
 import StyledIcon from "components/core/StyledIcon";
 import StyledTransactionsContent from "./TransactionsContent";
 import MenuButton from "components/buttons/AddTransactionsMenuButton";
+import { useTransactions } from "hooks/useTransactions";
+import { useEffect } from "react";
 
 /* Move AXIOS call down? */
-interface Props {
-	posts: Array<any>;
-}
+// interface Props {
+// 	posts: Array<any>;
+// }
 
-const TransactionsWidget = (props: Props) => {
+const TransactionsWidget = () => {
+	const { isLoading, transactions } = useTransactions();
+
+
+
 	return (
 		<StyledWidget>
 			<StyledHeader>
@@ -36,18 +42,19 @@ const TransactionsWidget = (props: Props) => {
 				</StyledTransactionsHeader>
 
 				<StyledTransactionsContent>
-					{props.posts.map((post: TransactionInterface) => {
-						return (
-							<Transaction
-								key={post._id}
-								_id={post._id}
-								date={post.date}
-								description={post.description}
-								category={post.category}
-								price={post.price}
-							/>
-						);
-					})}
+					{isLoading === false &&
+						transactions.map((post: TransactionInterface) => {
+							return (
+								<Transaction
+									key={post._id}
+									_id={post._id}
+									date={post.date}
+									description={post.description}
+									category={post.category}
+									price={post.price}
+								/>
+							);
+						})}
 				</StyledTransactionsContent>
 			</StyledContainer>
 		</StyledWidget>

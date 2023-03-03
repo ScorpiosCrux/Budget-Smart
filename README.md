@@ -23,5 +23,7 @@
 	- using SASS styled syntax (package does not need to be installed)
 - Seperate it when you can group it together
 
+## Hooks
+- Using hooks allows us to better organize our component logic into reusable functions!
 
 ## Known Issues and Weird things:
