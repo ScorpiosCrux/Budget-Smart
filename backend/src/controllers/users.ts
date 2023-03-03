@@ -49,7 +49,7 @@ export const loginUser = (req: Request, res: Response) => {
 
 	console.log(refreshToken)
 	res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
-	return res.status(200).json({ _id: _id, email: email, token });
+	return res.status(200).json({ _id: _id, email: email, token: token });
 };
 
 export const refreshToken = (req: Request, res: Response) => {
@@ -82,7 +82,8 @@ export const refreshToken = (req: Request, res: Response) => {
 								res.send(error);
 							} else {
 								res.cookie("refreshToken", newRefreshToken, COOKIE_OPTIONS);
-								res.send({ success: true, token });
+								// res.send({ success: true, token });
+								res.status(200).json({token: token})
 							}
 						});
 					}

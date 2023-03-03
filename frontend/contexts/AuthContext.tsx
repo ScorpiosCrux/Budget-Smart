@@ -1,9 +1,9 @@
-import { User } from "hooks/useUser";
+import { AuthUser } from "@/types";
 import { createContext, useState } from "react";
 
 interface AuthContext {
-	user: User | null;
-	setUser: (user: User | null) => void;
+	user: AuthUser | null;
+	setUser: (user: AuthUser | null) => void;
 }
 
 const defaultValue: AuthContext = {
@@ -25,7 +25,7 @@ type Props = {
 	Here we create the Provider that contains the actual state of the user
 */
 export const AuthContextProvider = (props: Props) => {
-	const [user, setUser] = useState<User | null>({
+	const [user, setUser] = useState<AuthUser | null>({
 		isLoggedIn: false,
 		_id: "",
 		email: "",

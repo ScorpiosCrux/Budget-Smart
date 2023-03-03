@@ -1,6 +1,7 @@
+import { AuthUser } from "@/types";
 import { useEffect } from "react";
 import { useLocalStorage } from "./useLocalStorage";
-import { User, useUser } from "./useUser";
+import { useUser } from "./useUser";
 
 export const useAuth = () => {
 	const { user, addUser, removeUser } = useUser();
@@ -13,7 +14,7 @@ export const useAuth = () => {
 		}
 	}, []);
 
-	const login = (user: User) => {
+	const login = (user: AuthUser) => {
 		addUser(user);
 	};
 
