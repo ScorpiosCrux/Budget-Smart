@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { UserContext } from "contexts/UserContext";
 import * as yup from "yup";
 import { Formik, FormikHelpers } from "formik";
+import { useAuth } from "hooks/useAuth";
 
 const loginSchema = yup.object().shape({
 	email: yup.string().email().required("required"),
@@ -24,47 +25,36 @@ interface Values {
 }
 
 const Login = () => {
-	const { userContext, updateContext, setLocalStorage } = useContext(UserContext);
+	const { login } = useAuth();
 	const [errorMsg, setErrorMsg] = useState<null | string>(null);
 	const router = useRouter();
 
-	const login = (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
-		axios({
-			method: "post",
-			data: {
-				username: values.email,
-				password: values.password,
-			},
-			withCredentials: true,
-			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/login",
-		})
-			.then((res) => {
-				console.log("Data: ");
-				console.log(res.data);
-				if (res.status === 200) {
-					for (const key in res.data) {
-						console.log(key)
-						console.log(res.data[key])
-						updateContext(key, res.data[key]);
-					}
-					updateContext("isLoggedIn", true);
-					console.log(userContext);
-					setLocalStorage();
-					router.push("/");
-				} else {
-					console.log("Some Error as Occured!");
-				}
-			})
-			.catch((error) => {
-				setErrorMsg("Username or Password incorrect!");
-				setSubmitting(false);
-			});
+	const handleLogin = async (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
+		setSubmitting(true);
+		const error = await login(values.email, values.password);
+		if (error) {
+			setErrorMsg(error);
+			setSubmitting(false);
+		} else {
+			router.push("/");
+		}
 	};
 
 	return (
 		<LoginWrapper>
-			<Formik initialValues={initialValuesLogin} validationSchema={loginSchema} onSubmit={login}>
-				{({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+			<Formik
+				initialValues={initialValuesLogin}
+				validationSchema={loginSchema}
+				onSubmit={handleLogin}>
+				{({
+					values,
+					errors,
+					touched,
+					handleChange,
+					handleBlur,
+					handleSubmit,
+					isSubmitting,
+				}) => (
 					<form onSubmit={handleSubmit}>
 						<h1>Sign In</h1>
 						{errorMsg && <p>{errorMsg}</p>}
