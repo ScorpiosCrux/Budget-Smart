@@ -5,34 +5,21 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { UserContext } from "contexts/UserContext";
+import { useAuth } from "hooks/useAuth";
 
 const Register = () => {
+	const { register } = useAuth();
 	const router = useRouter();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const { setUser } = useContext(UserContext);
 
-	const register = () => {
-		axios({
-			method: "post",
-			data: {
-				email,
-				password,
-			},
-			withCredentials: true,
-			url: "http://localhost:4000/api/auth/register",
-		})
-			.then((res) => {
-				console.log(res);
-				if (res.status === 201) {
-					setUser(res.data._id);
-					router.push("/");
-				}
-			})
-			.catch((error) => {
-				if (error.response.status === 409) console.log(error.response.data);
-				else console.log(error.response.data);
-			});
+	const handleRegister = async () => {
+		const error = await register(email, password);
+		if (error) {
+			console.log(error);
+		} else {
+			router.push("/");
+		}
 	};
 
 	return (
@@ -53,7 +40,7 @@ const Register = () => {
 					autoComplete="current-password"
 					onChange={(e) => setPassword(e.target.value)}
 				/>
-				<Button variant="outlined" onClick={register}>
+				<Button variant="outlined" onClick={handleRegister}>
 					Register
 				</Button>
 			</form>

@@ -6,11 +6,10 @@ import { getToken, COOKIE_OPTIONS, getRefreshToken } from "../authenticate.js";
 export const registerNewUser = async (req: Request, res: Response) => {
 	try {
 		// Get Inputs
-		const { email, password } = req.body;
-		const username = email;
+		const { username, password } = req.body;
 
 		// Create User, token, refreshToken and append to user
-		const user = new User({ email, username, password });
+		const user = new User({ email: username, username, password });
 		const token = getToken({ _id: user._id });
 		const refreshToken = getRefreshToken({ _id: user._id });
 		user.refreshToken.push({ refreshToken });
@@ -19,7 +18,9 @@ export const registerNewUser = async (req: Request, res: Response) => {
 		const registeredUser = await User.register(user, password);
 
 		res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
-		return res.status(201).json({ _id: registeredUser._id, email: registeredUser.email, token: token });
+		return res
+			.status(201)
+			.json({ _id: registeredUser._id, email: registeredUser.email, token: token });
 	} catch (error) {
 		console.log(error);
 		if (error.name === "UserExistsError") res.status(409).json({ error: error.name });
@@ -47,7 +48,7 @@ export const loginUser = (req: Request, res: Response) => {
 		});
 	});
 
-	console.log(refreshToken)
+	console.log(refreshToken);
 	res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
 	return res.status(200).json({ _id: _id, email: email, token: token });
 };
@@ -83,7 +84,7 @@ export const refreshToken = (req: Request, res: Response) => {
 							} else {
 								res.cookie("refreshToken", newRefreshToken, COOKIE_OPTIONS);
 								// res.send({ success: true, token });
-								res.status(200).json({token: token})
+								res.status(200).json({ token: token });
 							}
 						});
 					}

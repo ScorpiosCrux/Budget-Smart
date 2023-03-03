@@ -14,8 +14,42 @@ export const useAuth = () => {
 		if (user) {
 			addUser(JSON.parse(user));
 		}
-		console.log(user)
 	}, []);
+
+	const register = async (email: string, password: string) => {
+		try {
+			const response = await axios({
+				method: "POST",
+				data: {
+					username: email,
+					password: password,
+				},
+				withCredentials: true,
+				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/register",
+			});
+
+			// API should return a complete response
+			console.log("Data: ");
+			console.log(response.data);
+			const authUser: AuthUser = {
+				...response.data,
+				isLoggedIn: true,
+				displayName: "Display Name",
+				username: "Username",
+			};
+			addUser(authUser);
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				console.log(error);
+				if (error.response?.status === 409) {
+					return "Email Already Exists!";
+				}
+			} else {
+				console.log(error);
+				return "Oops Something Went Wrong!";
+			}
+		}
+	};
 
 	/* 
 		Logs the user in and updates the AuthContext.
@@ -32,6 +66,7 @@ export const useAuth = () => {
 				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/login",
 			});
 
+			// API should return a complete response
 			console.log("Data: ");
 			console.log(response.data);
 			const authUser: AuthUser = {
@@ -44,7 +79,6 @@ export const useAuth = () => {
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				console.log(error);
-				console.log(error.response?.status);
 				if (error.response?.status === 401) {
 					return "Incorrect Username or Password!";
 				}
@@ -59,5 +93,5 @@ export const useAuth = () => {
 		removeUser();
 	};
 
-	return { user, login, logout };
+	return { user, register, login, logout };
 };
