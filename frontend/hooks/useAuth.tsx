@@ -8,11 +8,13 @@ export const useAuth = () => {
 	const { user, addUser, removeUser } = useUser();
 	const { getItem } = useLocalStorage();
 
+	/* This runs wherever useAuth is called */
 	useEffect(() => {
 		const user = getItem("user");
 		if (user) {
 			addUser(JSON.parse(user));
 		}
+		console.log(user)
 	}, []);
 
 	/* 
