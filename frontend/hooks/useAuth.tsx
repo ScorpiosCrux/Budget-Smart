@@ -40,7 +40,6 @@ export const useAuth = () => {
 			addUser(authUser);
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				console.log(error);
 				if (error.response?.status === 409) {
 					return "Email Already Exists!";
 				}
@@ -78,9 +77,29 @@ export const useAuth = () => {
 			addUser(authUser);
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				console.log(error);
 				if (error.response?.status === 401) {
 					return "Incorrect Username or Password!";
+				}
+			} else {
+				console.log(error);
+				return "Oops Something Went Wrong!";
+			}
+		}
+	};
+
+	const refreshToken = async () => {
+		try {
+			const response = await axios({
+				method: "POST",
+				withCredentials: true,
+				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/refreshToken",
+			});
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				if (error.response?.status === 401) {
+					console.log("Refresh Token Missing Or Invalid!");
+				} else {
+					console.log(error.response);
 				}
 			} else {
 				console.log(error);
