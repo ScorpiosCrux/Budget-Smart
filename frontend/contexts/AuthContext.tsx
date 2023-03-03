@@ -22,17 +22,22 @@ type Props = {
 };
 
 /* 
+	Default state for user state.
+*/
+const defaultState: AuthUser = {
+	isLoggedIn: false,
+	_id: "",
+	email: "",
+	displayName: "",
+	username: "",
+	token: "",
+};
+
+/* 
 	Here we create the Provider that contains the actual state of the user
 */
 export const AuthContextProvider = (props: Props) => {
-	const [user, setUser] = useState<AuthUser | null>({
-		isLoggedIn: false,
-		_id: "",
-		email: "",
-		displayName: "Test",
-		username: "Test",
-		token: "",
-	});
+	const [user, setUser] = useState<AuthUser | null>(defaultState);
 
 	/* 
 		All consumers that are descendants of a Provider will re-render whenevser the
