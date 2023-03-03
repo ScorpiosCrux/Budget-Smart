@@ -18,7 +18,6 @@ const TransactionsWidget = () => {
 					<span className="title">Transactions</span>
 					<span className="helper-text">drag to sort</span>
 				</div>
-
 				<MenuButton />
 			</StyledHeader>
 

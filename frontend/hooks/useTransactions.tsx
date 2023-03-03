@@ -9,7 +9,6 @@ export const useTransactions = () => {
 
 	useEffect(() => {
 		if (user?.isLoggedIn === true) {
-			console.log(user)
 			getTransactions();
 		}
 	}, [user]);

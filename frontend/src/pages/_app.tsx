@@ -1,6 +1,5 @@
-import Layout from "components/Layout";
-import UserContextProvider from "contexts/UserContext";
 import "@/styles/globals.css";
+import Layout from "components/Layout";
 import type { AppProps } from "next/app";
 import { AuthContextProvider } from "contexts/AuthContext";
 
