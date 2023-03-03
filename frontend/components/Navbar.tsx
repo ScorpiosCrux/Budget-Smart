@@ -4,10 +4,10 @@ import axios from "axios";
 import { useContext, useEffect } from "react";
 import { themes } from "../src/theme.js";
 
-import { UserContext } from "contexts/UserContext";
+import { useAuth } from "hooks/useAuth";
 
 const Navbar = () => {
-	const { isLoaded, userContext, loadLocalStorage } = useContext(UserContext);
+	const { user } = useAuth();
 
 	return (
 		<StyledNavbar>
@@ -29,18 +29,18 @@ const Navbar = () => {
 				</div>
 			</div>
 			<UserLinks>
-				{isLoaded &&
-					(userContext._id !== "" ? (
-						<>
-							<NavLink href={"/user"}>{userContext._id}</NavLink>
-							<NavLink href={"/logout"}>Logout</NavLink>
-						</>
-					) : (
-						<>
-							<NavLink href={"/login"}>Login</NavLink>
-							<NavLink href={"/register"}>Register</NavLink>
-						</>
-					))}
+				{/* TODO: loading context */}
+				{user?.isLoggedIn ? (
+					<>
+						<NavLink href={"/user"}>{user.displayName}</NavLink>
+						<NavLink href={"/logout"}>Logout</NavLink>
+					</>
+				) : (
+					<>
+						<NavLink href={"/login"}>Login</NavLink>
+						<NavLink href={"/register"}>Register</NavLink>
+					</>
+				)}
 			</UserLinks>
 		</StyledNavbar>
 	);
