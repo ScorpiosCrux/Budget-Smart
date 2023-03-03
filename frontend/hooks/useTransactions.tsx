@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
 
 export const useTransactions = () => {
-	const { user } = useAuth();
+	const { user, refreshToken } = useAuth();
 	const [isLoading, setIsLoading] = useState(true);
 	const [transactions, setTransactions] = useState([]);
 
@@ -14,6 +14,7 @@ export const useTransactions = () => {
 	}, [user]);
 
 	const getTransactions = async () => {
+		await refreshToken();
 		try {
 			const response = await axios({
 				method: "GET",

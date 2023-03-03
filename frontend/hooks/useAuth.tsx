@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { useUser } from "./useUser";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 export const useAuth = () => {
 	const { user, addUser, removeUser } = useUser();
@@ -87,23 +88,48 @@ export const useAuth = () => {
 		}
 	};
 
+	const isExpired = (token: string) => {
+		var isExpired = false;
+		var decodedToken: JwtPayload | null = jwt.decode(token, { complete: true });
+
+		if (!decodedToken || !(decodedToken.payload.exp)) {
+			console.log(decodedToken);
+			console.log("Decoding Error!");
+		} else {
+			var dateNow = new Date();
+			if (decodedToken.payload.exp * 1000 < dateNow.getTime()) {
+				isExpired = true;
+				console.log("Token Expired!")
+			}
+		}
+		return isExpired;
+	};
+
 	const refreshToken = async () => {
-		try {
-			const response = await axios({
-				method: "POST",
-				withCredentials: true,
-				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/refreshToken",
-			});
-		} catch (error) {
-			if (axios.isAxiosError(error)) {
-				if (error.response?.status === 401) {
-					console.log("Refresh Token Missing Or Invalid!");
+		const token = user?.token;
+		if (token && isExpired(token)) {
+			try {
+				const response = await axios({
+					method: "POST",
+					withCredentials: true,
+					url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/refreshToken",
+				});
+
+				let newUser = user;
+				newUser.token = response.data.token;
+
+				addUser(newUser);
+			} catch (error) {
+				if (axios.isAxiosError(error)) {
+					if (error.response?.status === 401) {
+						console.log("Refresh Token Missing Or Invalid!");
+					} else {
+						console.log(error.response);
+					}
 				} else {
-					console.log(error.response);
+					console.log(error);
+					return "Oops Something Went Wrong!";
 				}
-			} else {
-				console.log(error);
-				return "Oops Something Went Wrong!";
 			}
 		}
 	};
@@ -112,5 +138,5 @@ export const useAuth = () => {
 		removeUser();
 	};
 
-	return { user, register, login, logout };
+	return { user, register, login, refreshToken, logout };
 };
