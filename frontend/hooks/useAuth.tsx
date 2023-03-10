@@ -121,7 +121,11 @@ export const useAuth = () => {
 			} catch (error) {
 				if (axios.isAxiosError(error)) {
 					if (error.response?.status === 401) {
+						removeUser();
 						console.log("Refresh Token Missing Or Invalid!");
+					} else if (error.response?.status === 500) {
+						removeUser();
+						console.log("500 Error: Token Missing");
 					} else {
 						console.log(error.response);
 					}

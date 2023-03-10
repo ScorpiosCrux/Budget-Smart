@@ -1,6 +1,3 @@
-import axios from "axios";
-import { UserContext } from "contexts/UserContext";
-import { useCallback, useContext, useEffect } from "react";
 import Navbar from "./Navbar";
 import styled from "styled-components";
 import { themes } from "@/theme";
@@ -10,44 +7,6 @@ type Props = {
 };
 
 const Layout = ({ children }: Props) => {
-	// const { isLoaded, userContext, resetLocalStorage, updateContext, setLocalStorage } = useContext(UserContext);
-
-	// const verifyUser = useCallback(() => {
-	// 	/* 
-	// 		First request is to /refreshToken where it uses the refreshToken in 
-	// 		cookies. The second request needs to be authenticated using the JWT
-	// 		that is stored in the User Context
-	// 	*/
-	// 	axios({
-	// 		method: "POST",
-	// 		withCredentials: true,
-	// 		url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/refreshToken",
-	// 	})
-	// 		.then((res) => {
-	// 			console.log("Refresh Token Valid");
-	// 			console.log(res.data.token);
-	// 			// updateContext("token", res.data.token);
-	// 			// setLocalStorage();
-	// 		})
-	// 		.catch((error) => {
-	// 			if (error.response.status === 401 || error.response.status === 500) {
-	// 				resetLocalStorage();
-	// 			}
-	// 		});
-	// }, []);
-
-	// useEffect(() => {
-	// 	if (isLoaded) {
-	// 		console.log("isLoaded");
-	// 		if (userContext.isLoggedIn) {
-	// 			verifyUser();
-	// 		} else {
-	// 			console.log("User Not Logged in! Skipping refresh Token Check");
-	// 		}
-	// 	} else {
-	// 		console.log("notLoaded");
-	// 	}
-	// }, [isLoaded, userContext]);
 
 	return (
 		<StyledLayout>
