@@ -34,6 +34,13 @@ I used typescript because after developing with vanilla JavaScript, I realized t
 
 I use React because it allows me to write reusable code. It also has great features like conditional rendering, contexts, hooks, routing, etc. One of the best features of React is that you can create custom hooks which separates the logic from the html. Custom hooks also allow you to reuse that logic, instead of copying and pasting it.
 
+## 📸 Progress Pictures
+
+<img src="https://gitlab.tylerchen.ca/tylerchen/smart-budget/-/raw/main/images/sort.png" height="600px">
+<img src="https://gitlab.tylerchen.ca/tylerchen/smart-budget/-/raw/main/images/drag.png" height="600px">
+
+
+
 ## 🔒 Security Considerations
 
 ### Storing data in the browser [source](https://stackoverflow.com/questions/3220660/local-storage-vs-cookies)
@@ -77,4 +84,10 @@ I use React because it allows me to write reusable code. It also has great featu
 
 
 to be continued...
+
+## Running the code
+
+`npm install` to install the packages
+
+`npm run dev` to run the development version
 
