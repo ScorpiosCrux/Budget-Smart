@@ -44,9 +44,31 @@ export const getTransactions = async (req: Request, res: Response) => {
 
 export const uploadTransactions = async (req: Request, res: Response) => {
 	const userId = req.user._id;
-	const test = req.file;
+	const file = req.file;
+	console.log(file);
 
-	
+	csv
+		.parseFile(file.path)
+		.on("error", (error) => console.error(error))
+		.on("data", (row) => {
+			// Specific for TD Canada Trust
+			const transaction = new Transaction({
+				userId: userId,
+				date: row[0],
+				description: row[1],
+				category: "",
+				price: row[2],
+			});
+
+			transaction.save((err: any) => {
+				if (err) console.log(err);
+				else {
+					console.log("Successfully Saved Transaction");
+					console.log(row);
+				}
+			});
+		})
+		.on("end", (rowCount: number) => console.log(`Parsed ${rowCount} rows`));
 
 	console.log("Done");
 };

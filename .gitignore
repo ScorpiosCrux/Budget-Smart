@@ -1,5 +1,6 @@
 */.env
 build/
+uploaded-transactions
 
 testing.ts
 
