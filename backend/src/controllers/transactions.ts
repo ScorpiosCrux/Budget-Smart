@@ -10,7 +10,8 @@ export const importTransactions = async () => {
 	// Name this file transactions/userId.csv
 	const csv_file_path = "/Users/vivid/Code/Smart-Budget/backend/src/utilities/transactions.csv";
 
-	csv.parseFile(csv_file_path)
+	csv
+		.parseFile(csv_file_path)
 		.on("error", (error) => console.error(error))
 		.on("data", (row) => {
 			// Specific for TD Canada Trust
@@ -37,4 +38,15 @@ export const getTransactions = async (req: Request, res: Response) => {
 	const userId = req.user._id;
 	const posts = await Transaction.find({ userId: userId });
 	return res.status(200).json(posts);
+};
+
+// TODO: This puts loads on the server, could have the client parse the file and send as JSON
+
+export const uploadTransactions = async (req: Request, res: Response) => {
+	const userId = req.user._id;
+	const test = req.file;
+
+	
+
+	console.log("Done");
 };

@@ -8,7 +8,7 @@ export default function BasicMenu() {
 	/* 
 		In this case, useRef is used to access a DOM element directly!
 	*/
-	const inputFile = useRef<HTMLInputElement | null>(null);
+	const inputFileBtn = useRef<HTMLInputElement | null>(null);
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
@@ -19,11 +19,19 @@ export default function BasicMenu() {
 		setAnchorEl(null);
 	};
 
-	const handleImport = () => {
+	const openFileDialog = () => {
 		handleClose();
-		if (inputFile) {
-			inputFile.current?.click();
+		if (inputFileBtn) {
+			inputFileBtn.current?.click();
 		}
+	};
+
+	const handleImport = () => {
+		console.log("Change!");
+		// try {
+		// 	const file = (e.target as HTMLInputElement).files![0]; // ! tells it to ignore the possibility that files is null
+		// 	console.log(file);
+		// } catch (error) {}
 	};
 
 	return (
@@ -53,9 +61,16 @@ export default function BasicMenu() {
 				MenuListProps={{
 					"aria-labelledby": "basic-button",
 				}}>
-				<MenuItem onClick={handleImport}>
-					<input type="file" name="" id="" ref={inputFile} style={{ display: "none" }} />
-					Import CSV
+				<MenuItem onClick={openFileDialog}>
+					<input
+						type="file"
+						name="inputFile"
+						ref={inputFileBtn}
+						onChange={handleImport}
+						style={{ display: "none" }}
+					/>
+					{/* <input type="file" name="inputFile" ref={inputFileBtn} onChange={handleImport} /> */}
+					<label htmlFor="inputFile">Upload CSV</label>
 				</MenuItem>
 				<MenuItem onClick={handleClose}>Manual</MenuItem>
 			</Menu>

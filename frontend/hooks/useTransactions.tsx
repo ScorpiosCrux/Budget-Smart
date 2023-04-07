@@ -38,5 +38,37 @@ export const useTransactions = () => {
 		}
 	};
 
-	return { isLoading, transactions };
+	/* 
+		Sends a CSV file
+	
+	*/
+	const sendCSV = async (file: File) => {
+		try {
+
+			let fileData = new FormData();
+			fileData.append("transactions", file);
+
+			// TODO: Content is not multipart
+			const response = await axios({
+				method: "POST",
+				withCredentials: true,
+				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions/upload",
+				headers: {
+					authorization: "Bearer " + user?.token,
+				},
+				data: fileData
+			});
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				if (error.response?.status === 401) {
+					return "User Not Signed In!";
+				}
+			} else {
+				console.log(error);
+				return "Oops Something Went Wrong!";
+			}
+		}
+	};
+
+	return { isLoading, sendCSV, transactions };
 };

@@ -5,7 +5,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Attach to Chrome",
+			"name": "Debug Frontend",
 			"request": "launch",
 			"type": "chrome",
 			"url": "http://localhost:3000",
@@ -14,7 +14,7 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Launch Program",
+			"name": "Debug Backend",
 			"skipFiles": ["<node_internals>/**"],
 			"program": "${workspaceFolder}/backend/src/index.ts",
 			"outFiles": ["${workspaceFolder}/**/*.js"],

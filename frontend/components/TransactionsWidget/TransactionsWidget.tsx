@@ -6,6 +6,7 @@ import TransactionGrid from "./TransactionGrid";
 import StyledTransactionsHeader from "./TransactionsHeader";
 import StyledTransactionsContent from "./TransactionsContent";
 import MenuButton from "components/buttons/AddTransactionsMenuButton";
+import UploadTransactionsButton from "components/buttons/UploadTransactionsButton";
 import { useTransactions } from "hooks/useTransactions";
 
 const TransactionsWidget = () => {
@@ -18,7 +19,7 @@ const TransactionsWidget = () => {
 					<span className="title">Transactions</span>
 					<span className="helper-text">drag to sort</span>
 				</div>
-				<MenuButton />
+				<UploadTransactionsButton/>
 			</StyledHeader>
 
 			<StyledContainer width="700px" height="700px">
