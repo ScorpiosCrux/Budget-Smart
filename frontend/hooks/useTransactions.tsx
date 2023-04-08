@@ -42,7 +42,7 @@ export const useTransactions = () => {
 		Sends a CSV file
 	
 	*/
-	const sendCSV = async (file: File) => {
+	const uploadTransactionsCSV = async (file: File) => {
 		try {
 
 			let fileData = new FormData();
@@ -70,5 +70,5 @@ export const useTransactions = () => {
 		}
 	};
 
-	return { isLoading, sendCSV, transactions };
+	return { isLoading, uploadTransactionsCSV, transactions };
 };

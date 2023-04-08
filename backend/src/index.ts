@@ -22,7 +22,7 @@ const port = 4000;
 const app: Express = express();
 
 function initExpressApp() {
-	// app.use(bodyParser.json());
+	app.use(bodyParser.json());
 	app.use(cookieParser(process.env.SECRET_COOKIE));
 	app.use(express.urlencoded({ extended: true }));
 	app.use(

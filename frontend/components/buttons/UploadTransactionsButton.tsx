@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useTransactions } from "hooks/useTransactions";
 
 export default function UploadTransactionsButton() {
-	const { sendCSV } = useTransactions();
+	const { uploadTransactionsCSV } = useTransactions();
 
 	/* 
 		In this case, useRef is used to access a DOM element directly!
@@ -23,7 +23,7 @@ export default function UploadTransactionsButton() {
 			if (!file) return;
 
 			console.log(file);
-			sendCSV(file);
+			uploadTransactionsCSV(file);
 		} catch (error) {}
 	};
 

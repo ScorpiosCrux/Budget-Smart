@@ -19,10 +19,9 @@ const CategoriesWidget = () => {
 					<span>Resets March 1st - 12 Days Until Reset</span>
 				</StyledSubHeader>
 				<CategoriesContent>
-					<Category index={0} category="Tech" price={32} />
-					<Category index={1} category="Tech" price={32} />
-					<Category index={2} category="Tech" price={32} />
-					<Category index={3} category="Tech" price={32} />
+					<Category index={0} category="Tech" price={500} />
+					<Category index={1} category="Groceries" price={400} />
+					<Category index={2} category="Eating Out" price={150} />
 				</CategoriesContent>
 			</StyledContainer>
 		</StyledWidget>
