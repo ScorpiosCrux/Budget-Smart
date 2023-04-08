@@ -71,4 +71,20 @@ export const uploadTransactions = async (req: Request, res: Response) => {
 		.on("end", (rowCount: number) => console.log(`Parsed ${rowCount} rows`));
 
 	console.log("Done");
+	// GENERATE PROPER RESPONSE
+};
+
+export const sortTransaction = async (req: Request, res: Response) => {
+	const transactionId = req.body._id;
+	const categoryName = req.body.categoryName;
+
+	await Transaction.updateOne(
+		{ _id: transactionId },
+		{
+			category: categoryName,
+		}
+	);
+
+	const post = await Transaction.findOne({ _id: transactionId });
+	console.log(post);
 };

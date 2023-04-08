@@ -9,6 +9,7 @@ const upload = multer({ dest: "uploaded-transactions/" });
 const router = express.Router({ mergeParams: true });
 
 router.route("/").get(verifyUser, Transactions.getTransactions);
+router.route("/sort").post(verifyUser, Transactions.sortTransaction)
 router
 	.route("/upload")
 	.post(verifyUser, upload.single("transactions"), Transactions.uploadTransactions);

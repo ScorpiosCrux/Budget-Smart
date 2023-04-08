@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDrag } from "react-dnd";
 import TransactionGrid from "./TransactionGrid";
 import StyledIcon from "../core/StyledIcon";
-
+import { useTransactions } from "hooks/useTransactions";
 
 /* MOVE THIS TO ANOTHER FILE */
 const ItemTypes = {
@@ -25,13 +25,15 @@ interface DropResult {
 }
 
 const Transaction = (props: TransactionInterface) => {
+	const { sortTransaction } = useTransactions();
 	const [{ isDragging }, drag] = useDrag(() => ({
 		type: ItemTypes.TRANSACTION,
 		item: props, // unsure how the item is used here
 		end(item, monitor) {
 			const dropResult = monitor.getDropResult() as DropResult;
 			if (item && dropResult) {
-				alert(`You moved ${props.description} into ${dropResult.name}!`);
+				// alert(`You moved ${props.description} into ${dropResult.name}!`);
+				sortTransaction(props._id, dropResult.name);
 			}
 		},
 		collect: (monitor) => ({

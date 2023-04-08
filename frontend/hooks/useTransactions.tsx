@@ -39,16 +39,14 @@ export const useTransactions = () => {
 	};
 
 	/* 
-		Sends a CSV file
-	
+		Sends a CSV file	
 	*/
 	const uploadTransactionsCSV = async (file: File) => {
 		try {
-
 			let fileData = new FormData();
 			fileData.append("transactions", file);
 
-			// TODO: Content is not multipart
+			// TODO: response should return updated list of transactions
 			const response = await axios({
 				method: "POST",
 				withCredentials: true,
@@ -56,7 +54,7 @@ export const useTransactions = () => {
 				headers: {
 					authorization: "Bearer " + user?.token,
 				},
-				data: fileData
+				data: fileData,
 			});
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -70,5 +68,31 @@ export const useTransactions = () => {
 		}
 	};
 
-	return { isLoading, uploadTransactionsCSV, transactions };
+	const sortTransaction = async (_id: string, categoryName: string) => {
+		try {
+			const response = await axios({
+				method: "POST",
+				withCredentials: true,
+				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions/sort",
+				headers: {
+					authorization: "Bearer " + user?.token,
+				},
+				data: {
+					_id: _id,
+					categoryName: categoryName,
+				},
+			});
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				if (error.response?.status === 401) {
+					return "User Not Signed In!";
+				}
+			} else {
+				console.log(error);
+				return "Oops Something Went Wrong!";
+			}
+		}
+	};
+
+	return { isLoading, transactions, uploadTransactionsCSV, sortTransaction };
 };
