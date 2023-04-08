@@ -86,5 +86,7 @@ export const sortTransaction = async (req: Request, res: Response) => {
 	);
 
 	const post = await Transaction.findOne({ _id: transactionId });
-	console.log(post);
+	const userId = req.user._id;
+	const posts = await Transaction.find({ userId: userId });
+	return res.status(200).json(posts);
 };

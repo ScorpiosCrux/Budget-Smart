@@ -82,6 +82,10 @@ export const useTransactions = () => {
 					categoryName: categoryName,
 				},
 			});
+			console.log("Sort")
+			console.log(response.data)
+			console.log("----Sort")
+			setTransactions(Array.from(response.data));
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				if (error.response?.status === 401) {

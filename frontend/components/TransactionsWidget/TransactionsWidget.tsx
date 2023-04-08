@@ -8,9 +8,12 @@ import StyledTransactionsContent from "./TransactionsContent";
 import MenuButton from "components/buttons/AddTransactionsMenuButton";
 import UploadTransactionsButton from "components/buttons/UploadTransactionsButton";
 import { useTransactions } from "hooks/useTransactions";
+import { useEffect } from "react";
 
 const TransactionsWidget = () => {
 	const { isLoading, transactions } = useTransactions();
+
+	useEffect(() => {console.log(transactions)}, [transactions])
 
 	return (
 		<StyledWidget>
