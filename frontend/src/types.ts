@@ -17,3 +17,16 @@ export interface AuthUser extends User {
 	isLoggedIn: boolean;
 	token: string;
 }
+
+export interface Transaction {
+	// discriminator: "transaction";
+	_id: string;
+	date: string;
+	description: string;
+	category: string;
+	price: string;
+}
+
+// export function instanceOfTransaction(object: any): object is Transaction {
+// 	return object.discriminator === "transaction";
+// }

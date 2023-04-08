@@ -1,8 +1,13 @@
+import { Transaction } from "@/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
 
 export const useTransactions = () => {
+	/* 
+	IMPORTANT NOTE: When creating a copy of this hook, you are DUPLICATING the states!! 
+	https://stackoverflow.com/questions/57130413/changes-to-state-issued-from-custom-hook-not-causing-re-render-even-though-added
+	*/
 	const { user, refreshToken } = useAuth();
 	const [isLoading, setIsLoading] = useState(true);
 	const [transactions, setTransactions] = useState([]);
@@ -82,9 +87,6 @@ export const useTransactions = () => {
 					categoryName: categoryName,
 				},
 			});
-			console.log("Sort")
-			console.log(response.data)
-			console.log("----Sort")
 			setTransactions(Array.from(response.data));
 		} catch (error) {
 			if (axios.isAxiosError(error)) {

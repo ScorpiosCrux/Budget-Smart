@@ -1,19 +1,18 @@
-import Transaction, { TransactionInterface } from "./Transaction";
+import TransactionComponent from "./Transaction";
 import StyledHeader from "../core/StyledHeader";
 import StyledContainer from "../core/StyledContainer";
 import StyledWidget from "../core/StyledWidget";
 import TransactionGrid from "./TransactionGrid";
 import StyledTransactionsHeader from "./TransactionsHeader";
 import StyledTransactionsContent from "./TransactionsContent";
-import MenuButton from "components/buttons/AddTransactionsMenuButton";
 import UploadTransactionsButton from "components/buttons/UploadTransactionsButton";
 import { useTransactions } from "hooks/useTransactions";
-import { useEffect } from "react";
+import { useAuth } from "hooks/useAuth";
+import {Transaction } from "@/types";
 
 const TransactionsWidget = () => {
-	const { isLoading, transactions } = useTransactions();
-
-	useEffect(() => {console.log(transactions)}, [transactions])
+	const { isLoading, transactions, sortTransaction } = useTransactions();
+	const { user, refreshToken } = useAuth();
 
 	return (
 		<StyledWidget>
@@ -22,7 +21,7 @@ const TransactionsWidget = () => {
 					<span className="title">Transactions</span>
 					<span className="helper-text">drag to sort</span>
 				</div>
-				<UploadTransactionsButton/>
+				<UploadTransactionsButton />
 			</StyledHeader>
 
 			<StyledContainer width="700px" height="700px">
@@ -37,9 +36,10 @@ const TransactionsWidget = () => {
 
 				<StyledTransactionsContent>
 					{isLoading === false &&
-						transactions.map((post: TransactionInterface) => {
+						transactions.map((post: Transaction) => {
 							return (
-								<Transaction
+								<TransactionComponent
+									sortTransaction={sortTransaction}
 									key={post._id}
 									_id={post._id}
 									date={post.date}

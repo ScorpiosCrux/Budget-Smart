@@ -4,19 +4,12 @@ import { useDrag } from "react-dnd";
 import TransactionGrid from "./TransactionGrid";
 import StyledIcon from "../core/StyledIcon";
 import { useTransactions } from "hooks/useTransactions";
+import { Transaction } from "@/types";
 
 /* MOVE THIS TO ANOTHER FILE */
 const ItemTypes = {
 	TRANSACTION: "transaction",
 };
-
-export interface TransactionInterface {
-	_id: string;
-	date: string;
-	description: string;
-	category: string;
-	price: string;
-}
 
 interface DropResult {
 	allowedDropEffect: string;
@@ -24,8 +17,11 @@ interface DropResult {
 	name: string;
 }
 
-const Transaction = (props: TransactionInterface) => {
-	const { sortTransaction } = useTransactions();
+interface Props extends Transaction {
+	sortTransaction(_id: string, categoryName: string): void;
+}
+
+const TransactionComponent = (props: Props) => {
 	const [{ isDragging }, drag] = useDrag(() => ({
 		type: ItemTypes.TRANSACTION,
 		item: props, // unsure how the item is used here
@@ -33,7 +29,7 @@ const Transaction = (props: TransactionInterface) => {
 			const dropResult = monitor.getDropResult() as DropResult;
 			if (item && dropResult) {
 				// alert(`You moved ${props.description} into ${dropResult.name}!`);
-				sortTransaction(props._id, dropResult.name);
+				props.sortTransaction(props._id, dropResult.name);
 			}
 		},
 		collect: (monitor) => ({
@@ -60,7 +56,7 @@ const Transaction = (props: TransactionInterface) => {
 	);
 };
 
-export default Transaction;
+export default TransactionComponent;
 
 const TransactionWrapper = styled.div<{ isDragging: boolean }>`
 	opacity: ${(p) => (p.isDragging ? 0.5 : 1)};

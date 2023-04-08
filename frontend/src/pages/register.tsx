@@ -1,10 +1,8 @@
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
-import { useContext, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import { UserContext } from "contexts/UserContext";
 import { useAuth } from "hooks/useAuth";
 
 const Register = () => {
