@@ -39,6 +39,10 @@ I use React because it allows me to write reusable code. It also has great featu
 <img src="https://gitlab.tylerchen.ca/tylerchen/smart-budget/-/raw/main/images/sort.png">
 <img src="https://gitlab.tylerchen.ca/tylerchen/smart-budget/-/raw/main/images/drag.png">
 
+## Database Considerations
+
+- Storing only what is necessary
+  - The way I've designed what to store into the database are only essential attributes. For example, attributes that are very simple to calculate are simply left for the client to calculate.
 
 
 ## 🔒 Security Considerations

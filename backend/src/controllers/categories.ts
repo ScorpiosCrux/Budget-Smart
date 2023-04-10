@@ -28,5 +28,6 @@ export const addCategories = async () => {
 export const getCategories = async (req: Request, res: Response) => {
 	const userId = req.user._id;
 	const categories = await Category.find({ userId: userId });
+	// console.log(categories) TODO: 2 QUERRIES?
 	return res.status(200).json(categories);
 };

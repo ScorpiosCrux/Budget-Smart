@@ -6,9 +6,14 @@ import StyledSubHeader from "components/core/StyledSubHeader";
 import CategoriesContent from "./CategoriesContent";
 import { useCategories } from "hooks/useCategories";
 import { Category } from "@/types";
+import { useData } from "hooks/useData";
 
-const CategoriesWidget = () => {
-	const { isLoading, categories } = useCategories();
+interface Props {
+	categories: any[];
+}
+
+const CategoriesWidget = (props: Props) => {
+	// const { isLoading, categories } = useData();
 
 	return (
 		<StyledWidget>
@@ -23,10 +28,9 @@ const CategoriesWidget = () => {
 					<span>Resets March 1st - 12 Days Until Reset</span>
 				</StyledSubHeader>
 				<CategoriesContent>
-					{isLoading === false &&
-						categories.map((category: Category, i) => {
-							return <CategoryComponent index={i} category={category.name} price={category.budget} />;
-						})}
+					{props.categories.map((category: Category, i) => {
+						return <CategoryComponent key={category._id} index={i} category={category.name} price={category.budget} />;
+					})}
 				</CategoriesContent>
 			</StyledContainer>
 		</StyledWidget>

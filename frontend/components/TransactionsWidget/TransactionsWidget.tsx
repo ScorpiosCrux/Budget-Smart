@@ -8,11 +8,15 @@ import StyledTransactionsContent from "./TransactionsContent";
 import UploadTransactionsButton from "components/buttons/UploadTransactionsButton";
 import { useTransactions } from "hooks/useTransactions";
 import { useAuth } from "hooks/useAuth";
-import {Transaction } from "@/types";
+import { Transaction } from "@/types";
 
-const TransactionsWidget = () => {
-	const { isLoading, transactions, sortTransaction } = useTransactions();
-	const { user, refreshToken } = useAuth();
+interface Props {
+	transactions: any[];
+	sortTransaction(_id: string, categoryName: string): void;
+}
+
+const TransactionsWidget = (props: Props) => {
+	// const { isLoading, transactions, sortTransaction } = useTransactions();
 
 	return (
 		<StyledWidget>
@@ -35,20 +39,19 @@ const TransactionsWidget = () => {
 				</StyledTransactionsHeader>
 
 				<StyledTransactionsContent>
-					{isLoading === false &&
-						transactions.map((post: Transaction) => {
-							return (
-								<TransactionComponent
-									sortTransaction={sortTransaction}
-									key={post._id}
-									_id={post._id}
-									date={post.date}
-									description={post.description}
-									category={post.category}
-									price={post.price}
-								/>
-							);
-						})}
+					{props.transactions.map((post: Transaction) => {
+						return (
+							<TransactionComponent
+								sortTransaction={props.sortTransaction}
+								key={post._id}
+								_id={post._id}
+								date={post.date}
+								description={post.description}
+								category={post.category}
+								price={post.price}
+							/>
+						);
+					})}
 				</StyledTransactionsContent>
 			</StyledContainer>
 		</StyledWidget>

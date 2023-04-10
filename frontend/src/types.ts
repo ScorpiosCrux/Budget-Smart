@@ -32,6 +32,7 @@ export interface Transaction {
 // }
 
 export interface Category {
+	_id: string;
 	userId: string;
 	name: string;
 	budget: number;
