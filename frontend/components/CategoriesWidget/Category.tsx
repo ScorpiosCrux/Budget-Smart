@@ -15,7 +15,7 @@ const ItemTypes = {
 	TRANSACTION: "transaction",
 };
 
-const Category = (props: Props) => {
+const CategoryComponent = (props: Props) => {
 	const [{ canDrop, isOver }, drop] = useDrop(() => ({
 		accept: ItemTypes.TRANSACTION,
 		drop: () => ({
@@ -71,7 +71,7 @@ const Category = (props: Props) => {
 	);
 };
 
-export default Category;
+export default CategoryComponent;
 
 const StyledCategory = styled.div<{ index: number }>`
 	width: 50%;

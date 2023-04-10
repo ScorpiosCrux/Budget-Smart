@@ -1,6 +1,5 @@
 import express from "express";
 import * as Transactions from "../controllers/transactions.js";
-import passport from "passport";
 import { verifyUser } from "../authenticate.js";
 import multer from "multer";
 

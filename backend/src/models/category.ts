@@ -11,7 +11,7 @@ const CategorySchema = new mongoose.Schema({
 		required: true,
 	},
 	budget: {
-		type: String,
+		type: Number,
 		required: true,
 	},
 });

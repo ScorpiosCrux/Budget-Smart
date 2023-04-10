@@ -1,11 +1,15 @@
 import StyledContainer from "components/core/StyledContainer";
 import StyledHeader from "components/core/StyledHeader";
 import StyledWidget from "components/core/StyledWidget";
-import Category from "./Category";
+import CategoryComponent from "./Category";
 import StyledSubHeader from "components/core/StyledSubHeader";
 import CategoriesContent from "./CategoriesContent";
+import { useCategories } from "hooks/useCategories";
+import { Category } from "@/types";
 
 const CategoriesWidget = () => {
+	const { isLoading, categories } = useCategories();
+
 	return (
 		<StyledWidget>
 			<StyledHeader>
@@ -19,9 +23,10 @@ const CategoriesWidget = () => {
 					<span>Resets March 1st - 12 Days Until Reset</span>
 				</StyledSubHeader>
 				<CategoriesContent>
-					<Category index={0} category="Tech" price={500} />
-					<Category index={1} category="Groceries" price={400} />
-					<Category index={2} category="Eating Out" price={150} />
+					{isLoading === false &&
+						categories.map((category: Category, i) => {
+							return <CategoryComponent index={i} category={category.name} price={category.budget} />;
+						})}
 				</CategoriesContent>
 			</StyledContainer>
 		</StyledWidget>

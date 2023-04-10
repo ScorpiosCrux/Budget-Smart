@@ -30,3 +30,9 @@ export interface Transaction {
 // export function instanceOfTransaction(object: any): object is Transaction {
 // 	return object.discriminator === "transaction";
 // }
+
+export interface Category {
+	userId: string;
+	name: string;
+	budget: number;
+}

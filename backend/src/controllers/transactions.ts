@@ -36,8 +36,8 @@ export const importTransactions = async () => {
 
 export const getTransactions = async (req: Request, res: Response) => {
 	const userId = req.user._id;
-	const posts = await Transaction.find({ userId: userId });
-	return res.status(200).json(posts);
+	const transactions = await Transaction.find({ userId: userId });
+	return res.status(200).json(transactions);
 };
 
 // TODO: This puts loads on the server, could have the client parse the file and send as JSON
@@ -74,6 +74,9 @@ export const uploadTransactions = async (req: Request, res: Response) => {
 	// GENERATE PROPER RESPONSE
 };
 
+/* 
+	Logic for updating the dragged transaction.
+*/
 export const sortTransaction = async (req: Request, res: Response) => {
 	const transactionId = req.body._id;
 	const categoryName = req.body.categoryName;
@@ -84,9 +87,7 @@ export const sortTransaction = async (req: Request, res: Response) => {
 			category: categoryName,
 		}
 	);
-
-	const post = await Transaction.findOne({ _id: transactionId });
 	const userId = req.user._id;
-	const posts = await Transaction.find({ userId: userId });
-	return res.status(200).json(posts);
+	const transactions = await Transaction.find({ userId: userId });
+	return res.status(200).json(transactions);
 };
