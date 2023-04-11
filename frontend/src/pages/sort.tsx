@@ -19,12 +19,15 @@ export default function Sort() {
 			</Head>
 			<SortWrapper>
 				<DndProvider backend={HTML5Backend}>
-					{isLoading === false && (
-						<>
-							<CategoriesWidget categories={categories} />
-							<TransactionsWidget transactions={transactions} sortTransaction={sortTransaction} />
-						</>
-					)}
+					<>
+						{isLoading === false && console.log(categories)}
+						{isLoading === false && (
+							<>
+								<CategoriesWidget categories={categories} />
+								<TransactionsWidget transactions={transactions} sortTransaction={sortTransaction} />
+							</>
+						)}
+					</>
 				</DndProvider>
 			</SortWrapper>
 		</>

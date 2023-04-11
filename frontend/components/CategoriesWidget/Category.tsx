@@ -4,10 +4,11 @@ import { useDrop } from "react-dnd";
 
 import { CategoryDNDHelper, CategoryInfo } from "./CategoryContents";
 import { Category } from "@/types";
+import { useEffect } from "react";
 
 interface Props {
 	index: number;
-	category: Category
+	category: Category;
 }
 
 /* MOVE THIS TO ANOTHER FILE */
@@ -16,10 +17,11 @@ const ItemTypes = {
 };
 
 const CategoryComponent = (props: Props) => {
+
 	const [{ canDrop, isOver }, drop] = useDrop(() => ({
 		accept: ItemTypes.TRANSACTION,
 		drop: () => ({
-			category: props.category
+			category: props.category,
 		}),
 		collect: (monitor) => ({
 			isOver: monitor.isOver(),

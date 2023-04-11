@@ -1,4 +1,4 @@
-import { Category } from "@/types";
+import { Category, Transaction } from "@/types";
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
@@ -59,5 +59,38 @@ export const useCategories = () => {
 		}
 	};
 
-	return { isLoading, categories };
+	/* 
+		Calculates the missing attributes of categories. Instead of storing these simple 
+		operations.
+		TODO: 6 calls to api right now
+	*/
+	const calculateCategories = (transactions: Transaction[]) => {
+		/* [...categories] copies by value instead of reference */
+		const updateCategories: Category[] = [...categories]; 
+
+		/* Reset Values to 0 */
+		for (const category of updateCategories) {
+			category.totalSpent = 0;
+			category.remainingBudget = 0;
+			category.remainingBudgetPerDay = 0;
+		}
+
+		for (const category of updateCategories) {
+			for (const transaction of transactions) {
+				if (transaction.category === category.name) {
+					category.totalSpent += transaction.price;
+				}
+			}
+			category.remainingBudget = category.budget - category.totalSpent;
+
+			category.remainingBudget = Math.round(category.remainingBudget * 100) / 100;
+			category.totalSpent = Math.round(category.totalSpent * 100) / 100;
+			category.remainingBudgetPerDay = Math.round(category.remainingBudgetPerDay * 100) / 100;
+		}
+
+		setCategories(updateCategories);
+		// console.log(categories)
+	};
+
+	return { isLoading, categories, calculateCategories };
 };
