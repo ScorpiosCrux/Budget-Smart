@@ -1,3 +1,4 @@
+import { Category } from "@/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
@@ -13,11 +14,30 @@ export const useData = () => {
 
 	useEffect(() => {
 		if (!(isCategoriesLoading || isTransactionsLoading)) {
-			setIsLoading(false)
-			console.log(isCategoriesLoading)
-			console.log(isTransactionsLoading)
+			setIsLoading(false);
+			console.log(isCategoriesLoading);
+			console.log(isTransactionsLoading);
 		}
 	}, [isCategoriesLoading, isTransactionsLoading]);
+
+
+
+	/* 
+		Calculates the missing attributes of categories. Instead of storing these simple 
+		operations.
+	*/
+	const calculateCategories = () => {
+		const updatedCategories = categories;
+
+
+		for (let i = 0; i < categories.length; i++) {
+			for (const transaction in transactions) {
+				let category:Category = categories[i]
+				// if (category.)
+				updatedCategories
+			}
+		}
+	};
 
 	return { isLoading, categories, transactions, sortTransaction };
 };

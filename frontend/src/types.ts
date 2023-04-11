@@ -36,4 +36,9 @@ export interface Category {
 	userId: string;
 	name: string;
 	budget: number;
+
+	/* The following are calculated after query */ 
+	remainingBudget: number;
+	totalSpent: number;
+	remainingBudgetPerDay: number
 }

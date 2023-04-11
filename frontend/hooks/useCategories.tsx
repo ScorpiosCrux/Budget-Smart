@@ -1,4 +1,5 @@
-import axios from "axios";
+import { Category } from "@/types";
+import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
 
@@ -9,7 +10,7 @@ export const useCategories = () => {
 	*/
 	const { user, refreshToken } = useAuth();
 	const [isLoading, setIsLoading] = useState(true);
-	const [categories, setCategories] = useState([]);
+	const [categories, setCategories] = useState<Category[]>([]);
 
 	useEffect(() => {
 		if (user?.isLoggedIn === true) {
@@ -20,7 +21,8 @@ export const useCategories = () => {
 	const getCategories = async () => {
 		await refreshToken();
 		try {
-			const response = await axios({
+			// https://stackoverflow.com/questions/57629111/how-to-use-a-type-for-the-response-from-axios-get
+			const response: AxiosResponse<Category[]> = await axios({
 				method: "GET",
 				withCredentials: true,
 				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/categories",
@@ -28,7 +30,25 @@ export const useCategories = () => {
 					authorization: "Bearer " + user?.token,
 				},
 			});
-			setCategories(Array.from(response.data));
+
+			let tempCategories: Category[] = response.data;
+			console.log(tempCategories);
+
+			let initializedCategories: Category[] = [];
+
+			for (let i = 0; i < tempCategories.length; i++) {
+				let temp = tempCategories[i];
+				let initializedCategory = { ...temp };
+				initializedCategory.remainingBudget = 0;
+				initializedCategory.totalSpent = 0;
+				initializedCategory.remainingBudgetPerDay = 0;
+
+				initializedCategories.push(initializedCategory);
+			}
+
+			console.log(initializedCategories)
+
+			setCategories(initializedCategories);
 			setIsLoading(false);
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -41,8 +61,6 @@ export const useCategories = () => {
 			}
 		}
 	};
-
-
 
 	return { isLoading, categories };
 };

@@ -95,3 +95,7 @@ to be continued...
 
 `npm run dev` to run the development version
 
+## Todo
+- There are `TODO:` tags where I am planning to change.
+- Strong typing on JSON to arrays for categories and transactions.
+

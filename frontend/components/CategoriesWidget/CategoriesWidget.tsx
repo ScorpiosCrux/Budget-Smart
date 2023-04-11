@@ -29,7 +29,7 @@ const CategoriesWidget = (props: Props) => {
 				</StyledSubHeader>
 				<CategoriesContent>
 					{props.categories.map((category: Category, i) => {
-						return <CategoryComponent key={category._id} index={i} category={category.name} price={category.budget} />;
+						return <CategoryComponent key={category._id} index={i} category={category} />;
 					})}
 				</CategoriesContent>
 			</StyledContainer>

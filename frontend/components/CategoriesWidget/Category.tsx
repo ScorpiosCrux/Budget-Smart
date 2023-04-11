@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { useDrop } from "react-dnd";
 
 import { CategoryDNDHelper, CategoryInfo } from "./CategoryContents";
+import { Category } from "@/types";
 
 interface Props {
 	index: number;
-	category: string;
-	price: number;
+	category: Category
 }
 
 /* MOVE THIS TO ANOTHER FILE */
@@ -40,7 +40,7 @@ const CategoryComponent = (props: Props) => {
 			<CategoryHeader>
 				<div className="info">
 					<img src="check.svg" alt="checkmark" />
-					<span className="title">{props.category}</span>
+					<span className="title">{props.category.name}</span>
 				</div>
 				<div className="category-modifiers">
 					<img src="pencil.svg" alt="edit" />
@@ -57,13 +57,13 @@ const CategoryComponent = (props: Props) => {
 				) : (
 					<CategoryInfo>
 						<span>Budget </span>
-						<span className="emphasize">${props.price}</span>
+						<span className="emphasize">${props.category.budget}</span>
 						<span>Current Total</span>
-						<span>${props.price}</span>
+						<span>${props.category.totalSpent}</span>
 						<span>Remaining Credits</span>
-						<span>${props.price}</span>
+						<span>${props.category.remainingBudget}</span>
 						<span>Remaining Per Day</span>
-						<span className="emphasize">${props.price}</span>
+						<span className="emphasize">${props.category.remainingBudgetPerDay}</span>
 					</CategoryInfo>
 				)}
 			</StyledContent>
