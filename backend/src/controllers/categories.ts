@@ -19,7 +19,7 @@ export const addCategories = async () => {
 
 	const eatingOut = new Category({
 		userId: "63f6d942e70890f81697254f",
-		name: "Eating Out <3",
+		name: "Eating Out 🍔",
 		budget: 200,
 	});
 	eatingOut.save();
@@ -28,6 +28,6 @@ export const addCategories = async () => {
 export const getCategories = async (req: Request, res: Response) => {
 	const userId = req.user._id;
 	const categories = await Category.find({ userId: userId });
-	//TODO: 2 QUERRIES?
+	//TODO: 2 QUERIES?
 	return res.status(200).json(categories);
 };
