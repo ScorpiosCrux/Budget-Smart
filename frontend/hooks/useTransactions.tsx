@@ -1,5 +1,5 @@
 import { Transaction } from "@/types";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
 
@@ -10,7 +10,7 @@ export const useTransactions = () => {
 	*/
 	const { user, refreshToken } = useAuth();
 	const [isLoading, setIsLoading] = useState(true);
-	const [transactions, setTransactions] = useState([]);
+	const [transactions, setTransactions] = useState<Transaction[]>([]);
 
 	useEffect(() => {
 		if (user?.isLoggedIn === true) {
@@ -21,7 +21,7 @@ export const useTransactions = () => {
 	const getTransactions = async () => {
 		await refreshToken();
 		try {
-			const response = await axios({
+			const response : AxiosResponse<Transaction[]> = await axios({
 				method: "GET",
 				withCredentials: true,
 				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions",
@@ -29,7 +29,8 @@ export const useTransactions = () => {
 					authorization: "Bearer " + user?.token,
 				},
 			});
-			setTransactions(Array.from(response.data));
+
+			setTransactions(response.data);
 			setIsLoading(false);
 		} catch (error) {
 			if (axios.isAxiosError(error)) {

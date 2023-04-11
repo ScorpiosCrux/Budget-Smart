@@ -32,7 +32,6 @@ export const useCategories = () => {
 			});
 
 			let tempCategories: Category[] = response.data;
-			console.log(tempCategories);
 
 			let initializedCategories: Category[] = [];
 
@@ -45,8 +44,6 @@ export const useCategories = () => {
 
 				initializedCategories.push(initializedCategory);
 			}
-
-			console.log(initializedCategories)
 
 			setCategories(initializedCategories);
 			setIsLoading(false);
