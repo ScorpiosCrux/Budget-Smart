@@ -11,15 +11,21 @@ export const useData = () => {
 	const { isLoading: isTransactionsLoading, transactions, sortTransaction } = useTransactions();
 	const [categories, setCategories] = useState<Category[]>([]);
 
-	// const { user, refreshToken } = useAuth();
 	const [isLoading, setIsLoading] = useState(true);
 
+	/* Is ran on initial load */
 	useEffect(() => {
 		if (!(isCategoriesLoading || isTransactionsLoading)) {
 			calculateCategories();
 			setIsLoading(false);
 		}
 	}, [isCategoriesLoading, isTransactionsLoading]);
+
+	/* Is ran on when transactions change */
+	useEffect(() => {
+		console.log("transactions updated");
+		calculateCategories();
+	}, [transactions]);
 
 	/* 
 		Calculates the missing attributes of categories. Instead of storing these simple 
@@ -29,18 +35,26 @@ export const useData = () => {
 	const calculateCategories = () => {
 		const updateCategories: Category[] = oldCategories;
 
+		/* Reset Values to 0 */
+		for (const category of updateCategories) {
+			category.totalSpent = 0;
+			category.remainingBudget = 0;
+			category.remainingBudgetPerDay = 0;
+		}
+
 		for (const category of updateCategories) {
 			for (const transaction of transactions) {
 				if (transaction.category === category.name) {
 					category.totalSpent += Number(transaction.price); // TODO: update db price model
 				}
 			}
-			category.remainingBudget = category.budget - category.totalSpent
+			category.remainingBudget = category.budget - category.totalSpent;
 		}
-
 
 		setCategories(updateCategories);
 	};
+
+	//TODO: add recalculateCategory(category: _id)
 
 	return { isLoading, categories, transactions, sortTransaction };
 };

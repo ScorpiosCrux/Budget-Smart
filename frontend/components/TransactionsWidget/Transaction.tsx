@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useDrag } from "react-dnd";
 import TransactionGrid from "./TransactionGrid";
 import StyledIcon from "../core/StyledIcon";
-import { useTransactions } from "hooks/useTransactions";
 import { Category, Transaction } from "@/types";
 
 /* MOVE THIS TO ANOTHER FILE */
