@@ -97,5 +97,4 @@ to be continued...
 
 ## Todo
 - There are `TODO:` tags where I am planning to change.
-- Strong typing on JSON to arrays for categories and transactions.
 
