@@ -23,12 +23,10 @@ export const useData = () => {
 	/* Is ran on when transactions change */
 	useEffect(() => {
 		if (isLoading === false) {
-			console.log("transactions updated");
 			calculateCategories(transactions);
 		}
 	}, [transactions]);
 
-	//TODO: add recalculateCategory(category: _id)
 
 	return { isLoading, categories, transactions, sortTransaction };
 };

@@ -66,7 +66,7 @@ export const useCategories = () => {
 	*/
 	const calculateCategories = (transactions: Transaction[]) => {
 		/* [...categories] copies by value instead of reference */
-		const updateCategories: Category[] = [...categories]; 
+		const updateCategories: Category[] = [...categories];
 
 		/* Reset Values to 0 */
 		for (const category of updateCategories) {
@@ -89,8 +89,9 @@ export const useCategories = () => {
 		}
 
 		setCategories(updateCategories);
-		// console.log(categories)
 	};
+
+	//TODO: add recalculateCategory(category: _id)
 
 	return { isLoading, categories, calculateCategories };
 };

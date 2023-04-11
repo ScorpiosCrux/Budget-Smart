@@ -59,13 +59,13 @@ const CategoryComponent = (props: Props) => {
 				) : (
 					<CategoryInfo>
 						<span>Budget </span>
-						<span className="emphasize">${props.category.budget}</span>
+						<span className="emphasize">${props.category.budget.toFixed(2)}</span>
 						<span>Current Total</span>
-						<span>${props.category.totalSpent}</span>
+						<span>${props.category.totalSpent.toFixed(2)}</span>
 						<span>Remaining Credits</span>
-						<span>${props.category.remainingBudget}</span>
+						<span>${props.category.remainingBudget.toFixed(2)}</span>
 						<span>Remaining Per Day</span>
-						<span className="emphasize">${props.category.remainingBudgetPerDay}</span>
+						<span className="emphasize">${props.category.remainingBudgetPerDay.toFixed(2)}</span>
 					</CategoryInfo>
 				)}
 			</StyledContent>
