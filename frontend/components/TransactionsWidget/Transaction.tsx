@@ -4,7 +4,7 @@ import { useDrag } from "react-dnd";
 import TransactionGrid from "./TransactionGrid";
 import StyledIcon from "../core/StyledIcon";
 import { useTransactions } from "hooks/useTransactions";
-import { Transaction } from "@/types";
+import { Category, Transaction } from "@/types";
 
 /* MOVE THIS TO ANOTHER FILE */
 const ItemTypes = {
@@ -14,7 +14,7 @@ const ItemTypes = {
 interface DropResult {
 	allowedDropEffect: string;
 	dropEffect: string;
-	name: string;
+	category: Category;
 }
 
 interface Props extends Transaction {
@@ -28,8 +28,7 @@ const TransactionComponent = (props: Props) => {
 		end(item, monitor) {
 			const dropResult = monitor.getDropResult() as DropResult;
 			if (item && dropResult) {
-				// alert(`You moved ${props.description} into ${dropResult.name}!`);
-				props.sortTransaction(props._id, dropResult.name);
+				props.sortTransaction(props._id, dropResult.category.name);
 			}
 		},
 		collect: (monitor) => ({
