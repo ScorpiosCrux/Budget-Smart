@@ -6,18 +6,14 @@ import TransactionGrid from "./TransactionGrid";
 import StyledTransactionsHeader from "./TransactionsHeader";
 import StyledTransactionsContent from "./TransactionsContent";
 import UploadTransactionsButton from "components/buttons/UploadTransactionsButton";
-import { useTransactions } from "hooks/useTransactions";
-import { useAuth } from "hooks/useAuth";
 import { Transaction } from "@/types";
 
 interface Props {
-	transactions: any[];
+	transactions: Transaction[];
 	sortTransaction(_id: string, categoryName: string): void;
 }
 
 const TransactionsWidget = (props: Props) => {
-	// const { isLoading, transactions, sortTransaction } = useTransactions();
-
 	return (
 		<StyledWidget>
 			<StyledHeader>

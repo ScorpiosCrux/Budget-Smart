@@ -29,13 +29,11 @@ export const useData = () => {
 	const calculateCategories = () => {
 		const updatedCategories = categories;
 
+		/* 
+			Since transactions > categories we loop through transactions once.
+		*/
+		for (const transaction in transactions){
 
-		for (let i = 0; i < categories.length; i++) {
-			for (const transaction in transactions) {
-				let category:Category = categories[i]
-				// if (category.)
-				updatedCategories
-			}
 		}
 	};
 

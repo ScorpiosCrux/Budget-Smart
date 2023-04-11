@@ -4,17 +4,13 @@ import StyledWidget from "components/core/StyledWidget";
 import CategoryComponent from "./Category";
 import StyledSubHeader from "components/core/StyledSubHeader";
 import CategoriesContent from "./CategoriesContent";
-import { useCategories } from "hooks/useCategories";
 import { Category } from "@/types";
-import { useData } from "hooks/useData";
 
 interface Props {
-	categories: any[];
+	categories: Category[];
 }
 
 const CategoriesWidget = (props: Props) => {
-	// const { isLoading, categories } = useData();
-
 	return (
 		<StyledWidget>
 			<StyledHeader>
