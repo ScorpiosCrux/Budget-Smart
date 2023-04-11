@@ -44,7 +44,7 @@ const TransactionComponent = (props: Props) => {
 				<div className="date">{props.date}</div>
 				<div className="description">{props.description}</div>
 				<div className="category">{props.category}</div>
-				<div className="price">${props.price}</div>
+				<div className="price">${props.price.toFixed(2)}</div>
 				<div className="modifiers">
 					<StyledIcon src="pencil.svg" height="40px" innerHeight="80%" innerWidth="80%" />
 					<StyledIcon src="trash.svg" height="100%" innerHeight="80%" innerWidth="80%" />
