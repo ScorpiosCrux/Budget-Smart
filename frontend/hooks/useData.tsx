@@ -45,10 +45,15 @@ export const useData = () => {
 		for (const category of updateCategories) {
 			for (const transaction of transactions) {
 				if (transaction.category === category.name) {
-					category.totalSpent += Number(transaction.price); // TODO: update db price model
+					category.totalSpent += transaction.price;
 				}
 			}
 			category.remainingBudget = category.budget - category.totalSpent;
+
+			category.remainingBudget = Math.round(category.remainingBudget * 100) / 100
+			category.totalSpent = Math.round(category.totalSpent * 100) / 100
+			category.remainingBudgetPerDay = Math.round(category.remainingBudgetPerDay * 100) / 100
+
 		}
 
 		setCategories(updateCategories);

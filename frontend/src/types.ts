@@ -24,7 +24,7 @@ export interface Transaction {
 	date: string;
 	description: string;
 	category: string;
-	price: string;
+	price: number;
 }
 
 // export function instanceOfTransaction(object: any): object is Transaction {
