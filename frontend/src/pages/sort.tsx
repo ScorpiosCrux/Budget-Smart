@@ -19,6 +19,7 @@ export default function Sort() {
 			</Head>
 			<SortWrapper>
 				<DndProvider backend={HTML5Backend}>
+
 					{isLoading === false && (
 						<>
 							<CategoriesWidget categories={categories} />
