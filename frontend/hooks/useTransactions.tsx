@@ -74,6 +74,11 @@ export const useTransactions = () => {
 		}
 	};
 
+	/* 
+		If the refresh token is expired, we get a new token and then call ourselves
+		with the retry flag to true. This ensures we only retry once. If there are further errors
+		(e.g. the refreshToken is invalid) we can further handle it.
+	*/
 	const sortTransaction = async (_id: string, categoryName: string, retry?: boolean) => {
 		try {
 			const response = await axios({
@@ -92,10 +97,10 @@ export const useTransactions = () => {
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				if (error.response?.status === 401) {
-					await refreshToken();
 					if (retry !== true) {
+						await refreshToken();
 						sortTransaction(_id, categoryName, true);
-						console.log("Retried")
+						console.log("Retried");
 					}
 					return "Token expired, retrieving new token. Please try again";
 				}
