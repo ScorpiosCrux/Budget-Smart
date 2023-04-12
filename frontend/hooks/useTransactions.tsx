@@ -77,7 +77,7 @@ export const useTransactions = () => {
 	/* 
 		If the refresh token is expired, we get a new token and then call ourselves
 		with the retry flag to true. This ensures we only retry once. If there are further errors
-		(e.g. the refreshToken is invalid) we can further handle it.
+		(e.g. the refreshToken is invalid) we can further handle it. 
 	*/
 	const sortTransaction = async (_id: string, categoryName: string, retry?: boolean) => {
 		try {
