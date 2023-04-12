@@ -17,7 +17,7 @@ interface DropResult {
 }
 
 interface Props extends Transaction {
-	sortTransaction(_id: string, categoryName: string): void;
+	sortTransactionHelper(_id: string, categoryName: string): void;
 }
 
 const TransactionComponent = (props: Props) => {
@@ -27,7 +27,7 @@ const TransactionComponent = (props: Props) => {
 		end(item, monitor) {
 			const dropResult = monitor.getDropResult() as DropResult;
 			if (item && dropResult) {
-				props.sortTransaction(props._id, dropResult.category.name);
+				props.sortTransactionHelper(props._id, dropResult.category.name);
 			}
 		},
 		collect: (monitor) => ({

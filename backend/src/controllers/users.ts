@@ -63,17 +63,20 @@ export const refreshToken = (req: Request, res: Response) => {
 			const userId = payload["_id"];
 			User.findOne({ _id: userId }).then((user) => {
 				if (user) {
-					// Find the refresh token against the user record in database
-					const refreshTokenIndex = user.refreshToken.findIndex(
-						(item: { refreshToken: any }) => item.refreshToken === refreshToken
-					);
+					/* Finds the index of the refreshToken from the queried results */
+					const refreshTokenIndex = user.refreshToken.findIndex((element: any) => {
+						return element.refreshToken === refreshToken;
+					});
 
 					if (refreshTokenIndex === -1) {
 						res.statusCode = 401;
 						res.send("refreshToken invalid");
 					} else {
 						const accessToken = getAccessToken({ _id: userId });
-						// If the refresh token exists, create a new one and replace it.
+						/* 
+							Refresh Token Rotation.
+							If the refresh token exists, create a new one and replace it.
+						 */
 						const newRefreshToken = getRefreshToken({ _id: userId });
 						user.refreshToken[refreshTokenIndex] = { refreshToken: newRefreshToken };
 						user.save((error: any, user: any) => {

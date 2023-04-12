@@ -65,6 +65,7 @@ I use React because it allows me to write reusable code. It also has great featu
 - JWT
   - Refresh Token
     - The refresh token allows the user to get a new JSON Web Token for access without getting the user to sign in again.
+    - I use refresh token rotation which overwrites the old refresh token with a new one.
   - Token
     - Is valid for a certain amount of time
     - TODO: Store in HTTPOnly cookies instead of local storage.

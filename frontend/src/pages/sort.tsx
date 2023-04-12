@@ -7,7 +7,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { useData } from "hooks/useData";
 
 export default function Sort() {
-	const { isLoading, categories, transactions, sortTransaction } = useData();
+	const { isLoading, categories, transactions, sortTransactionHelper } = useData();
 
 	return (
 		<>
@@ -19,10 +19,13 @@ export default function Sort() {
 			</Head>
 			<SortWrapper>
 				<DndProvider backend={HTML5Backend}>
-					{isLoading === false && (
+					{isLoading === false && categories && transactions && (
 						<>
 							<CategoriesWidget categories={categories} />
-							<TransactionsWidget transactions={transactions} sortTransaction={sortTransaction} />
+							<TransactionsWidget
+								transactions={transactions}
+								sortTransactionHelper={sortTransactionHelper}
+							/>
 						</>
 					)}
 				</DndProvider>

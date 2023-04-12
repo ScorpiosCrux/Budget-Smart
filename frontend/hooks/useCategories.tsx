@@ -8,19 +8,12 @@ export const useCategories = () => {
 	IMPORTANT NOTE: When creating a copy of this hook, you are DUPLICATING the states!! 
 	https://stackoverflow.com/questions/57130413/changes-to-state-issued-from-custom-hook-not-causing-re-render-even-though-added
 	*/
-	const { user, refreshToken } = useAuth();
 	const [isLoading, setIsLoading] = useState(true);
-	const [categories, setCategories] = useState<Category[]>([]);
+	const [categories, setCategories] = useState<Category[] | undefined>();
 
-	useEffect(() => {
-		if (user?.isLoggedIn === true) {
-			getCategories();
-		}
-	}, [user]);
-
-	const getCategories = async () => {
-		await refreshToken();
+	const getCategories = async (user: any) => {
 		try {
+			/* Generate GET request */
 			// https://stackoverflow.com/questions/57629111/how-to-use-a-type-for-the-response-from-axios-get
 			const response: AxiosResponse<Category[]> = await axios({
 				method: "GET",
@@ -31,10 +24,9 @@ export const useCategories = () => {
 				},
 			});
 
+			/* Initialize Categories with missing (calculable) fields*/
 			let tempCategories: Category[] = response.data;
-
 			let initializedCategories: Category[] = [];
-
 			for (let i = 0; i < tempCategories.length; i++) {
 				let temp = tempCategories[i];
 				let initializedCategory = { ...temp };
@@ -45,16 +37,16 @@ export const useCategories = () => {
 				initializedCategories.push(initializedCategory);
 			}
 
+			/* Update categories  */
 			setCategories(initializedCategories);
 			setIsLoading(false);
 		} catch (error) {
-			if (axios.isAxiosError(error)) {
-				if (error.response?.status === 401) {
-					return "User Not Signed In!";
-				}
+			if (axios.isAxiosError(error) && error.response?.status === 401) {
+				throw error;
+				/* Access token is most likely expired */
 			} else {
+				/* Any other errors that could occur */
 				console.log(error);
-				return "Oops Something Went Wrong!";
 			}
 		}
 	};
@@ -65,33 +57,45 @@ export const useCategories = () => {
 		TODO: 6 calls to api right now
 	*/
 	const calculateCategories = (transactions: Transaction[]) => {
-		/* [...categories] copies by value instead of reference */
-		const updateCategories: Category[] = [...categories];
+		/* If categories is undefined */
+		if (!categories || !transactions) {
+			console.log(categories)
+			console.log(transactions)
+			throw new Error(
+				"Error performing category calculations! Categories or Transactions undefined!"
+			);
+		}
 
-		/* Reset Values to 0 */
-		for (const category of updateCategories) {
+		/* 
+			Copy categories by value to update state
+			NOTE: [...categories] copies by value instead of reference
+		*/
+		const newCategories: Category[] = [...categories];
+
+		/* Resets all values to zero */
+		for (const category of newCategories) {
 			category.totalSpent = 0;
 			category.remainingBudget = 0;
 			category.remainingBudgetPerDay = 0;
 		}
 
-		for (const category of updateCategories) {
+		/* Calculate values depending on transactions */
+		for (const category of newCategories) {
 			for (const transaction of transactions) {
 				if (transaction.category === category.name) {
 					category.totalSpent += transaction.price;
 				}
 			}
 			category.remainingBudget = category.budget - category.totalSpent;
-
 			category.remainingBudget = Math.round(category.remainingBudget * 100) / 100;
 			category.totalSpent = Math.round(category.totalSpent * 100) / 100;
 			category.remainingBudgetPerDay = Math.round(category.remainingBudgetPerDay * 100) / 100;
 		}
 
-		setCategories(updateCategories);
+		setCategories(newCategories);
 	};
 
 	//TODO: add recalculateCategory(category: _id)
 
-	return { isLoading, categories, calculateCategories };
+	return { isLoading, categories, getCategories, calculateCategories };
 };

@@ -1,24 +1,16 @@
 import { Transaction } from "@/types";
 import axios, { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
-import { useAuth } from "./useAuth";
+import { useState } from "react";
 
 export const useTransactions = () => {
 	/* 
 	IMPORTANT NOTE: When creating a copy of this hook, you are DUPLICATING the states!! 
 	https://stackoverflow.com/questions/57130413/changes-to-state-issued-from-custom-hook-not-causing-re-render-even-though-added
 	*/
-	const { user, refreshToken } = useAuth();
 	const [isLoading, setIsLoading] = useState(true);
 	const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-	useEffect(() => {
-		if (user?.isLoggedIn === true) {
-			getTransactions();
-		}
-	}, [user]);
-
-	const getTransactions = async (retry?: boolean) => {
+	const getTransactions = async (user: any) => {
 		try {
 			const response: AxiosResponse<Transaction[]> = await axios({
 				method: "GET",
@@ -33,14 +25,7 @@ export const useTransactions = () => {
 			setIsLoading(false);
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				if (error.response?.status === 401) {
-					if (retry !== true) {
-						await refreshToken();
-						getTransactions(true);
-						console.log("Retried");
-					}
-					return "User Not Signed In!";
-				}
+				throw error;
 			} else {
 				console.log(error);
 				return "Oops Something Went Wrong!";
@@ -51,7 +36,7 @@ export const useTransactions = () => {
 	/* 
 		Sends a CSV file	
 	*/
-	const uploadTransactionsCSV = async (file: File) => {
+	const uploadTransactionsCSV = async (user: any, file: File) => {
 		try {
 			let fileData = new FormData();
 			fileData.append("transactions", file);
@@ -68,9 +53,7 @@ export const useTransactions = () => {
 			});
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				if (error.response?.status === 401) {
-					return "User Not Signed In!";
-				}
+				throw error;
 			} else {
 				console.log(error);
 				return "Oops Something Went Wrong!";
@@ -83,7 +66,7 @@ export const useTransactions = () => {
 		with the retry flag to true. This ensures we only retry once. If there are further errors
 		(e.g. the refreshToken is invalid) we can further handle it. 
 	*/
-	const sortTransaction = async (_id: string, categoryName: string, retry?: boolean) => {
+	const sortTransaction = async (user: any, _id: string, categoryName: string) => {
 		try {
 			const response = await axios({
 				method: "POST",
@@ -100,19 +83,12 @@ export const useTransactions = () => {
 			setTransactions(Array.from(response.data));
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				if (error.response?.status === 401) {
-					if (retry !== true) {
-						await refreshToken();
-						sortTransaction(_id, categoryName, true);
-						console.log("Retried");
-					}
-					return "Token expired, retrieving new token. Please try again";
-				}
+				throw error;
 			} else {
 				return "Oops Something Went Wrong!";
 			}
 		}
 	};
 
-	return { isLoading, transactions, uploadTransactionsCSV, sortTransaction };
+	return { isLoading, transactions, getTransactions, uploadTransactionsCSV, sortTransaction };
 };

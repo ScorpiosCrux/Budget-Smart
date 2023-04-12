@@ -1,6 +1,6 @@
 import { AuthUser } from "@/types";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { useUser } from "./useUser";
 import jwt, { JwtPayload } from "jsonwebtoken";
@@ -8,6 +8,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 export const useAuth = () => {
 	const { user, addUser, removeUser } = useUser();
 	const { getItem } = useLocalStorage();
+	const [isLoading, setIsLoading] = useState(false);
 
 	/* This runs wherever useAuth is called */
 	useEffect(() => {
@@ -105,8 +106,18 @@ export const useAuth = () => {
 	};
 
 	const refreshToken = async () => {
+		console.log("Refresh Token");
+
+		/* If already called, return */
+		if (isLoading) {
+			console.log("Is already loading")
+			return;
+		}
+
+		setIsLoading(true);
 		const token = user?.token;
 		if (token && isExpired(token)) {
+			console.log("refreshToken call")
 			try {
 				const response = await axios({
 					method: "POST",
@@ -118,7 +129,9 @@ export const useAuth = () => {
 				newUser.token = response.data.token;
 
 				addUser(newUser);
+				setIsLoading(false);
 			} catch (error) {
+				setIsLoading(false);
 				if (axios.isAxiosError(error)) {
 					if (error.response?.status === 401) {
 						removeUser();

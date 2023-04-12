@@ -10,7 +10,7 @@ import { Transaction } from "@/types";
 
 interface Props {
 	transactions: Transaction[];
-	sortTransaction(_id: string, categoryName: string): void;
+	sortTransactionHelper(_id: string, categoryName: string): void;
 }
 
 const TransactionsWidget = (props: Props) => {
@@ -38,7 +38,7 @@ const TransactionsWidget = (props: Props) => {
 					{props.transactions.map((post: Transaction) => {
 						return (
 							<TransactionComponent
-								sortTransaction={props.sortTransaction}
+								sortTransactionHelper={props.sortTransactionHelper}
 								key={post._id}
 								_id={post._id}
 								date={post.date}
