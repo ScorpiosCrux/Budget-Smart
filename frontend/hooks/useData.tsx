@@ -23,8 +23,6 @@ export const useData = () => {
 		sortTransaction,
 	} = useTransactions();
 
-	/* Possible solutions, fix frontend. Otherwise get backend to check when the last token was created and issue a new one if < 1 minute */
-
 	useEffect(() => {
 		fetchData();
 	}, [user]);

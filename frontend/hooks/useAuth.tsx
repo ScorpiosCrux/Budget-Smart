@@ -110,14 +110,14 @@ export const useAuth = () => {
 
 		/* If already called, return */
 		if (isLoading) {
-			console.log("Is already loading")
+			console.log("Already refreshing token!");
 			return;
 		}
 
 		setIsLoading(true);
 		const token = user?.token;
 		if (token && isExpired(token)) {
-			console.log("refreshToken call")
+			console.log("refreshToken call");
 			try {
 				const response = await axios({
 					method: "POST",
