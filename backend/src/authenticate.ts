@@ -22,7 +22,7 @@ export const COOKIE_OPTIONS: CookieOptions = {
 /* 
 	Used to create the JWT
 */
-export const getToken = (user: string | object | Buffer) => {
+export const getAccessToken = (user: string | object | Buffer) => {
 	return jwt.sign(user, process.env.SECRET_JWT, {
 		expiresIn: eval(process.env.SESSION_EXPIRY),
 	});

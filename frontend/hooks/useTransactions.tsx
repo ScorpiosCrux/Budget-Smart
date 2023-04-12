@@ -18,8 +18,7 @@ export const useTransactions = () => {
 		}
 	}, [user]);
 
-	const getTransactions = async () => {
-		await refreshToken();
+	const getTransactions = async (retry?: boolean) => {
 		try {
 			const response: AxiosResponse<Transaction[]> = await axios({
 				method: "GET",
@@ -35,6 +34,11 @@ export const useTransactions = () => {
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				if (error.response?.status === 401) {
+					if (retry !== true) {
+						await refreshToken();
+						getTransactions(true);
+						console.log("Retried");
+					}
 					return "User Not Signed In!";
 				}
 			} else {
