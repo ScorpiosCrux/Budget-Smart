@@ -65,14 +65,14 @@ export const useData = () => {
 
 	const sortTransactionHelper = async (_id: string, categoryName: string, retry?: boolean) => {
 		try {
-			sortTransaction(user, _id, categoryName);
+			await sortTransaction(user, _id, categoryName);
 		} catch (error) {
-			if (isAxiosError(error) && error.response?.status === 401) {
-				console.log("Access Token Expired!");
+			console.log("error useData");
+			if (isAxiosError(error)) {
 				await refreshToken();
-				
+
 				/* If retry value is not present, then try again else 1 retry is enough */
-				if (!retry) sortTransactionHelper(_id, categoryName, true);
+				if (!retry) await sortTransactionHelper(_id, categoryName, true);
 			}
 		}
 	};
