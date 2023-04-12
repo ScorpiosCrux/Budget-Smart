@@ -21,7 +21,7 @@ export const useTransactions = () => {
 	const getTransactions = async () => {
 		await refreshToken();
 		try {
-			const response : AxiosResponse<Transaction[]> = await axios({
+			const response: AxiosResponse<Transaction[]> = await axios({
 				method: "GET",
 				withCredentials: true,
 				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions",
@@ -74,7 +74,7 @@ export const useTransactions = () => {
 		}
 	};
 
-	const sortTransaction = async (_id: string, categoryName: string) => {
+	const sortTransaction = async (_id: string, categoryName: string, retry?: boolean) => {
 		try {
 			const response = await axios({
 				method: "POST",
@@ -92,10 +92,14 @@ export const useTransactions = () => {
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				if (error.response?.status === 401) {
-					return "User Not Signed In!";
+					await refreshToken();
+					if (retry !== true) {
+						sortTransaction(_id, categoryName, true);
+						console.log("Retried")
+					}
+					return "Token expired, retrieving new token. Please try again";
 				}
 			} else {
-				console.log(error);
 				return "Oops Something Went Wrong!";
 			}
 		}
