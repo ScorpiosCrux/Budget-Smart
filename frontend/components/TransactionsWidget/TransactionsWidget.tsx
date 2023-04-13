@@ -11,6 +11,7 @@ import { Transaction } from "@/types";
 interface Props {
 	transactions: Transaction[];
 	sortTransactionHelper(_id: string, categoryName: string): void;
+	uploadTransactionCSVHelper(file: File, retry?: boolean): void
 }
 
 const TransactionsWidget = (props: Props) => {
@@ -21,7 +22,7 @@ const TransactionsWidget = (props: Props) => {
 					<span className="title">Transactions</span>
 					<span className="helper-text">drag to sort</span>
 				</div>
-				<UploadTransactionsButton />
+				<UploadTransactionsButton uploadTransactionCSVHelper={props.uploadTransactionCSVHelper}/>
 			</StyledHeader>
 
 			<StyledContainer width="700px" height="700px">

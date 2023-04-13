@@ -7,7 +7,8 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { useData } from "hooks/useData";
 
 export default function Sort() {
-	const { isLoading, categories, transactions, sortTransactionHelper } = useData();
+	const { isLoading, categories, transactions, sortTransactionHelper, uploadTransactionCSVHelper } =
+		useData();
 
 	return (
 		<>
@@ -25,6 +26,7 @@ export default function Sort() {
 							<TransactionsWidget
 								transactions={transactions}
 								sortTransactionHelper={sortTransactionHelper}
+								uploadTransactionCSVHelper={uploadTransactionCSVHelper}
 							/>
 						</>
 					)}

@@ -3,8 +3,11 @@ import Button from "@mui/material/Button";
 import { useRef } from "react";
 import { useTransactions } from "hooks/useTransactions";
 
-export default function UploadTransactionsButton() {
-	const { uploadTransactionsCSV } = useTransactions();
+interface Props {
+	uploadTransactionCSVHelper(file: File, retry?: boolean): void
+}
+
+export default function UploadTransactionsButton(props : Props) {
 
 	/* 
 		In this case, useRef is used to access a DOM element directly!
@@ -23,7 +26,7 @@ export default function UploadTransactionsButton() {
 			if (!file) return;
 
 			console.log(file);
-			uploadTransactionsCSV(file);
+			props.uploadTransactionCSVHelper(file);
 		} catch (error) {}
 	};
 

@@ -20,6 +20,7 @@ export const useData = () => {
 		isLoading: isTransactionsLoading,
 		transactions,
 		getTransactions,
+		uploadTransactionsCSV,
 		sortTransaction,
 	} = useTransactions();
 
@@ -77,5 +78,19 @@ export const useData = () => {
 		}
 	};
 
-	return { isLoading, categories, transactions, sortTransactionHelper };
+	const uploadTransactionCSVHelper = async (file: File, retry?: boolean) => {
+		try {
+			await uploadTransactionsCSV(user, file);
+		} catch (error) {
+			console.log("error useData");
+			if (isAxiosError(error)) {
+				await refreshToken();
+
+				/* If retry value is not present, then try again else 1 retry is enough */
+				if (!retry) await uploadTransactionCSVHelper(file, true);
+			}
+		}
+	};
+
+	return { isLoading, categories, transactions, uploadTransactionCSVHelper, sortTransactionHelper };
 };
