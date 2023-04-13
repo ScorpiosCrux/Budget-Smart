@@ -10,19 +10,10 @@ export const useData = () => {
 	const { user, refreshToken } = useAuth();
 	const [isLoading, setIsLoading] = useState(true);
 
-	const {
-		isLoading: isCategoriesLoading,
-		categories,
-		getCategories,
-		calculateCategories,
-	} = useCategories();
-	const {
-		isLoading: isTransactionsLoading,
-		transactions,
-		getTransactions,
-		uploadTransactionsCSV,
-		sortTransaction,
-	} = useTransactions();
+	const categoryHook = useCategories();
+	const categories = categoryHook.categories;
+	const transactionHook = useTransactions();
+	const transactions = transactionHook.transactions;
 
 	useEffect(() => {
 		fetchData();
@@ -31,8 +22,8 @@ export const useData = () => {
 	const fetchData = async (retry?: boolean) => {
 		if (user?.isLoggedIn === true) {
 			try {
-				await getTransactions(user);
-				await getCategories(user);
+				await transactionHook.getTransactions(user);
+				await categoryHook.getCategories(user);
 
 				console.log("Success!");
 			} catch (error) {
@@ -51,46 +42,67 @@ export const useData = () => {
 
 	/* Is ran on initial load */
 	useEffect(() => {
-		if (!(isCategoriesLoading || isTransactionsLoading)) {
-			calculateCategories(transactions);
+		if (!(categoryHook.isLoading || transactionHook.isLoading)) {
+			categoryHook.calculateCategories(transactionHook.transactions);
 			setIsLoading(false);
 		}
-	}, [isCategoriesLoading, isTransactionsLoading]);
+	}, [categoryHook.isLoading, transactionHook.isLoading]);
 
 	/* Is ran on when transactions change */
 	useEffect(() => {
 		if (isLoading === false) {
-			calculateCategories(transactions);
+			categoryHook.calculateCategories(transactionHook.transactions);
 		}
-	}, [transactions]);
+	}, [transactionHook.transactions]);
 
-	const sortTransactionHelper = async (_id: string, categoryName: string, retry?: boolean) => {
+	const sort = async (_id: string, categoryName: string, retry?: boolean) => {
 		try {
-			await sortTransaction(user, _id, categoryName);
+			await transactionHook.sortTransaction(user, _id, categoryName);
 		} catch (error) {
 			console.log("error useData");
 			if (isAxiosError(error)) {
 				await refreshToken();
 
 				/* If retry value is not present, then try again else 1 retry is enough */
-				if (!retry) await sortTransactionHelper(_id, categoryName, true);
+				if (!retry) await sort(_id, categoryName, true);
 			}
 		}
 	};
 
-	const uploadTransactionCSVHelper = async (file: File, retry?: boolean) => {
+	const uploadCSV = async (file: File, retry?: boolean) => {
 		try {
-			await uploadTransactionsCSV(user, file);
+			await transactionHook.uploadTransactionsCSV(user, file);
 		} catch (error) {
 			console.log("error useData");
 			if (isAxiosError(error)) {
 				await refreshToken();
 
 				/* If retry value is not present, then try again else 1 retry is enough */
-				if (!retry) await uploadTransactionCSVHelper(file, true);
+				if (!retry) await uploadCSV(file, true);
 			}
 		}
 	};
 
-	return { isLoading, categories, transactions, uploadTransactionCSVHelper, sortTransactionHelper };
+	const deleteTransaction = async (_id: string, retry?: boolean) => {
+		try {
+			await transactionHook.deleteTransaction(user, _id);
+		} catch (error) {
+			console.log("error useData");
+			if (isAxiosError(error)) {
+				await refreshToken();
+
+				/* If retry value is not present, then try again else 1 retry is enough */
+				if (!retry) await deleteTransaction(_id, true);
+			}
+		}
+	};
+
+	return {
+		isLoading,
+		categories,
+		transactions,
+		uploadCSV,
+		sort,
+		deleteTransaction,
+	};
 };

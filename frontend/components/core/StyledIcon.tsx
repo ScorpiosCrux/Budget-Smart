@@ -7,26 +7,31 @@ interface Props {
 	height?: string;
 	innerWidth: string;
 	innerHeight: string;
+	onClick?(): void;
 }
 
 const StyledIcon = (props: Props) => {
 	return (
-		<StyledIconWrapper width={props.width} height={props.height}>
-			<StyledIconContent src={props.src} innerHeight={props.innerHeight} innerWidth={props.innerWidth} />
+		<StyledIconWrapper width={props.width} height={props.height} onClick={props.onClick}>
+			<StyledIconContent
+				src={props.src}
+				innerHeight={props.innerHeight}
+				innerWidth={props.innerWidth}
+			/>
 		</StyledIconWrapper>
 	);
 };
 
-const StyledIconWrapper = styled.div<{ width?: string, height?:string }>`
+const StyledIconWrapper = styled.div<{ width?: string; height?: string }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
 	aspect-ratio: 1;
 
-	${props => props.width && !props.height && `width: ${props.width}`}
-	${props => !props.width && props.height && `height: ${props.height}`}
-	${props => !props.width && !props.height && `height: 1rem`}
+	${(props) => props.width && !props.height && `width: ${props.width}`}
+	${(props) => !props.width && props.height && `height: ${props.height}`}
+	${(props) => !props.width && !props.height && `height: 1rem`}
 `;
 
 const StyledIconContent = styled.img<{ innerWidth: string; innerHeight: string }>`

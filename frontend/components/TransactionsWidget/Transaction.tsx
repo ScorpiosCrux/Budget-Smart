@@ -18,6 +18,7 @@ interface DropResult {
 
 interface Props extends Transaction {
 	sortTransactionHelper(_id: string, categoryName: string): void;
+	deleteTransaction(_id: string): void;
 }
 
 const TransactionComponent = (props: Props) => {
@@ -35,6 +36,15 @@ const TransactionComponent = (props: Props) => {
 		}),
 	}));
 
+	const deleteTransactionHelper = () => {
+		console.log(props._id)
+		props.deleteTransaction(props._id);
+	};
+
+	const editTransactionHelper = () => {
+		console.log("edit");
+	};
+
 	return (
 		<TransactionWrapper ref={drag} isDragging={isDragging}>
 			<TransactionGrid>
@@ -46,8 +56,20 @@ const TransactionComponent = (props: Props) => {
 				<div className="category">{props.category}</div>
 				<div className="price">${props.price.toFixed(2)}</div>
 				<div className="modifiers">
-					<StyledIcon src="pencil.svg" height="40px" innerHeight="80%" innerWidth="80%" />
-					<StyledIcon src="trash.svg" height="100%" innerHeight="80%" innerWidth="80%" />
+					<StyledIcon
+						src="pencil.svg"
+						height="40px"
+						innerHeight="80%"
+						innerWidth="80%"
+						onClick={editTransactionHelper}
+					/>
+					<StyledIcon
+						src="trash.svg"
+						height="100%"
+						innerHeight="80%"
+						innerWidth="80%"
+						onClick={deleteTransactionHelper}
+					/>
 				</div>
 			</TransactionGrid>
 		</TransactionWrapper>

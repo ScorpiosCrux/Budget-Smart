@@ -91,3 +91,13 @@ export const sortTransaction = async (req: Request, res: Response) => {
 	const transactions = await Transaction.find({ userId: userId });
 	return res.status(200).json(transactions);
 };
+
+export const deleteTransaction = async (req: Request, res: Response) => {
+	const transactionId = req.body._id;
+
+	const result = await Transaction.findByIdAndDelete({ _id: transactionId });
+
+	const userId = req.user._id;
+	const transactions = await Transaction.find({ userId: userId });
+	return res.status(200).json(transactions);
+};

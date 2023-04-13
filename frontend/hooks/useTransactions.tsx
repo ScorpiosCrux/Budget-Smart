@@ -91,5 +91,38 @@ export const useTransactions = () => {
 		}
 	};
 
-	return { isLoading, transactions, getTransactions, uploadTransactionsCSV, sortTransaction };
+	const deleteTransaction = async (user: any, _id: string) => {
+		console.log("delete");
+		try {
+			const response = await axios({
+				method: "DELETE",
+				withCredentials: true,
+				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions",
+				headers: {
+					authorization: "Bearer " + user?.token,
+				},
+				data: {
+					_id: _id,
+				},
+			});
+
+			setTransactions(Array.from(response.data));
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				throw error;
+			} else {
+				return "Oops Something Went Wrong!";
+			}
+		}
+	};
+
+	/* Functions that are visible */
+	return {
+		isLoading,
+		transactions,
+		getTransactions,
+		uploadTransactionsCSV,
+		sortTransaction,
+		deleteTransaction,
+	};
 };

@@ -11,7 +11,8 @@ import { Transaction } from "@/types";
 interface Props {
 	transactions: Transaction[];
 	sortTransactionHelper(_id: string, categoryName: string): void;
-	uploadTransactionCSVHelper(file: File, retry?: boolean): void
+	uploadTransactionCSVHelper(file: File, retry?: boolean): void;
+	deleteTransaction(_id: string): void;
 }
 
 const TransactionsWidget = (props: Props) => {
@@ -22,7 +23,7 @@ const TransactionsWidget = (props: Props) => {
 					<span className="title">Transactions</span>
 					<span className="helper-text">drag to sort</span>
 				</div>
-				<UploadTransactionsButton uploadTransactionCSVHelper={props.uploadTransactionCSVHelper}/>
+				<UploadTransactionsButton uploadTransactionCSVHelper={props.uploadTransactionCSVHelper} />
 			</StyledHeader>
 
 			<StyledContainer width="700px" height="700px">
@@ -40,6 +41,7 @@ const TransactionsWidget = (props: Props) => {
 						return (
 							<TransactionComponent
 								sortTransactionHelper={props.sortTransactionHelper}
+								deleteTransaction={props.deleteTransaction}
 								key={post._id}
 								_id={post._id}
 								date={post.date}
