@@ -70,8 +70,8 @@ export const uploadTransactions = async (req: Request, res: Response) => {
 		})
 		.on("end", (rowCount: number) => console.log(`Parsed ${rowCount} rows`));
 
-	console.log("Done");
-	// GENERATE PROPER RESPONSE
+	const transactions = await Transaction.find({ userId: userId });
+	return res.status(200).json(transactions);
 };
 
 /* 

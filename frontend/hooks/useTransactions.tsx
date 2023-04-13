@@ -51,6 +51,7 @@ export const useTransactions = () => {
 				},
 				data: fileData,
 			});
+			setTransactions(Array.from(response.data));
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				throw error;
