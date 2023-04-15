@@ -8,10 +8,6 @@ export const StyledTransactions = styled.div`
 		font-size: ${typography.bold.fontSize};
 		font-weight: ${typography.bold.fontWeight};
 	}
-
-	.price {
-		text-align: right;
-	}
 `;
 
 export const StyledTransactionsHeader = styled.div`
@@ -40,7 +36,7 @@ export const StyledTransactionGrid = styled.div`
 	width: 100%;
 	display: grid;
 
-	grid-template-columns: 11ch 3fr 2fr 12ch;
+	grid-template-columns: 11ch 3fr 2fr 8ch;
 
 	& > div {
 		height: 100%;
@@ -56,11 +52,6 @@ export const StyledTransactionGrid = styled.div`
 
 	& > div::-webkit-scrollbar {
 		display: none; /* Safari and Chrome */
-	}
-
-	& .price {
-		display: flex;
-		justify-content: end;
 	}
 `;
 

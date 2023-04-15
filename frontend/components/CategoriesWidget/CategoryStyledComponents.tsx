@@ -33,12 +33,20 @@ export const StyledCategory = styled.div<{ index: number }>`
 
 export const StyledCategoryInfo = styled.div`
 	display: grid;
-	grid-template-columns: 70% 30%;
+	grid-template-columns: 1fr 7ch;
 	justify-content: end;
 	gap: 0.5rem;
 
 	& span {
 		font-size: 0.875rem;
+		overflow-x: auto;
+		/* Disable Scrollbar show */
+		-ms-overflow-style: none; /* Internet Explorer 10+ */
+		scrollbar-width: none; /* Firefox */
+	}
+
+	& span::-webkit-scrollbar {
+		display: none; /* Safari and Chrome */
 	}
 
 	.emphasize {

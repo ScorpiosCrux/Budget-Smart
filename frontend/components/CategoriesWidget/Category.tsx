@@ -3,9 +3,7 @@ import { useDrop } from "react-dnd";
 import { Category } from "@/types";
 import StyledLine from "components/core/StyledLine";
 import {
-
 	StyledCategoryHeader,
-
 	StyledCategory,
 	StyledCategoryContent,
 	StyledCategoryInfo,
@@ -54,9 +52,9 @@ const CategoryComponent = (props: Props) => {
 			<StyledCategoryContent ref={drop} backgroundColor={backgroundColor}>
 				{canDrop ? (
 					<StyledCategoryDNDContainer>
-						<div>DROP</div>
-						<div>TRANSACTION</div>
-						<div>HERE</div>
+						<div>Drop</div>
+						<div>Transaction</div>
+						<div>Here</div>
 					</StyledCategoryDNDContainer>
 				) : (
 					<StyledCategoryInfo>

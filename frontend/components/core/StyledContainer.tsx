@@ -11,7 +11,7 @@ const StyledContainer = styled.div<Props>`
 	height: ${props => props.height};;
 	background-color: ${themes.light.primary};
 	border-radius: 0.75rem;
-	padding: 2rem;
+	padding: 1.5rem;
 `;
 
 export default StyledContainer;

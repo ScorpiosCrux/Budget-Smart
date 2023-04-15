@@ -2,7 +2,6 @@ import StyledContainer from "components/core/StyledContainer";
 import StyledHeader from "components/core/StyledHeader";
 import StyledWidget from "components/core/StyledWidget";
 import CategoryComponent from "./Category";
-import StyledSubHeader from "components/core/StyledSubHeader";
 
 import { Category } from "@/types";
 import { StyledCategories } from "./CategoryStyledComponents";
