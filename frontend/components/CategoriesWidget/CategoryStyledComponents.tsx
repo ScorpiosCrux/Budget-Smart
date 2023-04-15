@@ -4,8 +4,6 @@ import styled from "styled-components";
 
 /* ========= Categories Components =========*/
 
-
-
 export const StyledCategories = styled.div`
 	display: grid;
 	gap: inherit;

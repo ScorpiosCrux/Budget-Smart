@@ -1,12 +1,16 @@
-import TransactionComponent from "./Transaction";
+import TransactionComponent from "./TransactionComponent";
 import StyledHeader from "../core/StyledHeader";
 import StyledContainer from "../core/StyledContainer";
 import StyledWidget from "../core/StyledWidget";
-import TransactionGrid from "./TransactionGrid";
-import StyledTransactionsHeader from "./TransactionsHeader";
-import StyledTransactionsContent from "./TransactionsContent";
 import UploadTransactionsButton from "components/buttons/UploadTransactionsButton";
 import { Transaction } from "@/types";
+import StyledContent from "components/core/StyledContent";
+import {
+	StyledTransactionGrid,
+	StyledTransactions,
+	StyledTransactionsContainer,
+	StyledTransactionsHeader,
+} from "./TransactionStyledComponents";
 
 interface Props {
 	transactions: Transaction[];
@@ -18,40 +22,45 @@ interface Props {
 const TransactionsWidget = (props: Props) => {
 	return (
 		<StyledWidget>
-			<StyledHeader>
-				<div className="main">
-					<span className="title">Transactions</span>
-					<span className="helper-text">drag to sort</span>
-				</div>
-				<UploadTransactionsButton uploadTransactionCSVHelper={props.uploadTransactionCSVHelper} />
-			</StyledHeader>
+			<StyledContainer width="800px" height="900px">
+				<StyledContent>
+					<StyledHeader>
+						<div className="main">
+							<span className="title">Transactions</span>
+							<span className="helper-text">drag to sort</span>
+						</div>
+						<UploadTransactionsButton
+							uploadTransactionCSVHelper={props.uploadTransactionCSVHelper}
+						/>
+					</StyledHeader>
 
-			<StyledContainer width="700px" height="700px">
-				<StyledTransactionsHeader>
-					<TransactionGrid>
-						<div className="date header">Date</div>
-						<div className="description header">Transaction Description</div>
-						<div className="category header">Category</div>
-						<div className="price header">Price</div>
-					</TransactionGrid>
-				</StyledTransactionsHeader>
-
-				<StyledTransactionsContent>
-					{props.transactions.map((post: Transaction) => {
-						return (
-							<TransactionComponent
-								sortTransactionHelper={props.sortTransactionHelper}
-								deleteTransaction={props.deleteTransaction}
-								key={post._id}
-								_id={post._id}
-								date={post.date}
-								description={post.description}
-								category={post.category}
-								price={post.price}
-							/>
-						);
-					})}
-				</StyledTransactionsContent>
+					<StyledTransactions>
+						<StyledTransactionsHeader>
+							<StyledTransactionGrid>
+								<div className="date header">Date</div>
+								<div className="description header">Transaction Description</div>
+								<div className="category header">Category</div>
+								<div className="price header">Price</div>
+							</StyledTransactionGrid>
+						</StyledTransactionsHeader>
+						<StyledTransactionsContainer>
+							{props.transactions.map((post: Transaction) => {
+								return (
+									<TransactionComponent
+										sortTransactionHelper={props.sortTransactionHelper}
+										deleteTransaction={props.deleteTransaction}
+										key={post._id}
+										_id={post._id}
+										date={post.date}
+										description={post.description}
+										category={post.category}
+										price={post.price}
+									/>
+								);
+							})}
+						</StyledTransactionsContainer>
+					</StyledTransactions>
+				</StyledContent>
 			</StyledContainer>
 		</StyledWidget>
 	);

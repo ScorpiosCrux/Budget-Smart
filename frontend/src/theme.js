@@ -1,5 +1,3 @@
-// Theme Context https://reactjs.org/docs/context.html Good example
-
 export const themes = {
 	light: {
 		accent: "#2AB514",
@@ -8,11 +6,12 @@ export const themes = {
 		secondary: "#939393",
 	},
 };
+// Theme Context https://reactjs.org/docs/context.html Good example
 
 /* Add Constants for Text sizes */
 export const typography = {
 	title: {
-		fontSize: "1.25rem",
+		fontSize: "1.5rem",
 		fontWeight: "700",
 	},
 	regular: {
