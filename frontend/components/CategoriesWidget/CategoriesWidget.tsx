@@ -5,7 +5,8 @@ import CategoryComponent from "./Category";
 import StyledSubHeader from "components/core/StyledSubHeader";
 
 import { Category } from "@/types";
-import { StyledCategories, StyledCategoriesContent } from "./CategoryStyledComponents";
+import { StyledCategories } from "./CategoryStyledComponents";
+import StyledContent from "components/core/StyledContent";
 
 interface Props {
 	categories: Category[];
@@ -15,7 +16,7 @@ const CategoriesWidget = (props: Props) => {
 	return (
 		<StyledWidget>
 			<StyledContainer width="500px" height="900px">
-				<StyledCategoriesContent>
+				<StyledContent>
 					<StyledHeader>
 						<div className="main">
 							<div className="title">Categories</div>
@@ -30,7 +31,7 @@ const CategoriesWidget = (props: Props) => {
 					{/* <StyledSubHeader>
 					<span>Resets March 1st - 12 Days Until Reset</span>
 				</StyledSubHeader> */}
-				</StyledCategoriesContent>
+				</StyledContent>
 			</StyledContainer>
 		</StyledWidget>
 	);

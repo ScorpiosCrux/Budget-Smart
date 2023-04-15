@@ -4,24 +4,14 @@ import styled from "styled-components";
 
 /* ========= Categories Components =========*/
 
-export const StyledCategoriesContent = styled.div`
-	--numberOfCategoriesPerRow: 2;
-	--numberOfCategoriesPerColumn: 5;
-	--gap: 1rem;
-	--headerSize: 3rem;
 
-	height: 100%;
-	display: grid;
-	gap: 1rem;
-	grid-template-rows: var(--headerSize) calc(100% - var(--headerSize) - var(--gap));
-`;
 
 export const StyledCategories = styled.div`
 	display: grid;
 	gap: inherit;
 	grid-template-rows: repeat(5, 1fr);
 	grid-template-columns: repeat(2, 1fr);
-`
+`;
 
 /* ========= Category Components =========*/
 
