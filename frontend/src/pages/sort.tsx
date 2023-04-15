@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useData } from "hooks/useData";
+import MenuContext from "components/core/MenuContext";
 
 export default function Sort() {
 	const data = useData();
@@ -32,6 +33,7 @@ export default function Sort() {
 					)}
 				</DndProvider>
 			</SortWrapper>
+			
 		</>
 	);
 }
