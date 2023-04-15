@@ -1,10 +1,16 @@
 import { themes } from "@/theme";
-import styled from "styled-components";
 import { useDrop } from "react-dnd";
-
-import { CategoryDNDHelper, CategoryInfo } from "./CategoryContents";
 import { Category } from "@/types";
-import { useEffect } from "react";
+import StyledLine from "components/core/StyledLine";
+import {
+
+	StyledCategoryHeader,
+
+	StyledCategory,
+	StyledCategoryContent,
+	StyledCategoryInfo,
+	StyledCategoryDNDContainer,
+} from "./CategoryStyledComponents";
 
 interface Props {
 	index: number;
@@ -17,7 +23,6 @@ const ItemTypes = {
 };
 
 const CategoryComponent = (props: Props) => {
-
 	const [{ canDrop, isOver }, drop] = useDrop(() => ({
 		accept: ItemTypes.TRANSACTION,
 		drop: () => ({
@@ -39,98 +44,33 @@ const CategoryComponent = (props: Props) => {
 
 	return (
 		<StyledCategory index={props.index}>
-			<CategoryHeader>
+			<StyledCategoryHeader>
 				<div className="info">
-					<img src="check.svg" alt="checkmark" />
 					<span className="title">{props.category.name}</span>
+					{/* <img src="check.svg" alt="checkmark" /> */}
 				</div>
-				<div className="category-modifiers">
-					<img src="pencil.svg" alt="edit" />
-					<img src="trash.svg" alt="delete" />
-				</div>
-			</CategoryHeader>
-			<StyledContent ref={drop} backgroundColor={backgroundColor}>
+			</StyledCategoryHeader>
+			<StyledLine />
+			<StyledCategoryContent ref={drop} backgroundColor={backgroundColor}>
 				{canDrop ? (
-					<CategoryDNDHelper>
+					<StyledCategoryDNDContainer>
 						<div>DROP</div>
 						<div>TRANSACTION</div>
 						<div>HERE</div>
-					</CategoryDNDHelper>
+					</StyledCategoryDNDContainer>
 				) : (
-					<CategoryInfo>
+					<StyledCategoryInfo>
 						<span>Budget </span>
-						<span className="emphasize">${props.category.budget.toFixed(2)}</span>
-						<span>Current Total</span>
+						<span>${props.category.budget.toFixed(2)}</span>
+						<span>Total</span>
 						<span>${props.category.totalSpent.toFixed(2)}</span>
-						<span>Remaining Credits</span>
+						<span>Remaining</span>
 						<span>${props.category.remainingBudget.toFixed(2)}</span>
-						<span>Remaining Per Day</span>
-						<span className="emphasize">${props.category.remainingBudgetPerDay.toFixed(2)}</span>
-					</CategoryInfo>
+					</StyledCategoryInfo>
 				)}
-			</StyledContent>
+			</StyledCategoryContent>
 		</StyledCategory>
 	);
 };
 
 export default CategoryComponent;
-
-const StyledCategory = styled.div<{ index: number }>`
-	width: 50%;
-	height: 130px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-between;
-
-	border-right: ${(p) => (p.index % 2 == 0 ? "1px solid black" : "none")};
-	border-bottom: 1px solid black;
-	background-color: ${themes.light.primary};
-
-	& img {
-		margin: 0px 6px 0px 6px;
-		width: 25px;
-		aspect-ratio: 1;
-	}
-`;
-
-const CategoryHeader = styled.div`
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	border-bottom: 1px dashed ${themes.light.secondary};
-
-	& span {
-		text-transform: capitalize;
-		font-weight: 600;
-		font-size: 1rem;
-	}
-
-	& .info {
-		display: flex;
-		justify-content: space-evenly;
-		align-items: center;
-		& img {
-			width: 12px;
-			aspect-ratio: 1;
-		}
-	}
-
-	& .category-modifiers {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.category-modifiers > img {
-		margin: 0;
-	}
-`;
-
-const StyledContent = styled.div<{ backgroundColor: string }>`
-	width: 100%;
-	height: 100%;
-	padding: 0.6rem;
-	background-color: ${(props) => props.backgroundColor};
-`;
