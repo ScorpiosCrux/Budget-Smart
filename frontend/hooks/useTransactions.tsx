@@ -9,6 +9,7 @@ export const useTransactions = () => {
 	*/
 	const [isLoading, setIsLoading] = useState(true);
 	const [transactions, setTransactions] = useState<Transaction[]>([]);
+	
 
 	const getTransactions = async (user: any) => {
 		try {

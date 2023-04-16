@@ -4,7 +4,7 @@ import styled from "styled-components";
 interface MenuItem {
 	title: string;
 	action: () => void;
-	key: string,
+	key: string;
 }
 
 interface Props {
@@ -14,10 +14,32 @@ interface Props {
 }
 
 const MenuContext = (props: Props) => {
+	/* Used to close the menu when user clicks anywhere else */
+	useEffect(() => {
+		const handleClick = () => {
+			console.log("clicked");
+			// setClicked(false);
+		};
+
+		document.addEventListener("click", handleClick);
+
+
+		/* This runs when the component is "unmounted" */
+		return () => {
+			console.log("component dismount");
+			document.removeEventListener("click", handleClick);
+
+		};
+	}, []);
+
 	return (
 		<MenuContextContainer left={props.pageX} top={props.pageY}>
 			{props.menuItems.map((menuItem) => {
-				return <MenuItem key={menuItem.key} onClick={menuItem.action}>{menuItem.title}</MenuItem>;
+				return (
+					<MenuItem key={menuItem.key} onClick={menuItem.action}>
+						{menuItem.title}
+					</MenuItem>
+				);
 			})}
 		</MenuContextContainer>
 	);
@@ -26,9 +48,7 @@ const MenuContext = (props: Props) => {
 const MenuContextContainer = styled.div<{ left: number; top: number }>`
 	position: absolute;
 	left: ${(props) => `${props.left}px`};
-	/* left: 1000px; */
 	top: ${(props) => `${props.top}px`};
-	/* top: 300px; */
 
 	background-color: grey;
 

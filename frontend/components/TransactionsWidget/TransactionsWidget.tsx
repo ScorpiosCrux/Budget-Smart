@@ -11,6 +11,8 @@ import {
 	StyledTransactionsContainer,
 	StyledTransactionsHeader,
 } from "./TransactionStyledComponents";
+import { useContextMenu } from "hooks/useContextMenu";
+import MenuContext from "components/core/MenuContext";
 
 interface Props {
 	transactions: Transaction[];
@@ -20,6 +22,8 @@ interface Props {
 }
 
 const TransactionsWidget = (props: Props) => {
+	const { clicked, setClicked, points, setPoints, target, setTarget } = useContextMenu();
+
 	return (
 		<StyledWidget>
 			<StyledContainer width="800px" height="900px">
@@ -44,20 +48,55 @@ const TransactionsWidget = (props: Props) => {
 							</StyledTransactionGrid>
 						</StyledTransactionsHeader>
 						<StyledTransactionsContainer>
-							{props.transactions.map((post: Transaction) => {
+							{props.transactions.map((transaction: Transaction) => {
 								return (
-									<TransactionComponent
-										sortTransactionHelper={props.sortTransactionHelper}
-										deleteTransaction={props.deleteTransaction}
-										key={post._id}
-										_id={post._id}
-										date={post.date}
-										description={post.description}
-										category={post.category}
-										price={post.price}
-									/>
+									<div
+										onContextMenu={(e) => {
+											e.preventDefault();
+											setClicked(true);
+											setPoints({
+												x: e.pageX,
+												y: e.pageY,
+											});
+											setTarget(transaction)
+										}}>
+										<TransactionComponent
+											sortTransactionHelper={props.sortTransactionHelper}
+											deleteTransaction={props.deleteTransaction}
+											key={transaction._id}
+											_id={transaction._id}
+											date={transaction.date}
+											description={transaction.description}
+											category={transaction.category}
+											price={transaction.price}
+										/>
+									</div>
 								);
 							})}
+
+							{clicked && (
+								<MenuContext
+									pageX={points.x}
+									pageY={points.y}
+									menuItems={[
+										{
+											title: "Edit",
+											action: () => {
+												console.log("Edit Clicked");
+											},
+											key: "MenuItemEdit",
+										},
+										{
+											title: "Delete",
+											action: () => {
+												console.log("Delete Clicked");
+												console.log(target)
+											},
+											key: "MenuItemDelete",
+										},
+									]}
+								/>
+							)}
 						</StyledTransactionsContainer>
 					</StyledTransactions>
 				</StyledContent>

@@ -1,3 +1,4 @@
+import { Transaction } from "@/types";
 import { MouseEventHandler, useEffect, useState } from "react";
 
 export const useContextMenu = () => {
@@ -6,29 +7,22 @@ export const useContextMenu = () => {
 		x: 0,
 		y: 0,
 	});
+	const [target, setTarget] = useState<Transaction>()
 
-	/* Used to close the menu when user clicks anywhere else */
 	useEffect(() => {
 		const handleClick = () => setClicked(false);
-
-		window.addEventListener("click", handleClick);
-		// window.addEventListener("scroll", handleClick);
+		document.addEventListener("click", handleClick);
 		return () => {
-			window.removeEventListener("click", handleClick);
-			// window.addEventListener("scroll", handleClick);
+			document.removeEventListener("click", handleClick);
 		};
 	}, []);
 
-	/* Prevent default right click function */
-	const onContextMenuHandler = (e: any) => {
-		e.preventDefault();
-		setClicked(true);
-		setPoints({
-			x: e.pageX,
-			y: e.pageY,
-		});
-		console.log("Right Click", e.pageX, e.pageY);
+	return {
+		clicked,
+		setClicked,
+		points,
+		setPoints,
+		target,
+		setTarget
 	};
-
-	return { clicked, points, onContextMenuHandler };
 };

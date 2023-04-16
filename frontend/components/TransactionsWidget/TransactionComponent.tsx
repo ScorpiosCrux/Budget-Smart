@@ -38,8 +38,6 @@ const TransactionComponent = (props: Props) => {
 		}),
 	}));
 
-	const { clicked, points, onContextMenuHandler } = useContextMenu();
-
 	const deleteTransactionHelper = () => {
 		console.log(props._id);
 		props.deleteTransaction(props._id);
@@ -50,41 +48,14 @@ const TransactionComponent = (props: Props) => {
 	};
 
 	return (
-		<>
-			<StyledTransactionWrapper
-				ref={drag}
-				isDragging={isDragging}
-				onContextMenu={onContextMenuHandler}>
-				<StyledTransactionGrid>
-					<div className="date">{props.date}</div>
-					<div className="description">{props.description}</div>
-					<div className="category">{props.category}</div>
-					<div className="price">${props.price.toFixed(2)}</div>
-				</StyledTransactionGrid>
-			</StyledTransactionWrapper>
-			{clicked && (
-				<MenuContext
-					menuItems={[
-						{
-							title: "Edit",
-							action: () => {
-								console.log("Edit Clicked");
-							},
-							key: "MenuItemEdit",
-						},
-						{
-							title: "Delete",
-							action: () => {
-								console.log("Delete Clicked");
-							},
-							key: "MenuItemDelete",
-						},
-					]}
-					pageX={points.x}
-					pageY={points.y}
-				/>
-			)}
-		</>
+		<StyledTransactionWrapper ref={drag} isDragging={isDragging}>
+			<StyledTransactionGrid>
+				<div className="date">{props.date}</div>
+				<div className="description">{props.description}</div>
+				<div className="category">{props.category}</div>
+				<div className="price">${props.price.toFixed(2)}</div>
+			</StyledTransactionGrid>
+		</StyledTransactionWrapper>
 	);
 };
 
