@@ -32,6 +32,11 @@ const StyledHeader = styled.div`
 		color: ${themes.light.secondary};
 		margin: 0rem 1rem;
 	}
+
+	& .transactionButtons{
+		display: flex;
+		gap: 0.5rem;
+	}
 `;
 
 export default StyledHeader;

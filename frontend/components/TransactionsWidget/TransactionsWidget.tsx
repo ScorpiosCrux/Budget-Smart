@@ -2,7 +2,6 @@ import TransactionComponent from "./TransactionComponent";
 import StyledHeader from "../core/StyledHeader";
 import StyledContainer from "../core/StyledContainer";
 import StyledWidget from "../core/StyledWidget";
-import UploadTransactionsButton from "components/buttons/UploadTransactionsButton";
 import { Transaction } from "@/types";
 import StyledContent from "components/core/StyledContent";
 import {
@@ -15,7 +14,10 @@ import { useContextMenu } from "hooks/useContextMenu";
 import MenuContext from "components/core/MenuContext";
 import trashIcon from "public/assets/icons/trash-solid.svg";
 import editIcon from "public/assets/icons/pencil-solid.svg";
+import addIcon from "public/assets/icons/plus-solid.svg";
 
+import Button from "components/buttons/Button";
+import UploadFileButton from "components/buttons/UploadFileButton";
 
 interface Props {
 	transactions: Transaction[];
@@ -36,9 +38,10 @@ const TransactionsWidget = (props: Props) => {
 							<span className="title">Transactions</span>
 							<span className="helper-text">drag to sort</span>
 						</div>
-						<UploadTransactionsButton
-							uploadTransactionCSVHelper={props.uploadTransactionCSVHelper}
-						/>
+						<div className="transactionButtons">
+							<UploadFileButton action={props.uploadTransactionCSVHelper} />
+							<Button icon={addIcon} height="2rem" isSquare={true} />
+						</div>
 					</StyledHeader>
 
 					<StyledTransactions>

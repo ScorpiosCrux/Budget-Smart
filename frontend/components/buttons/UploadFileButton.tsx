@@ -1,17 +1,16 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
+
 import { useRef } from "react";
 import { useTransactions } from "hooks/useTransactions";
+import Button from "./Button";
+import uploadIcon from "public/assets/icons/upload-solid.svg";
 
 interface Props {
-	uploadTransactionCSVHelper(file: File, retry?: boolean): void
+	action(props: any): void;
 }
 
-export default function UploadTransactionsButton(props : Props) {
-
-	/* 
-		In this case, useRef is used to access a DOM element directly!
-	*/
+export default function UploadFileButton(props: Props) {
+	/* In this case, useRef is used to access a DOM element directly! */
 	const inputFileBtn = useRef<HTMLInputElement | null>(null);
 
 	const handleOpenFileDialog = () => {
@@ -24,17 +23,15 @@ export default function UploadTransactionsButton(props : Props) {
 		try {
 			const file = (event.target as HTMLInputElement).files![0]; // ! tells it to ignore the possibility that files is null
 			if (!file) return;
-
-			console.log(file);
-			props.uploadTransactionCSVHelper(file);
-		} catch (error) {}
+			props.action(file);
+		} catch (error) {
+			console.log("Error in upload!");
+		}
 	};
 
 	return (
 		<div>
-			<Button id="uploadCSVBtn" onClick={handleOpenFileDialog} sx={{ padding: 0 }}>
-				Upload CSV
-			</Button>
+			<Button icon={uploadIcon} height="2rem" isSquare={true} onClick={handleOpenFileDialog} />
 			<input
 				type="file"
 				name="inputFile"
