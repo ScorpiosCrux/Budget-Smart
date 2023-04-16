@@ -33,7 +33,7 @@ const StyledHeader = styled.div`
 		margin: 0rem 1rem;
 	}
 
-	& .transactionButtons{
+	& .headerButtons{
 		display: flex;
 		gap: 0.5rem;
 	}

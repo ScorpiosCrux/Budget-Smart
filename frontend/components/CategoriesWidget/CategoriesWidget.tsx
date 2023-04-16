@@ -7,6 +7,9 @@ import { Category } from "@/types";
 import { StyledCategories } from "./CategoryStyledComponents";
 import StyledContent from "components/core/StyledContent";
 
+import addIcon from "public/assets/icons/plus-solid.svg";
+import Button from "components/buttons/Button";
+
 interface Props {
 	categories: Category[];
 }
@@ -20,6 +23,9 @@ const CategoriesWidget = (props: Props) => {
 						<div className="main">
 							<div className="title">Categories</div>
 							{/* <span className="helper-text">drag transactions below</span> */}
+						</div>
+						<div className="headerButtons">
+							<Button icon={addIcon} height="2rem" isSquare={true} />
 						</div>
 					</StyledHeader>
 					<StyledCategories>

@@ -18,7 +18,7 @@ interface Props {
 	pageY: number;
 }
 
-const MenuContext = (props: Props) => {
+const ContextMenu = (props: Props) => {
 	return (
 		<MenuContextContainer left={props.pageX} top={props.pageY}>
 			{props.menuItems.map((menuItem) => {
@@ -58,4 +58,4 @@ const MenuItem = styled.div`
 	}
 `;
 
-export default MenuContext;
+export default ContextMenu;

@@ -11,7 +11,7 @@ import {
 	StyledTransactionsHeader,
 } from "./TransactionStyledComponents";
 import { useContextMenu } from "hooks/useContextMenu";
-import MenuContext from "components/core/MenuContext";
+import MenuContext from "components/core/ContextMenu";
 import trashIcon from "public/assets/icons/trash-solid.svg";
 import editIcon from "public/assets/icons/pencil-solid.svg";
 import addIcon from "public/assets/icons/plus-solid.svg";
@@ -38,7 +38,7 @@ const TransactionsWidget = (props: Props) => {
 							<span className="title">Transactions</span>
 							<span className="helper-text">drag to sort</span>
 						</div>
-						<div className="transactionButtons">
+						<div className="headerButtons">
 							<UploadFileButton action={props.uploadTransactionCSVHelper} />
 							<Button icon={addIcon} height="2rem" isSquare={true} />
 						</div>
