@@ -19,10 +19,9 @@ export const StyledCategory = styled.div<{ index: number }>`
 	align-items: center;
 	justify-content: space-between;
 	padding: 0rem 1rem;
-
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
+	border-radius: 0.5rem;
 	background-color: ${themes.light.primary};
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
 
 	& img {
 		margin: 0px 6px 0px 6px;
@@ -31,44 +30,13 @@ export const StyledCategory = styled.div<{ index: number }>`
 	}
 `;
 
-export const StyledCategoryInfo = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 7ch;
-	justify-content: end;
-	gap: 0.5rem;
-
-	& span {
-		font-size: 0.875rem;
-		overflow-x: auto;
-		/* Disable Scrollbar show */
-		-ms-overflow-style: none; /* Internet Explorer 10+ */
-		scrollbar-width: none; /* Firefox */
-	}
-
-	& span::-webkit-scrollbar {
-		display: none; /* Safari and Chrome */
-	}
-
-	.emphasize {
-		font-weight: 700;
-	}
-`;
-
-export const StyledCategoryDNDContainer = styled.div`
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-`;
-
 export const StyledCategoryHeader = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 
-	& span {
+	& > span {
 		text-transform: capitalize;
 		font-weight: 600;
 		font-size: 1rem;
@@ -99,6 +67,46 @@ export const StyledCategoryHeader = styled.div`
 export const StyledCategoryContent = styled.div<{ backgroundColor: string }>`
 	width: 100%;
 	height: 100%;
-	padding: 0.6rem;
 	background-color: ${(props) => props.backgroundColor};
 `;
+
+
+export const StyledCategoryInfo = styled.div`
+	width: 100%;
+	height: 100%;
+	padding: 0.5rem;
+	
+
+	display: grid;
+	grid-template-columns: 1fr 7ch;
+	justify-content: end;
+	align-items: center;
+	gap: 0.5rem;
+
+	& span {
+		font-size: 0.875rem;
+		overflow-x: auto;
+		/* Disable Scrollbar show */
+		-ms-overflow-style: none; /* Internet Explorer 10+ */
+		scrollbar-width: none; /* Firefox */
+	}
+
+	& span::-webkit-scrollbar {
+		display: none; /* Safari and Chrome */
+	}
+
+	.emphasize {
+		font-weight: 700;
+	}
+`;
+
+export const StyledCategoryDNDContainer = styled.div`
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+`;
+
+
+

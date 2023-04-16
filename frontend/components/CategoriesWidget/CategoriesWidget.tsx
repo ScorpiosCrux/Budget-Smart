@@ -33,9 +33,6 @@ const CategoriesWidget = (props: Props) => {
 							return <CategoryComponent key={category._id} index={i} category={category} />;
 						})}
 					</StyledCategories>
-					{/* <StyledSubHeader>
-					<span>Resets March 1st - 12 Days Until Reset</span>
-				</StyledSubHeader> */}
 				</StyledContent>
 			</StyledContainer>
 		</StyledWidget>
