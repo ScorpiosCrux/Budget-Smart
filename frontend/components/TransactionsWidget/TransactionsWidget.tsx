@@ -13,6 +13,9 @@ import {
 } from "./TransactionStyledComponents";
 import { useContextMenu } from "hooks/useContextMenu";
 import MenuContext from "components/core/MenuContext";
+import trashIcon from "public/assets/icons/trash-solid.svg";
+import editIcon from "public/assets/icons/pencil-solid.svg";
+
 
 interface Props {
 	transactions: Transaction[];
@@ -81,6 +84,7 @@ const TransactionsWidget = (props: Props) => {
 									menuItems={[
 										{
 											title: "Edit",
+											icon: editIcon,
 											action: () => {
 												console.log("Edit Clicked");
 											},
@@ -88,6 +92,7 @@ const TransactionsWidget = (props: Props) => {
 										},
 										{
 											title: "Delete",
+											icon: trashIcon,
 											action: () => {
 												console.log("Delete Clicked");
 												console.log(target);

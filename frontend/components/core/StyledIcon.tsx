@@ -1,43 +1,29 @@
-import { themes, typography } from "@/theme";
+import Image, { StaticImageData } from "next/image";
 import styled from "styled-components";
 
 interface Props {
-	src: string;
-	width?: string;
-	height?: string;
-	innerWidth: string;
-	innerHeight: string;
-	onClick?(): void;
+	image: StaticImageData;
+	alt: string;
+	width: string;
 }
 
-const StyledIcon = (props: Props) => {
+const Icon = (props: Props) => {
 	return (
-		<StyledIconWrapper width={props.width} height={props.height} onClick={props.onClick}>
-			<StyledIconContent
-				src={props.src}
-				innerHeight={props.innerHeight}
-				innerWidth={props.innerWidth}
-			/>
-		</StyledIconWrapper>
+		<StyledIcon width={props.width}>
+			<Image src={props.image} alt={props.alt} />
+		</StyledIcon>
 	);
 };
 
-const StyledIconWrapper = styled.div<{ width?: string; height?: string }>`
-	display: flex;
-	justify-content: center;
-	align-items: center;
+export default Icon;
 
-	aspect-ratio: 1;
+const StyledIcon = styled.div<{ width: string }>`
+	width: ${(props) => props.width};
+	height: ${(props) => props.width};
 
-	${(props) => props.width && !props.height && `width: ${props.width}`}
-	${(props) => !props.width && props.height && `height: ${props.height}`}
-	${(props) => !props.width && !props.height && `height: 1rem`}
+	& img {
+		object-fit: contain;
+		width: 100%;
+		height: 100%;
+	}
 `;
-
-const StyledIconContent = styled.img<{ innerWidth: string; innerHeight: string }>`
-	object-fit: contain;
-	width: ${(props) => props.innerWidth};
-	height: ${(props) => props.innerHeight};
-`;
-
-export default StyledIcon;
