@@ -9,7 +9,6 @@ export const useTransactions = () => {
 	*/
 	const [isLoading, setIsLoading] = useState(true);
 	const [transactions, setTransactions] = useState<Transaction[]>([]);
-	
 
 	const getTransactions = async (user: any) => {
 		try {
@@ -43,7 +42,7 @@ export const useTransactions = () => {
 			fileData.append("transactions", file);
 
 			// TODO: response should return updated list of transactions
-			const response = await axios({
+			const response: AxiosResponse<Transaction[]> = await axios({
 				method: "POST",
 				withCredentials: true,
 				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions/upload",
@@ -52,7 +51,7 @@ export const useTransactions = () => {
 				},
 				data: fileData,
 			});
-			setTransactions(Array.from(response.data));
+			setTransactions(response.data);
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				throw error;
