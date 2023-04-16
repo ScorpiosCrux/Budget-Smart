@@ -58,12 +58,12 @@ const TransactionsWidget = (props: Props) => {
 												x: e.pageX,
 												y: e.pageY,
 											});
-											setTarget(transaction)
-										}}>
+											setTarget(transaction);
+										}}
+										key={transaction._id}>
 										<TransactionComponent
 											sortTransactionHelper={props.sortTransactionHelper}
 											deleteTransaction={props.deleteTransaction}
-											key={transaction._id}
 											_id={transaction._id}
 											date={transaction.date}
 											description={transaction.description}
@@ -90,7 +90,8 @@ const TransactionsWidget = (props: Props) => {
 											title: "Delete",
 											action: () => {
 												console.log("Delete Clicked");
-												console.log(target)
+												console.log(target);
+												if (target) props.deleteTransaction(target?._id);
 											},
 											key: "MenuItemDelete",
 										},
