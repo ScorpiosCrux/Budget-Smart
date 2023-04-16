@@ -1,4 +1,4 @@
-import { Transaction } from "@/types";
+import { Category, Transaction } from "@/types";
 import { MouseEventHandler, useEffect, useState } from "react";
 
 export const useContextMenu = () => {
@@ -7,7 +7,7 @@ export const useContextMenu = () => {
 		x: 0,
 		y: 0,
 	});
-	const [target, setTarget] = useState<Transaction>()
+	const [target, setTarget] = useState<Transaction | Category>()
 
 	useEffect(() => {
 		const handleClick = () => setClicked(false);

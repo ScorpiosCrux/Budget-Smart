@@ -11,7 +11,7 @@ import {
 	StyledTransactionsHeader,
 } from "./TransactionStyledComponents";
 import { useContextMenu } from "hooks/useContextMenu";
-import MenuContext from "components/core/ContextMenu";
+import ContextMenu from "components/core/ContextMenu";
 import trashIcon from "public/assets/icons/trash-solid.svg";
 import editIcon from "public/assets/icons/pencil-solid.svg";
 import addIcon from "public/assets/icons/plus-solid.svg";
@@ -81,7 +81,7 @@ const TransactionsWidget = (props: Props) => {
 							})}
 
 							{clicked && (
-								<MenuContext
+								<ContextMenu
 									pageX={points.x}
 									pageY={points.y}
 									menuItems={[

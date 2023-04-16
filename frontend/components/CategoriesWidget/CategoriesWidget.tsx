@@ -7,14 +7,20 @@ import { Category } from "@/types";
 import { StyledCategories } from "./CategoryStyledComponents";
 import StyledContent from "components/core/StyledContent";
 
+import trashIcon from "public/assets/icons/trash-solid.svg";
+import editIcon from "public/assets/icons/pencil-solid.svg";
 import addIcon from "public/assets/icons/plus-solid.svg";
 import Button from "components/buttons/Button";
+import { useContextMenu } from "hooks/useContextMenu";
+import ContextMenu from "components/core/ContextMenu";
 
 interface Props {
 	categories: Category[];
 }
 
 const CategoriesWidget = (props: Props) => {
+	const { clicked, setClicked, points, setPoints, target, setTarget } = useContextMenu();
+
 	return (
 		<StyledWidget>
 			<StyledContainer width="500px" height="900px">
@@ -30,8 +36,49 @@ const CategoriesWidget = (props: Props) => {
 					</StyledHeader>
 					<StyledCategories>
 						{props.categories.map((category: Category, i) => {
-							return <CategoryComponent key={category._id} index={i} category={category} />;
+							return (
+								<div
+									onContextMenu={(e) => {
+										e.preventDefault();
+										setClicked(true);
+										setPoints({
+											x: e.pageX,
+											y: e.pageY,
+										});
+										setTarget(category);
+									}}
+									key={category._id}>
+									<CategoryComponent index={i} category={category} />
+								</div>
+							);
 						})}
+
+						{clicked && (
+							<ContextMenu
+								pageX={points.x}
+								pageY={points.y}
+								menuItems={[
+									{
+										title: "Edit",
+										icon: editIcon,
+										action: () => {
+											console.log("Edit Clicked");
+										},
+										key: "MenuItemEdit",
+									},
+									{
+										title: "Delete",
+										icon: trashIcon,
+										action: () => {
+											console.log("Delete Clicked");
+											console.log(target);
+											// if (target) props.deleteTransaction(target?._id);
+										},
+										key: "MenuItemDelete",
+									},
+								]}
+							/>
+						)}
 					</StyledCategories>
 				</StyledContent>
 			</StyledContainer>
