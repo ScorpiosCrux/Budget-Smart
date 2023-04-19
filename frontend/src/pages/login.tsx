@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-// import { Button } from "@mui/material";
+import { Button } from "@mui/material";
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -9,11 +9,10 @@ import { useAuth } from "hooks/useAuth";
 import StyledContainer from "components/core/StyledContainer";
 import { StyledPageContent } from "components/core/StyledPageContent";
 import {
-	LoginContent,
+	AuthContent,
 	StyledInputContainer,
-} from "components/AuthWidgets/LoginWidgetStyledComponents";
+} from "components/AuthWidgets/AuthWidgetStyledComponents";
 import { StyledH1 } from "components/core/StyledHeadings";
-import Button from "components/buttons/Button";
 import { themes } from "@/theme";
 
 const loginSchema = yup.object().shape({
@@ -21,22 +20,24 @@ const loginSchema = yup.object().shape({
 	password: yup.string().required("required"),
 });
 
-const initialValuesLogin = {
+const initialFormikValues = {
 	email: "",
 	password: "",
 };
 
-interface Values {
+interface FormValues {
 	email: string;
 	password: string;
 }
 
 const Login = () => {
+	/* Hooks */
+	const router = useRouter();
 	const { login } = useAuth();
 	const [errorMsg, setErrorMsg] = useState<null | string>(null);
-	const router = useRouter();
 
-	const handleLogin = async (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
+	/* Handler Functions */
+	const handleLogin = async (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
 		setSubmitting(true);
 		const error = await login(values.email, values.password);
 		if (error) {
@@ -50,9 +51,9 @@ const Login = () => {
 	return (
 		<StyledPageContent>
 			<StyledContainer width="400px" height="400px" padding="3rem">
-				<LoginContent>
+				<AuthContent>
 					<Formik
-						initialValues={initialValuesLogin}
+						initialValues={initialFormikValues}
 						validationSchema={loginSchema}
 						onSubmit={handleLogin}>
 						{({
@@ -106,21 +107,33 @@ const Login = () => {
 										}}
 									/>
 								</StyledInputContainer>
-								{/* <Button variant="outlined" disabled={isSubmitting} type={"submit"}>
-									{isSubmitting ? "Logging In" : "Login"}
-								</Button> */}
 								<Button
+									variant="outlined"
+									disabled={isSubmitting}
+									type={"submit"}
+									sx={{
+										background: themes.lightMode.accent.background,
+										color: themes.lightMode.accent.text,
+										border: 0,
+										"&:hover": {
+											background: themes.lightMode.secondaryBackground.background,
+											border: 0,
+										},
+									}}>
+									{isSubmitting ? "Logging In" : "Log In"}
+								</Button>
+								{/* <Button
 									height="2rem"
 									text={isSubmitting ? "Logging In" : "Log In"}
 									isDisabled={isSubmitting}
 									backgroundColor={themes.lightMode.accent.background}
 									textColor={themes.lightMode.accent.text}
 									padding="1.5rem"
-								/>
+								/> */}
 							</form>
 						)}
 					</Formik>
-				</LoginContent>
+				</AuthContent>
 			</StyledContainer>
 		</StyledPageContent>
 	);

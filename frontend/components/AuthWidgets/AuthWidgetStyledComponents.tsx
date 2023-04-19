@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LoginContent = styled.div`
+export const AuthContent = styled.div`
 	height: 100%;
 	width: 100%;
 

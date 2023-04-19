@@ -28,7 +28,10 @@ export const themes = {
 		/**
 		 * Smart Budget green color with white text
 		 */
-		accent: { background: "#2AB514", text: "#FFF" },
+		accent: {
+			background: "#2AB514",
+			text: "#FFF",
+		},
 		/**
 		 * Page background off white
 		 */
@@ -40,7 +43,9 @@ export const themes = {
 		/**
 		 * Secondary background color. Gray
 		 */
-		secondaryBackground: { background: "#939393" },
+		secondaryBackground: {
+			background: "#939393",
+		},
 	},
 };
 // Theme Context https://reactjs.org/docs/context.html Good example

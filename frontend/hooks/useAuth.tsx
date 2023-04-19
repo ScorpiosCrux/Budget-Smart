@@ -18,11 +18,12 @@ export const useAuth = () => {
 		}
 	}, []);
 
-	const register = async (email: string, password: string) => {
+	const register = async (displayName: string, email: string, password: string) => {
 		try {
 			const response = await axios({
 				method: "POST",
 				data: {
+					displayName: displayName,
 					username: email,
 					password: password,
 				},
