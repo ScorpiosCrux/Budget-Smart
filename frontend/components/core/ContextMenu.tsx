@@ -54,7 +54,7 @@ const MenuItem = styled.div`
 
 	:hover {
 		cursor: pointer;
-		background-color: ${themes.light.secondary};
+		background-color: ${themes.light.secondaryBackground};
 	}
 `;
 

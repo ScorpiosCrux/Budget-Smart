@@ -23,7 +23,7 @@ export const StyledCategory = styled.div<{ index: number }>`
 	justify-content: space-between;
 	padding: 0rem 1rem;
 	border-radius: 0.5rem;
-	background-color: ${themes.light.primary};
+	background-color: ${themes.light.primaryBackground};
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
 
 	& img {
@@ -73,12 +73,10 @@ export const StyledCategoryContent = styled.div<{ backgroundColor: string }>`
 	background-color: ${(props) => props.backgroundColor};
 `;
 
-
 export const StyledCategoryInfo = styled.div`
 	width: 100%;
 	height: 100%;
 	padding: 0.5rem;
-	
 
 	display: grid;
 	grid-template-columns: 1fr 7ch;
@@ -110,6 +108,3 @@ export const StyledCategoryDNDContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 `;
-
-
-

@@ -29,11 +29,11 @@ const StyledHeader = styled.div`
 	& .helper-text {
 		font-size: ${typography.regular.fontSize};
 		font-weight: ${typography.regular.fontWeight};
-		color: ${themes.light.secondary};
+		color: ${themes.light.secondaryBackground};
 		margin: 0rem 1rem;
 	}
 
-	& .headerButtons{
+	& .headerButtons {
 		display: flex;
 		gap: 0.5rem;
 	}

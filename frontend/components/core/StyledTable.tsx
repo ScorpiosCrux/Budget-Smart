@@ -28,7 +28,6 @@ const StyledTable = styled.table`
 `;
 
 export const DraggableRow = styled.tr`
-	
 	max-height: 41px;
 	height: 40px;
 	border-bottom: 1px solid ${themes.light.background};

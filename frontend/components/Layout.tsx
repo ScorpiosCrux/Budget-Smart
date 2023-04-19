@@ -7,7 +7,6 @@ type Props = {
 };
 
 const Layout = ({ children }: Props) => {
-
 	return (
 		<StyledLayout>
 			<Navbar />

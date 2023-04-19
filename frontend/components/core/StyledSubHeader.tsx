@@ -10,7 +10,7 @@ const StyledSubHeader = styled.div`
 	border-bottom: 1px solid black;
 
 	& span {
-		color: ${themes.light.secondary};
+		color: ${themes.light.secondaryBackground};
 		font-size: ${typography.regular.fontSize};
 		font-weight: ${typography.regular.fontWeight};
 	}

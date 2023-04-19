@@ -44,7 +44,6 @@ I use React because it allows me to write reusable code. It also has great featu
 - Storing only what is necessary
   - The way I've designed what to store into the database are only essential attributes. For example, attributes that are very simple to calculate are simply left for the client to calculate.
 
-
 ## 🔒 Security Considerations
 
 ### Storing data in the browser [source](https://stackoverflow.com/questions/3220660/local-storage-vs-cookies)
@@ -87,8 +86,13 @@ I use React because it allows me to write reusable code. It also has great featu
 - Hooks
   - Using hooks allows us to better organize our component logic into reusable functions!
 
-
 to be continued...
+
+## 📝 Documentation
+
+### JSDoc
+
+- All documentation is done with JSDoc, this provides the developer with comments about the code they are using.
 
 ## Running the code
 
@@ -97,5 +101,5 @@ to be continued...
 `npm run dev` to run the development version
 
 ## Todo
-- There are `TODO:` tags where I am planning to change.
 
+- There are `TODO:` tags where I am planning to change.

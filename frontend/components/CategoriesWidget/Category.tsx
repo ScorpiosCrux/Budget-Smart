@@ -33,11 +33,11 @@ const CategoryComponent = (props: Props) => {
 	}));
 
 	const isActive = canDrop && isOver;
-	let backgroundColor = themes.light.primary;
+	let backgroundColor = themes.light.primaryBackground;
 	if (isActive) {
 		backgroundColor = themes.light.accent;
 	} else if (canDrop) {
-		backgroundColor = themes.light.secondary;
+		backgroundColor = themes.light.secondaryBackground;
 	}
 
 	return (
