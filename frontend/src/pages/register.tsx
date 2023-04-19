@@ -55,7 +55,7 @@ const Register = () => {
 
 	return (
 		<StyledPageContent>
-			<StyledContainer width="400px" height="400px" padding="3rem">
+			<StyledContainer width="400px" height="500px" padding="3rem">
 				<AuthContent>
 					<Formik
 						initialValues={initialFormikValues}

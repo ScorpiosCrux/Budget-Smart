@@ -6,10 +6,10 @@ import { getAccessToken, COOKIE_OPTIONS, getRefreshToken } from "../authenticate
 export const registerNewUser = async (req: Request, res: Response) => {
 	try {
 		// Get Inputs
-		const { username, password } = req.body;
+		const { displayName, username, password } = req.body;
 
 		// Create User, token, refreshToken and append to user
-		const user = new User({ email: username, username, password });
+		const user = new User({ displayName, email: username, username, password });
 		const accessToken = getAccessToken({ _id: user._id });
 		const refreshToken = getRefreshToken({ _id: user._id });
 		user.refreshToken.push({ refreshToken });
@@ -20,7 +20,12 @@ export const registerNewUser = async (req: Request, res: Response) => {
 		res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
 		return res
 			.status(201)
-			.json({ _id: registeredUser._id, email: registeredUser.email, token: accessToken });
+			.json({
+				_id: registeredUser._id,
+				displayName: registeredUser.displayName,
+				email: registeredUser.email,
+				token: accessToken,
+			});
 	} catch (error) {
 		console.log(error);
 		if (error.name === "UserExistsError") res.status(409).json({ error: error.name });

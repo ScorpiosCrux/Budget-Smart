@@ -37,7 +37,6 @@ export const useAuth = () => {
 			const authUser: AuthUser = {
 				...response.data,
 				isLoggedIn: true,
-				displayName: "Display Name",
 				username: "Username",
 			};
 			addUser(authUser);
