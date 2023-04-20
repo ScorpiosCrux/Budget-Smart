@@ -18,6 +18,7 @@ import Modal from "components/core/Modal";
 
 interface Props {
 	categories: Category[];
+	addCategory(categoryName: string, budget: number): void;
 }
 
 const CategoriesWidget = (props: Props) => {
@@ -40,7 +41,7 @@ const CategoriesWidget = (props: Props) => {
 								isSquare={true}
 								onClick={(e) => {
 									e.preventDefault();
-									setShowModal(true)
+									setShowModal(true);
 								}}
 							/>
 						</div>
@@ -99,6 +100,7 @@ const CategoriesWidget = (props: Props) => {
 									setShowModal(false);
 								}}
 								targetType={TargetType.Category}
+								addCategory={props.addCategory}
 							/>
 						)}
 					</StyledCategories>

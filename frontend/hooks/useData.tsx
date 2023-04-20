@@ -97,6 +97,20 @@ export const useData = () => {
 		}
 	};
 
+	const addCategory = async (categoryName: string, budget: number, retry?: boolean) => {
+		try {
+			await categoryHook.addCategory(user, categoryName, budget);
+		} catch (error) {
+			console.log("error useData");
+			if (isAxiosError(error)) {
+				await refreshToken();
+
+				/* If retry value is not present, then try again else 1 retry is enough */
+				if (!retry) await addCategory(categoryName, budget, true);
+			}
+		}
+	};
+
 	return {
 		isLoading,
 		categories,
@@ -104,5 +118,6 @@ export const useData = () => {
 		uploadCSV,
 		sort,
 		deleteTransaction,
+		addCategory,
 	};
 };

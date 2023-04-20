@@ -51,6 +51,54 @@ export const useCategories = () => {
 		}
 	};
 
+	/**
+	 * This function is an API call to the backend which adds a category
+	 * @param user the user object
+	 */
+	const addCategory = async (user: any, categoryName: string, budget: number) => {
+		try {
+			/* Generate GET request */
+			const response: AxiosResponse<Category[]> = await axios({
+				method: "POST",
+				withCredentials: true,
+				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/categories/new",
+				headers: {
+					authorization: "Bearer " + user?.token,
+				},
+				data: {
+					categoryName: categoryName,
+					budget: budget,
+				},
+			});
+
+			// TODO: Move repeated code to it's own function
+			/* Initialize Categories with missing (calculable) fields*/
+			let tempCategories: Category[] = response.data;
+			let initializedCategories: Category[] = [];
+			for (let i = 0; i < tempCategories.length; i++) {
+				let temp = tempCategories[i];
+				let initializedCategory = { ...temp };
+				initializedCategory.remainingBudget = 0;
+				initializedCategory.totalSpent = 0;
+				initializedCategory.remainingBudgetPerDay = 0;
+
+				initializedCategories.push(initializedCategory);
+			}
+
+			/* Update categories  */
+			setCategories(initializedCategories);
+			setIsLoading(false);
+		} catch (error) {
+			if (axios.isAxiosError(error) && error.response?.status === 401) {
+				throw error;
+				/* Access token is most likely expired */
+			} else {
+				/* Any other errors that could occur */
+				console.log(error);
+			}
+		}
+	};
+
 	/* 
 		Calculates the missing attributes of categories. Instead of storing these simple 
 		operations.
@@ -59,8 +107,8 @@ export const useCategories = () => {
 	const calculateCategories = (transactions: Transaction[]) => {
 		/* If categories is undefined */
 		if (!categories || !transactions) {
-			console.log(categories)
-			console.log(transactions)
+			console.log(categories);
+			console.log(transactions);
 			throw new Error(
 				"Error performing category calculations! Categories or Transactions undefined!"
 			);
@@ -97,5 +145,5 @@ export const useCategories = () => {
 
 	//TODO: add recalculateCategory(category: _id)
 
-	return { isLoading, categories, getCategories, calculateCategories };
+	return { isLoading, categories, getCategories, calculateCategories, addCategory };
 };

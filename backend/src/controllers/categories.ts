@@ -25,6 +25,29 @@ export const addCategories = async () => {
 	eatingOut.save();
 };
 
+/**
+ * Used to add a category to the backend.
+ * @param req the request object created by the browser (Axios)
+ * @param res the response object that we return.
+ * @returns the response with status code and the new list of categories.
+ */
+export const addCategory = async (req: Request, res: Response) => {
+	const userId = req.user._id;
+	const budget = req.body.budget;
+	const categoryName = req.body.categoryName;
+
+	const category = new Category({
+		userId: userId,
+		name: categoryName,
+		budget: budget,
+	});
+
+	category.save();
+
+	const categories = await Category.find({ userId: userId });
+	return res.status(200).json(categories);
+};
+
 export const getCategories = async (req: Request, res: Response) => {
 	const userId = req.user._id;
 	const categories = await Category.find({ userId: userId });

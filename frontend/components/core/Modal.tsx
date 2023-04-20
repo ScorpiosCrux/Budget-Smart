@@ -11,6 +11,7 @@ import { red } from "@mui/material/colors";
 interface Props {
 	closeModal(): void;
 	targetType: TargetType;
+	addCategory(categoryName: string, budget: number): void;
 }
 
 /**
@@ -19,54 +20,9 @@ interface Props {
 const Modal = (props: Props) => {
 	return (
 		<ModalContainer>
-			<StyledContainer width="400px" height="auto">
+			<StyledContainer width="400px" height="500px">
 				<ModalContent>
-					<ModalHeader>
-						<StyledH2>
-							{props.targetType === TargetType.Category ? "New Category" : "New Transaction"}
-						</StyledH2>
-					</ModalHeader>
-					<ModalBody>
-						<CategoryForm />
-					</ModalBody>
-					<ModalFooter>
-						<Button
-							variant="outlined"
-							// disabled={isSubmitting}
-							type={"submit"}
-							onClick={props.closeModal}
-							sx={{
-								width: "100%",
-								background: "red",
-								color: themes.lightMode.accent.text,
-								border: 0,
-								"&:hover": {
-									background: themes.lightMode.secondaryBackground.background,
-									border: 0,
-								},
-							}}>
-							{/* {isSubmitting ? "Adding Category" : "Add Category"} */}
-							Cancel
-						</Button>
-
-						<Button
-							variant="outlined"
-							// disabled={isSubmitting}
-							type={"submit"}
-							sx={{
-								width: "100%",
-								background: themes.lightMode.accent.background,
-								color: themes.lightMode.accent.text,
-								border: 0,
-								"&:hover": {
-									background: themes.lightMode.secondaryBackground.background,
-									border: 0,
-								},
-							}}>
-							{/* {isSubmitting ? "Adding Category" : "Add Category"} */}
-							Add Category
-						</Button>
-					</ModalFooter>
+					<CategoryForm closeModal={props.closeModal} addCategory={props.addCategory} />
 				</ModalContent>
 			</StyledContainer>
 		</ModalContainer>
@@ -90,22 +46,4 @@ const ModalContainer = styled.div`
 const ModalContent = styled.div`
 	width: 100%;
 	height: 100%;
-	display: grid;
-	grid-template-rows: 2fr 5fr 2fr;
-	z-index: 2;
-`;
-
-const ModalHeader = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`;
-
-const ModalBody = styled.div``;
-
-const ModalFooter = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	place-items: center;
-	gap: 10%;
 `;

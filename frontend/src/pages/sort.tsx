@@ -22,7 +22,8 @@ export default function Sort() {
 				<DndProvider backend={HTML5Backend}>
 					{data.isLoading === false && data.categories && data.transactions && (
 						<>
-							<CategoriesWidget categories={data.categories} />
+
+							<CategoriesWidget categories={data.categories} addCategory={data.addCategory} />
 							<TransactionsWidget
 								transactions={data.transactions}
 								sortTransactionHelper={data.sort}
