@@ -3,7 +3,7 @@ import StyledHeader from "components/core/StyledHeader";
 import StyledWidget from "components/core/StyledWidget";
 import CategoryComponent from "./Category";
 
-import { Category } from "@/types";
+import { Category, TargetType } from "@/types";
 import { StyledCategories } from "./CategoryStyledComponents";
 import StyledContent from "components/core/StyledContent";
 
@@ -13,6 +13,8 @@ import addIcon from "public/assets/icons/plus-solid.svg";
 import Button from "components/buttons/Button";
 import { useContextMenu } from "hooks/useContextMenu";
 import ContextMenu from "components/core/ContextMenu";
+import { useModal } from "hooks/useModal";
+import Modal from "components/core/Modal";
 
 interface Props {
 	categories: Category[];
@@ -20,6 +22,7 @@ interface Props {
 
 const CategoriesWidget = (props: Props) => {
 	const { clicked, setClicked, points, setPoints, target, setTarget } = useContextMenu();
+	const { showModal, setShowModal } = useModal();
 
 	return (
 		<StyledWidget>
@@ -31,7 +34,15 @@ const CategoriesWidget = (props: Props) => {
 							{/* <span className="helper-text">drag transactions below</span> */}
 						</div>
 						<div className="headerButtons">
-							<Button icon={addIcon} height="2rem" isSquare={true} />
+							<Button
+								icon={addIcon}
+								height="2rem"
+								isSquare={true}
+								onClick={(e) => {
+									e.preventDefault();
+									setShowModal(true)
+								}}
+							/>
 						</div>
 					</StyledHeader>
 					<StyledCategories>
@@ -53,6 +64,7 @@ const CategoriesWidget = (props: Props) => {
 							);
 						})}
 
+						{/* Context Menu (right clicks on categories & transactions) */}
 						{clicked && (
 							<ContextMenu
 								pageX={points.x}
@@ -77,6 +89,16 @@ const CategoriesWidget = (props: Props) => {
 										key: "MenuItemDelete",
 									},
 								]}
+							/>
+						)}
+
+						{/* Modal for adding categories */}
+						{showModal && (
+							<Modal
+								closeModal={() => {
+									setShowModal(false);
+								}}
+								targetType={TargetType.Category}
 							/>
 						)}
 					</StyledCategories>

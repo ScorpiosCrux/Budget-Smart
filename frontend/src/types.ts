@@ -37,8 +37,16 @@ export interface Category {
 	name: string;
 	budget: number;
 
-	/* The following are calculated after query */ 
+	/* The following are calculated after query */
 	remainingBudget: number;
 	totalSpent: number;
-	remainingBudgetPerDay: number
+	remainingBudgetPerDay: number;
+}
+
+/**
+ * Defines whether we are editing categories or transactions
+ */
+export enum TargetType {
+	Category = 0,
+	Transaction = 1,
 }

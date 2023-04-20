@@ -9,3 +9,4 @@ import styled from "styled-components";
  * A generic styled component for h1 headers.
  */
 export const StyledH1 = styled.h1``;
+export const StyledH2 = styled.h2``;

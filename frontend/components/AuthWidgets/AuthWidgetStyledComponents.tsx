@@ -24,5 +24,5 @@ export const StyledInputContainer = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	gap: 5px;
+	gap: 15px;
 `;

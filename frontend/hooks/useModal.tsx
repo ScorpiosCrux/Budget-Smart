@@ -1,10 +1,7 @@
 import { Category, Transaction } from "@/types";
 import { useEffect, useState } from "react";
 
-enum TargetType {
-	Category = 0,
-	Transaction = 1,
-}
+
 
 export const useModal = () => {
 	const [showModal, setShowModal] = useState(false);
