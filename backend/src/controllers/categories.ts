@@ -25,6 +25,18 @@ export const addCategories = async () => {
 	eatingOut.save();
 };
 
+export const mongoErrorHandler = (error: any): string => {
+	if (error) {
+		if (error.code === 11000) {
+			console.log("Category already exists!");
+			return "Category already exists!";
+		} else {
+			console.log("Some other error");
+			console.log(error);
+		}
+	}
+};
+
 /**
  * Used to add a category to the backend.
  * @param req the request object created by the browser (Axios)
@@ -32,20 +44,28 @@ export const addCategories = async () => {
  * @returns the response with status code and the new list of categories.
  */
 export const addCategory = async (req: Request, res: Response) => {
-	const userId = req.user._id;
-	const budget = req.body.budget;
-	const categoryName = req.body.categoryName;
+	try {
+		const userId = req.user._id;
+		const budget = req.body.budget;
+		const categoryName = req.body.categoryName;
 
-	const category = new Category({
-		userId: userId,
-		name: categoryName,
-		budget: budget,
-	});
+		const category = new Category({
+			userId: userId,
+			name: categoryName,
+			budget: budget,
+		});
 
-	category.save();
+		// Nothing gets returned?
+		const error: string = category.save(mongoErrorHandler);
+		if (error) {
+			console.log(error);
+		}
 
-	const categories = await Category.find({ userId: userId });
-	return res.status(200).json(categories);
+		const categories = await Category.find({ userId: userId });
+		return res.status(200).json(categories);
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export const getCategories = async (req: Request, res: Response) => {
