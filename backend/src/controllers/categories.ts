@@ -25,6 +25,11 @@ export const addCategories = async () => {
 	eatingOut.save();
 };
 
+/**
+ * This handler is a generic handler for all use. Adapt function to different errors.
+ * @param error The error which we are handling
+ * @returns a string with the return message. Does not return yet.
+ */
 export const mongoErrorHandler = (error: any): string => {
 	if (error) {
 		if (error.code === 11000) {
