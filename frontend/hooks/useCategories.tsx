@@ -71,22 +71,11 @@ export const useCategories = () => {
         },
       });
 
-      // TODO: Move repeated code to it's own function
-      /* Initialize Categories with missing (calculable) fields*/
-      let tempCategories: Category[] = response.data;
-      let initializedCategories: Category[] = [];
-      for (let i = 0; i < tempCategories.length; i++) {
-        let temp = tempCategories[i];
-        let initializedCategory = { ...temp };
-        initializedCategory.remainingBudget = 0;
-        initializedCategory.totalSpent = 0;
-        initializedCategory.remainingBudgetPerDay = 0;
-
-        initializedCategories.push(initializedCategory);
-      }
+      const categories: Category[] = response.data;
+      console.log(categories);
 
       /* Update categories  */
-      setCategories(initializedCategories);
+      setCategories(categories);
       setIsLoading(false);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {

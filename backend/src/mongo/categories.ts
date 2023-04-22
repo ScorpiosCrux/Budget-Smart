@@ -1,17 +1,32 @@
 /**
  * This file contains all queries related to categories.
  */
-
 import Category from "../models/category.js";
+import { ICategory, ICategoryPartial } from "../types.js";
 
 /**
- * Finds all the categories
+ * Finds all the categories and returns
  * @param userId the userId from the request
- * @returns an [] of categories
+ * @returns A promise but an ICategory[]
  */
 export const findCategories = async (userId: string) => {
   try {
-    const categories = await Category.find({ userId });
+    /* The lean function optimizes querries and only has necessary information */
+    const categories: ICategoryPartial[] = await Category.find({ userId }).lean();
+
+    /* Initializes the categories with the necessary values O(n) */
+    const initializedCategories: ICategory[] = [];
+    for (let i = 0; i < categories.length; i++) {
+      const category: ICategoryPartial = categories[i];
+      const initializedCategory: ICategory = {
+        ...category,
+        remainingBudget: 0,
+        totalSpent: 0,
+        remainingBudgetPerDay: 0,
+      };
+      initializedCategories.push(initializedCategory);
+    }
+
     return categories;
   } catch (error) {
     console.log(error);
@@ -35,9 +50,8 @@ export const newCategory = async (userId: string, categoryName: string, budget: 
   await category.save();
 };
 
-
 /**
- * A function that deletes the category from 
+ * A function that deletes the category from
  * @param userId userId of the client
  * @param categoryId the MongoDB id of the category
  * @returns whether operation was successful or not.
