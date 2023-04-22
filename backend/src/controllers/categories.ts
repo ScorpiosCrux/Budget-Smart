@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 import * as CategoryQueries from "../mongo/categories.js";
 
+/**
+ * Used to find all the categories associated with a user.
+ * @param req the request object created by the browser (Axios)
+ * @param res the response object that we return.
+ * @returns the response with status code and the new list of categories.
+ */
 export const getCategories = async (req: Request, res: Response) => {
   const userId = req.user._id;
   const categories = await CategoryQueries.findCategories(userId);
@@ -39,11 +45,18 @@ export const addCategory = async (req: Request, res: Response) => {
  * @returns The express status and categories
  */
 export const deleteCategory = async (req: Request, res: Response) => {
-	const userId = req.user._id;
-	const categoryId = req.body._id;
+  const userId = req.user._id;
+  const categoryId = req.body._id;
 
-	const result = await CategoryQueries.deleteCategory(userId, categoryId)
+  const result = await CategoryQueries.deleteCategory(userId, categoryId);
 
-	const categories = await CategoryQueries.findCategories(userId);
-	return res.status(200).json(categories);
+  const categories = await CategoryQueries.findCategories(userId);
+
+  /* If nothing was deleted */
+  if (!result) {
+    return res.status(404).json(categories);
+  }
+
+  /* If delete was successful and we're returning the updated list */
+  return res.status(200).json(categories);
 };

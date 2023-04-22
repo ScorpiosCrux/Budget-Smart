@@ -1,4 +1,4 @@
-import { Category, Transaction } from "@/types";
+import { Category, ICategory, ICategoryPartial, Transaction } from "@/types";
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
@@ -15,7 +15,7 @@ export const useCategories = () => {
     try {
       /* Generate GET request */
       // https://stackoverflow.com/questions/57629111/how-to-use-a-type-for-the-response-from-axios-get
-      const response: AxiosResponse<Category[]> = await axios({
+      const response: AxiosResponse<ICategory[]> = await axios({
         method: "GET",
         withCredentials: true,
         url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/categories",
@@ -23,22 +23,10 @@ export const useCategories = () => {
           authorization: "Bearer " + user?.token,
         },
       });
+      const categories: ICategory[] = response.data;
 
-      /* Initialize Categories with missing (calculable) fields*/
-      let tempCategories: Category[] = response.data;
-      let initializedCategories: Category[] = [];
-      for (let i = 0; i < tempCategories.length; i++) {
-        let temp = tempCategories[i];
-        let initializedCategory = { ...temp };
-        initializedCategory.remainingBudget = 0;
-        initializedCategory.totalSpent = 0;
-        initializedCategory.remainingBudgetPerDay = 0;
-
-        initializedCategories.push(initializedCategory);
-      }
-
-      /* Update categories  */
-      setCategories(initializedCategories);
+      /* Update categories state  */
+      setCategories(categories);
       setIsLoading(false);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -58,7 +46,7 @@ export const useCategories = () => {
   const addCategory = async (user: any, categoryName: string, budget: number) => {
     try {
       /* Generate GET request */
-      const response: AxiosResponse<Category[]> = await axios({
+      const response: AxiosResponse<ICategory[]> = await axios({
         method: "POST",
         withCredentials: true,
         url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/categories/new",
@@ -70,13 +58,10 @@ export const useCategories = () => {
           budget: budget,
         },
       });
-
-      const categories: Category[] = response.data;
-      console.log(categories);
+      const categories: ICategory[] = response.data;
 
       /* Update categories  */
       setCategories(categories);
-      setIsLoading(false);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         throw error;
@@ -95,9 +80,8 @@ export const useCategories = () => {
    * @returns
    */
   const deleteCategory = async (user: any, _id: string) => {
-    console.log("delete");
     try {
-      const response: AxiosResponse<Category[]> = await axios({
+      const response: AxiosResponse<ICategory[]> = await axios({
         method: "DELETE",
         withCredentials: true,
         url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/categories",
@@ -108,23 +92,10 @@ export const useCategories = () => {
           _id: _id,
         },
       });
-
-      /* Initialize Categories with missing (calculable) fields*/
-      let tempCategories: Category[] = response.data;
-      let initializedCategories: Category[] = [];
-      for (let i = 0; i < tempCategories.length; i++) {
-        let temp = tempCategories[i];
-        let initializedCategory = { ...temp };
-        initializedCategory.remainingBudget = 0;
-        initializedCategory.totalSpent = 0;
-        initializedCategory.remainingBudgetPerDay = 0;
-
-        initializedCategories.push(initializedCategory);
-      }
+      const categories: ICategory[] = response.data;
 
       /* Update categories  */
-      setCategories(initializedCategories);
-      setIsLoading(false);
+      setCategories(categories);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw error;
@@ -134,11 +105,10 @@ export const useCategories = () => {
     }
   };
 
-  /* 
-		Calculates the missing attributes of categories. Instead of storing these simple 
-		operations.
-		TODO: 6 calls to api right now
-	*/
+  /**
+   * Calculates the missing attributes of categories. Instead of storing these simple operations.
+   * @param transactions Array of transactions to perform calculations with.
+   */
   const calculateCategories = (transactions: Transaction[]) => {
     /* If categories is undefined */
     if (!categories || !transactions) {
@@ -153,7 +123,7 @@ export const useCategories = () => {
 			Copy categories by value to update state
 			NOTE: [...categories] copies by value instead of reference
 		*/
-    const newCategories: Category[] = [...categories];
+    const newCategories: ICategory[] = [...categories];
 
     /* Resets all values to zero */
     for (const category of newCategories) {
@@ -178,7 +148,7 @@ export const useCategories = () => {
     setCategories(newCategories);
   };
 
-  //TODO: add recalculateCategory(category: _id)
+  //TODO: add recalculateCategory(category: _id) optimization instead of recalculating everything
 
   return { isLoading, categories, getCategories, calculateCategories, addCategory, deleteCategory };
 };

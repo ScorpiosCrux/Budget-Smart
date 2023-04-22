@@ -43,6 +43,30 @@ export interface Category {
 	remainingBudgetPerDay: number;
 }
 
+
+/**
+ * Only necessary data is saved to the database.
+ */
+export interface ICategoryPartial {
+  _id: string;
+  userId: string;
+  name: string;
+  budget: number;
+}
+
+/**
+ * This is the complete category type
+ */
+export interface ICategory {
+  _id: string;
+  userId: string;
+  name: string;
+  budget: number;
+  remainingBudget: number;
+  totalSpent: number;
+  remainingBudgetPerDay: number;
+}
+
 /**
  * Defines whether we are editing categories or transactions
  */
