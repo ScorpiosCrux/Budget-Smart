@@ -3,102 +3,103 @@ import * as csv from "@fast-csv/parse";
 import Transaction from "../models/transactions.js";
 
 export const importTransactions = async () => {
-	// Get File and Save
+  // Get File and Save
 
-	// Read File (after checking for possible breaking characters or code)
+  // Read File (after checking for possible breaking characters or code)
 
-	// Name this file transactions/userId.csv
-	const csv_file_path = "/Users/vivid/Code/Smart-Budget/backend/src/utilities/transactions.csv";
+  // Name this file transactions/userId.csv
+  const csv_file_path = "/Users/vivid/Code/Smart-Budget/backend/src/utilities/transactions.csv";
 
-	csv
-		.parseFile(csv_file_path)
-		.on("error", (error) => console.error(error))
-		.on("data", (row) => {
-			// Specific for TD Canada Trust
-			const transaction = new Transaction({
-				userId: "63f6d942e70890f81697254f",
-				date: row[0],
-				description: row[1],
-				category: "",
-				price: row[2],
-			});
+  csv
+    .parseFile(csv_file_path)
+    .on("error", (error) => console.error(error))
+    .on("data", (row) => {
+      // Specific for TD Canada Trust
+      const transaction = new Transaction({
+        userId: "63f6d942e70890f81697254f",
+        date: row[0],
+        description: row[1],
+        category: "",
+        price: row[2],
+      });
 
-			transaction.save((err: any) => {
-				if (err) console.log(err);
-				else {
-					console.log("Successfully Saved Transaction");
-					console.log(row);
-				}
-			});
-		})
-		.on("end", (rowCount: number) => console.log(`Parsed ${rowCount} rows`));
+      transaction.save((err: any) => {
+        if (err) console.log(err);
+        else {
+          console.log("Successfully Saved Transaction");
+          console.log(row);
+        }
+      });
+    })
+    .on("end", (rowCount: number) => console.log(`Parsed ${rowCount} rows`));
 };
 
 export const getTransactions = async (req: Request, res: Response) => {
-	const userId = req.user._id;
-	const transactions = await Transaction.find({ userId: userId });
-	return res.status(200).json(transactions);
+  const userId = req.user._id;
+  const transactions = await Transaction.find({ userId: userId });
+  return res.status(200).json(transactions);
 };
 
 // TODO: This puts loads on the server, could have the client parse the file and send as JSON
 
 export const uploadTransactions = async (req: Request, res: Response) => {
-	const userId = req.user._id;
-	const file = req.file;
-	console.log(file);
+  const userId = req.user._id;
+  const file = req.file;
+  console.log(file);
 
-	csv
-		.parseFile(file.path)
-		.on("error", (error) => console.error(error))
-		.on("data", (row) => {
-			// Specific for TD Canada Trust
-			const transaction = new Transaction({
-				userId: userId,
-				date: row[0],
-				description: row[1],
-				category: "",
-				price: row[2],
-			});
+  csv
+    .parseFile(file.path)
+    .on("error", (error) => console.error(error))
+    .on("data", (row) => {
+      // Specific for TD Canada Trust
+      const transaction = new Transaction({
+        userId: userId,
+        date: row[0],
+        description: row[1],
+        category: "",
+        price: row[2],
+      });
 
-			transaction.save((err: any) => {
-				if (err) console.log(err);
-				else {
-					console.log("Successfully Saved Transaction");
-					console.log(row);
-				}
-			});
-		})
-		.on("end", (rowCount: number) => console.log(`Parsed ${rowCount} rows`));
+      transaction.save((err: any) => {
+        if (err) console.log(err);
+        else {
+          console.log("Successfully Saved Transaction");
+          console.log(row);
+        }
+      });
+    })
+    .on("end", (rowCount: number) => console.log(`Parsed ${rowCount} rows`));
 
-	const transactions = await Transaction.find({ userId: userId });
-	return res.status(200).json(transactions);
+  const transactions = await Transaction.find({ userId: userId });
+  return res.status(200).json(transactions);
 };
 
 /* 
 	Logic for updating the dragged transaction.
 */
 export const sortTransaction = async (req: Request, res: Response) => {
-	const transactionId = req.body._id;
-	const categoryName = req.body.categoryName;
+  const transactionId = req.body._id;
+  const categoryName = req.body.categoryName;
 
-	await Transaction.updateOne(
-		{ _id: transactionId },
-		{
-			category: categoryName,
-		}
-	);
-	const userId = req.user._id;
-	const transactions = await Transaction.find({ userId: userId });
-	return res.status(200).json(transactions);
+  await Transaction.updateOne(
+    { _id: transactionId },
+    {
+      category: categoryName,
+    }
+  );
+  const userId = req.user._id;
+  const transactions = await Transaction.find({ userId: userId });
+  return res.status(200).json(transactions);
 };
 
+
 export const deleteTransaction = async (req: Request, res: Response) => {
-	const transactionId = req.body._id;
+  const transactionId = req.body._id;
+  const userId = req.user._id;
 
-	// verify userId
-	const result = await Transaction.findByIdAndDelete({ _id: transactionId });
+  // verify userId
+  const result = await Transaction.findByIdAndDelete({ _id: transactionId, userId });
 
-	const userId = req.user._id;
-	const transactions = await Transaction.find({ userId: userId });
-	return res.status(200).json(transactions);
+  const transactions = await Transaction.find({ userId: userId });
+  return res.status(200).json(transactions);
 };
