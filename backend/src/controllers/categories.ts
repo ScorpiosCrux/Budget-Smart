@@ -1,45 +1,11 @@
 import { Request, Response } from "express";
 import Category from "../models/category.js";
+import * as CategoryQueries from "../mongo/categories.js";
 
-// Used for testing
-export const addCategories = async () => {
-	const techCategory = new Category({
-		userId: "63f6d942e70890f81697254f",
-		name: "New Tech!",
-		budget: 750,
-	});
-	techCategory.save();
-
-	const groceries = new Category({
-		userId: "63f6d942e70890f81697254f",
-		name: "Groceries",
-		budget: 325,
-	});
-	groceries.save();
-
-	const eatingOut = new Category({
-		userId: "63f6d942e70890f81697254f",
-		name: "Eating Out 🍔",
-		budget: 200,
-	});
-	eatingOut.save();
-};
-
-/**
- * This handler is a generic handler for all use. Adapt function to different errors.
- * @param error The error which we are handling
- * @returns a string with the return message. Does not return yet.
- */
-export const mongoErrorHandler = (error: any): string => {
-	if (error) {
-		if (error.code === 11000) {
-			console.log("Category already exists!");
-			return "Category already exists!";
-		} else {
-			console.log("Some other error");
-			console.log(error);
-		}
-	}
+export const getCategories = async (req: Request, res: Response) => {
+	const userId = req.user._id;
+	const categories = await CategoryQueries.findCategories(userId);
+	return res.status(200).json(categories);
 };
 
 /**
@@ -54,28 +20,23 @@ export const addCategory = async (req: Request, res: Response) => {
 		const budget = req.body.budget;
 		const categoryName = req.body.categoryName;
 
-		const category = new Category({
-			userId: userId,
-			name: categoryName,
-			budget: budget,
+		// TODO POSSIBLE ERROR HERE NO AWAIT
+		// const dbErrored = await CategoryQueries.newCategory(userId, categoryName, budget);
+		CategoryQueries.newCategory(userId, categoryName, budget).then((value) => {
+			console.log("Then");
+			console.log(value);
 		});
 
-		// Nothing gets returned?
-		const error: string = category.save(mongoErrorHandler);
-		if (error) {
-			console.log(error);
-		}
-
-		const categories = await Category.find({ userId: userId });
-		return res.status(200).json(categories);
+		// if (dbErrored !== null) {
+		// 	// Unprocessable Entity
+		// 	console.log("DB ERRORED");
+		// 	console.log(dbErrored);
+		// 	return res.status(422).json({ error: dbErrored });
+		// } else {
+		// 	const categories = await CategoryQueries.findCategories(userId);
+		// 	return res.status(200).json(categories);
+		// }
 	} catch (error) {
 		console.log(error);
 	}
-};
-
-export const getCategories = async (req: Request, res: Response) => {
-	const userId = req.user._id;
-	const categories = await Category.find({ userId: userId });
-	//TODO: 2 QUERIES?
-	return res.status(200).json(categories);
 };
