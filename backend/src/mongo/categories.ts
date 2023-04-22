@@ -27,7 +27,7 @@ export const findCategories = async (userId: string) => {
       initializedCategories.push(initializedCategory);
     }
 
-    return categories;
+    return initializedCategories;
   } catch (error) {
     console.log(error);
   }
