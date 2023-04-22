@@ -100,6 +100,8 @@ to be continued...
 
 `npm run dev` to run the development version
 
+You need .env files for both the frontend and backend.
+
 ## Todo
 
 - There are `TODO:` tags where I am planning to change.
