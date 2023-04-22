@@ -1,105 +1,85 @@
 import { Request, Response } from "express";
 import * as csv from "@fast-csv/parse";
 import Transaction from "../models/transactions.js";
-
-export const importTransactions = async () => {
-  // Get File and Save
-
-  // Read File (after checking for possible breaking characters or code)
-
-  // Name this file transactions/userId.csv
-  const csv_file_path = "/Users/vivid/Code/Smart-Budget/backend/src/utilities/transactions.csv";
-
-  csv
-    .parseFile(csv_file_path)
-    .on("error", (error) => console.error(error))
-    .on("data", (row) => {
-      // Specific for TD Canada Trust
-      const transaction = new Transaction({
-        userId: "63f6d942e70890f81697254f",
-        date: row[0],
-        description: row[1],
-        category: "",
-        price: row[2],
-      });
-
-      transaction.save((err: any) => {
-        if (err) console.log(err);
-        else {
-          console.log("Successfully Saved Transaction");
-          console.log(row);
-        }
-      });
-    })
-    .on("end", (rowCount: number) => console.log(`Parsed ${rowCount} rows`));
-};
-
-export const getTransactions = async (req: Request, res: Response) => {
-  const userId = req.user._id;
-  const transactions = await Transaction.find({ userId: userId });
-  return res.status(200).json(transactions);
-};
+import * as TransactionQuerries from "../mongo/transactions.js";
+import { ITransaction } from "../types.js";
 
 // TODO: This puts loads on the server, could have the client parse the file and send as JSON
-
-export const uploadTransactions = async (req: Request, res: Response) => {
+/**
+ * Creates multiple transactions from the CSV file
+ * @param req the request object created by the browser (Axios)
+ * @param res the response object that we return to the browser.
+ * @returns the response with status code and the new list of transactions.
+ */
+export const createTransactions = async (req: Request, res: Response) => {
   const userId = req.user._id;
   const file = req.file;
-  console.log(file);
 
+  /* Parses uploaded CSV file path */
   csv
     .parseFile(file.path)
     .on("error", (error) => console.error(error))
-    .on("data", (row) => {
-      // Specific for TD Canada Trust
-      const transaction = new Transaction({
-        userId: userId,
-        date: row[0],
-        description: row[1],
-        category: "",
-        price: row[2],
-      });
+    .on("data", async (row) => {
+      /* Specific CSV format for TD Canada Trust */
+      const date = row[0];
+      const description = row[1];
+      const price = row[2];
 
-      transaction.save((err: any) => {
-        if (err) console.log(err);
-        else {
-          console.log("Successfully Saved Transaction");
-          console.log(row);
-        }
-      });
+      await TransactionQuerries.createTransaction(userId, date, description, price);
     })
     .on("end", (rowCount: number) => console.log(`Parsed ${rowCount} rows`));
 
-  const transactions = await Transaction.find({ userId: userId });
+  /* Gets the updated list */
+  const transactions: ITransaction[] = await TransactionQuerries.readTransactions(userId);
   return res.status(200).json(transactions);
 };
 
-/* 
-	Logic for updating the dragged transaction.
-*/
+export const readTransactions = async (req: Request, res: Response) => {
+  const userId = req.user._id;
+  const transactions = await TransactionQuerries.readTransactions(userId);
+  return res.status(200).json(transactions);
+};
+
+/**
+ * Logic for updating the dragged transaction into categories.
+ * @param req the request object created by the browser (Axios)
+ * @param res the response object that we return to the browser.
+ * @returns the response with status code and the new list of transactions.
+ */
 export const sortTransaction = async (req: Request, res: Response) => {
+  const userId = req.user._id;
   const transactionId = req.body._id;
   const categoryName = req.body.categoryName;
 
-  await Transaction.updateOne(
-    { _id: transactionId },
-    {
-      category: categoryName,
-    }
-  );
-  const userId = req.user._id;
-  const transactions = await Transaction.find({ userId: userId });
+  /* Creates an object for updating the Transaction db document */
+  const update: object = {
+    category: categoryName,
+  };
+
+  await TransactionQuerries.updateTransaction(userId, transactionId, update);
+
+  const transactions: ITransaction[] = await TransactionQuerries.readTransactions(userId);
   return res.status(200).json(transactions);
 };
 
-
+/**
+ * Deletes the transaction given the userId and transactionId
+ * @param req Express request
+ * @param res Express response
+ * @returns The express status and updated array of transactions
+ */
 export const deleteTransaction = async (req: Request, res: Response) => {
-  const transactionId = req.body._id;
   const userId = req.user._id;
+  const transactionId = req.body._id;
 
-  // verify userId
-  const result = await Transaction.findByIdAndDelete({ _id: transactionId, userId });
+  const result = await TransactionQuerries.deleteTransaction(userId, transactionId);
+  const transactions: ITransaction[] = await TransactionQuerries.readTransactions(userId);
 
-  const transactions = await Transaction.find({ userId: userId });
+  /* If nothing was deleted */
+  if (!result) {
+    return res.status(404).json(transactions);
+  }
+
+  /* If delete was successful and we're returning the updated list */
   return res.status(200).json(transactions);
 };

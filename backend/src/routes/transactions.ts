@@ -8,12 +8,12 @@ const upload = multer({ dest: "uploaded-transactions/" });
 const router = express.Router({ mergeParams: true });
 
 router
-	.route("/")
-	.get(verifyUser, Transactions.getTransactions)
-	.delete(verifyUser, Transactions.deleteTransaction);
+  .route("/")
+  .get(verifyUser, Transactions.readTransactions)
+  .delete(verifyUser, Transactions.deleteTransaction);
 router.route("/sort").post(verifyUser, Transactions.sortTransaction);
 router
-	.route("/upload")
-	.post(verifyUser, upload.single("transactions"), Transactions.uploadTransactions);
+  .route("/upload")
+  .post(verifyUser, upload.single("transactions"), Transactions.createTransactions);
 
 export default router;

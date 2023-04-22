@@ -7,7 +7,7 @@ import * as CategoryQueries from "../mongo/categories.js";
  * @param res the response object that we return.
  * @returns the response with status code and the new list of categories.
  */
-export const getCategories = async (req: Request, res: Response) => {
+export const readCategories = async (req: Request, res: Response) => {
   const userId = req.user._id;
   const categories = await CategoryQueries.readCategories(userId);
   return res.status(200).json(categories);
@@ -19,7 +19,7 @@ export const getCategories = async (req: Request, res: Response) => {
  * @param res the response object that we return.
  * @returns the response with status code and the new list of categories.
  */
-export const addCategory = async (req: Request, res: Response) => {
+export const createCategory = async (req: Request, res: Response) => {
   try {
     const userId = req.user._id;
     const budget = req.body.budget;
@@ -42,7 +42,7 @@ export const addCategory = async (req: Request, res: Response) => {
  * Deletes the category given the userId and categoryId
  * @param req Express request
  * @param res Express response
- * @returns The express status and categories
+ * @returns The express status and updated array of categories
  */
 export const deleteCategory = async (req: Request, res: Response) => {
   const userId = req.user._id;

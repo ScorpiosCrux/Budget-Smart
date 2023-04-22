@@ -7,9 +7,9 @@ const router = express.Router({ mergeParams: true });
 // api/categories/...
 router
   .route("/")
-  .get(verifyUser, Categories.getCategories)
+  .get(verifyUser, Categories.readCategories)
   .delete(verifyUser, Categories.deleteCategory);
 
-router.route("/new").post(verifyUser, Categories.addCategory);
+router.route("/new").post(verifyUser, Categories.createCategory);
 
 export default router;
