@@ -45,22 +45,6 @@ export const newCategory = async (userId: string, categoryName: string, budget: 
     budget: budget,
   });
 
-	/* 
-		
-	*/
-  try {
-    await category.save((err: any) => {
-      if (err) {
-        if (err.name === "MongoServerError" && err.code === 11000) {
-          console.log("category already exists");
-        } else {
-          // If any errors arrive here, you should handle it.
-          console.log(err);
-          // return "Check print statements";
-        }
-      }
-    });
-  } catch (error) {
-		console.log("trycat block error")
-	}
+  /* The error(s) are passed to the caller */
+  await category.save();
 };

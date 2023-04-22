@@ -20,23 +20,17 @@ export const addCategory = async (req: Request, res: Response) => {
     const budget = req.body.budget;
     const categoryName = req.body.categoryName;
 
-    // TODO POSSIBLE ERROR HERE NO AWAIT
-    // const dbErrored = await CategoryQueries.newCategory(userId, categoryName, budget);
+    /* 
+			.then and await are equivalent in the sense they both use promises.
+			Await waits for the promise to resolve, and errors you catch using try/catch blocks
+			instead
+		*/
     try {
-      const mongoResponse = await CategoryQueries.newCategory(userId, categoryName, budget);
+      await CategoryQueries.newCategory(userId, categoryName, budget);
     } catch (error) {
       console.log("Mongo Error!");
     }
 
-    // if (dbErrored !== null) {
-    // 	// Unprocessable Entity
-    // 	console.log("DB ERRORED");
-    // 	console.log(dbErrored);
-    // 	return res.status(422).json({ error: dbErrored });
-    // } else {
-    // 	const categories = await CategoryQueries.findCategories(userId);
-    // 	return res.status(200).json(categories);
-    // }
   } catch (error) {
     console.log(error);
   }
