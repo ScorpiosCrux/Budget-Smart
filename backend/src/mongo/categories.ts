@@ -2,6 +2,7 @@
  * This file contains all queries related to categories.
  */
 import Category from "../models/category.js";
+import Transaction from "../models/transactions.js";
 import { ICategory, ICategoryPartial } from "../types.js";
 
 /**
@@ -51,12 +52,27 @@ export const newCategory = async (userId: string, categoryName: string, budget: 
 };
 
 /**
- * A function that deletes the category from
+ * A function that deletes the category from the database. Also updates the transactions
  * @param userId userId of the client
  * @param categoryId the MongoDB id of the category
  * @returns whether operation was successful or not.
  */
 export const deleteCategory = async (userId: string, categoryId: string) => {
+  const category: ICategoryPartial = await Category.findOne({ _id: categoryId });
+
+  /* Find transactions of user that has a category name of the one we're deleting */
+  const transactions = await Transaction.find({
+    userId,
+    category: category.name,
+  });
+
+  /* Sets the category to "", updates and validates with save() */
+  for (let transaction of transactions) {
+    transaction.category = "";
+    transaction.save();
+  }
+
+  /* Deletes the category by _id and userId */
   const result = await Category.findByIdAndDelete({ _id: categoryId, userId });
   return result;
 };
