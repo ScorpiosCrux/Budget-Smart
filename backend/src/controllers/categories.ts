@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import Category from "../models/category.js";
 import * as CategoryQueries from "../mongo/categories.js";
 
 export const getCategories = async (req: Request, res: Response) => {
@@ -25,13 +24,26 @@ export const addCategory = async (req: Request, res: Response) => {
 			Await waits for the promise to resolve, and errors you catch using try/catch blocks
 			instead
 		*/
-    try {
-      await CategoryQueries.newCategory(userId, categoryName, budget);
-    } catch (error) {
-      console.log("Mongo Error!");
-    }
-
+    await CategoryQueries.newCategory(userId, categoryName, budget);
+    const categories = await CategoryQueries.findCategories(userId);
+    return res.status(200).json(categories);
   } catch (error) {
     console.log(error);
   }
+};
+
+/**
+ * Deletes the category given the userId and categoryId
+ * @param req Express request
+ * @param res Express response
+ * @returns The express status and categories
+ */
+export const deleteCategory = async (req: Request, res: Response) => {
+	const userId = req.user._id;
+	const categoryId = req.body._id;
+
+	const result = await CategoryQueries.deleteCategory(userId, categoryId)
+
+	const categories = await CategoryQueries.findCategories(userId);
+	return res.status(200).json(categories);
 };

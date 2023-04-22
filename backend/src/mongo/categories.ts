@@ -2,27 +2,7 @@
  * This file contains all queries related to categories.
  */
 
-import { error } from "console";
 import Category from "../models/category.js";
-
-// ========== ERROR HANDLER =========
-/**
- * This handler is a generic handler for all use. Adapt function to different errors.
- * @param error The error which we are handling
- * @returns a string with the return message. Does not return yet.
- */
-export const errorHandler = (error: any): string => {
-  if (error) {
-    if (error.code === 11000) {
-      console.log("Category already exists!");
-      return "Category already exists!";
-    } else {
-      console.log("Some other error");
-      console.log(error);
-    }
-  }
-};
-// ========== ERROR HANDLER =========
 
 /**
  * Finds all the categories
@@ -38,6 +18,12 @@ export const findCategories = async (userId: string) => {
   }
 };
 
+/**
+ * This function creates a new category and saves it to the database.
+ * @param userId userId of the client
+ * @param categoryName name of the category we are adding
+ * @param budget the budget the client wants to allocate to the category
+ */
 export const newCategory = async (userId: string, categoryName: string, budget: number) => {
   const category = new Category({
     userId: userId,
@@ -47,4 +33,16 @@ export const newCategory = async (userId: string, categoryName: string, budget: 
 
   /* The error(s) are passed to the caller */
   await category.save();
+};
+
+
+/**
+ * A function that deletes the category from 
+ * @param userId userId of the client
+ * @param categoryId the MongoDB id of the category
+ * @returns whether operation was successful or not.
+ */
+export const deleteCategory = async (userId: string, categoryId: string) => {
+  const result = await Category.findByIdAndDelete({ _id: categoryId, userId });
+  return result;
 };

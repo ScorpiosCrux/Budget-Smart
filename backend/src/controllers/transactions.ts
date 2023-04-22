@@ -95,6 +95,7 @@ export const sortTransaction = async (req: Request, res: Response) => {
 export const deleteTransaction = async (req: Request, res: Response) => {
 	const transactionId = req.body._id;
 
+	// verify userId
 	const result = await Transaction.findByIdAndDelete({ _id: transactionId });
 
 	const userId = req.user._id;
