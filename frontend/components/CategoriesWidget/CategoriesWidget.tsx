@@ -19,6 +19,7 @@ import Modal from "components/core/Modal";
 interface Props {
 	categories: Category[];
 	addCategory(categoryName: string, budget: number): void;
+	deleteCategory(_id: string): void;
 }
 
 const CategoriesWidget = (props: Props) => {
@@ -85,7 +86,7 @@ const CategoriesWidget = (props: Props) => {
 										action: () => {
 											console.log("Delete Clicked");
 											console.log(target);
-											// if (target) props.deleteTransaction(target?._id);
+											if (target) props.deleteCategory(target?._id);
 										},
 										key: "MenuItemDelete",
 									},
