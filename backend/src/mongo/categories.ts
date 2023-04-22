@@ -1,16 +1,33 @@
 /**
- * This file contains all queries related to categories.
+ * This file contains all queries related to categories. 
  */
 import Category from "../models/category.js";
 import Transaction from "../models/transactions.js";
 import { ICategory, ICategoryPartial } from "../types.js";
 
 /**
+ * This function creates a new category and saves it to the database.
+ * @param userId userId of the client
+ * @param categoryName name of the category we are adding
+ * @param budget the budget the client wants to allocate to the category
+ */
+export const createCategory = async (userId: string, categoryName: string, budget: number) => {
+  const category = new Category({
+    userId: userId,
+    name: categoryName,
+    budget: budget,
+  });
+
+  /* The error(s) are passed to the caller */
+  await category.save();
+};
+
+/**
  * Finds all the categories and returns
  * @param userId the userId from the request
  * @returns A promise but an ICategory[]
  */
-export const findCategories = async (userId: string) => {
+export const readCategories = async (userId: string) => {
   try {
     /* The lean function optimizes querries and only has necessary information */
     const categories: ICategoryPartial[] = await Category.find({ userId }).lean();
@@ -32,23 +49,6 @@ export const findCategories = async (userId: string) => {
   } catch (error) {
     console.log(error);
   }
-};
-
-/**
- * This function creates a new category and saves it to the database.
- * @param userId userId of the client
- * @param categoryName name of the category we are adding
- * @param budget the budget the client wants to allocate to the category
- */
-export const newCategory = async (userId: string, categoryName: string, budget: number) => {
-  const category = new Category({
-    userId: userId,
-    name: categoryName,
-    budget: budget,
-  });
-
-  /* The error(s) are passed to the caller */
-  await category.save();
 };
 
 /**

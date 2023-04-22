@@ -9,7 +9,7 @@ import * as CategoryQueries from "../mongo/categories.js";
  */
 export const getCategories = async (req: Request, res: Response) => {
   const userId = req.user._id;
-  const categories = await CategoryQueries.findCategories(userId);
+  const categories = await CategoryQueries.readCategories(userId);
   return res.status(200).json(categories);
 };
 
@@ -30,8 +30,8 @@ export const addCategory = async (req: Request, res: Response) => {
 			Await waits for the promise to resolve, and errors you catch using try/catch blocks
 			instead
 		*/
-    await CategoryQueries.newCategory(userId, categoryName, budget);
-    const categories = await CategoryQueries.findCategories(userId);
+    await CategoryQueries.createCategory(userId, categoryName, budget);
+    const categories = await CategoryQueries.readCategories(userId);
     return res.status(200).json(categories);
   } catch (error) {
     console.log(error);
@@ -50,7 +50,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
 
   const result = await CategoryQueries.deleteCategory(userId, categoryId);
 
-  const categories = await CategoryQueries.findCategories(userId);
+  const categories = await CategoryQueries.readCategories(userId);
 
   /* If nothing was deleted */
   if (!result) {
