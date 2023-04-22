@@ -1,5 +1,5 @@
 /**
- * This file contains all queries related to categories. 
+ * This file contains all queries related to categories.
  */
 import Category from "../models/category.js";
 import Transaction from "../models/transactions.js";
@@ -12,14 +12,18 @@ import { ICategory, ICategoryPartial } from "../types.js";
  * @param budget the budget the client wants to allocate to the category
  */
 export const createCategory = async (userId: string, categoryName: string, budget: number) => {
-  const category = new Category({
-    userId: userId,
-    name: categoryName,
-    budget: budget,
-  });
+  try {
+    const category = new Category({
+      userId: userId,
+      name: categoryName,
+      budget: budget,
+    });
 
-  /* The error(s) are passed to the caller */
-  await category.save();
+    /* The error(s) are passed to the caller */
+    await category.save();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 /**
@@ -58,21 +62,25 @@ export const readCategories = async (userId: string) => {
  * @returns whether operation was successful or not.
  */
 export const deleteCategory = async (userId: string, categoryId: string) => {
-  const category: ICategoryPartial = await Category.findOne({ _id: categoryId });
+  try {
+    const category: ICategoryPartial = await Category.findOne({ _id: categoryId });
 
-  /* Find transactions of user that has a category name of the one we're deleting */
-  const transactions = await Transaction.find({
-    userId,
-    category: category.name,
-  });
+    /* Find transactions of user that has a category name of the one we're deleting */
+    const transactions = await Transaction.find({
+      userId,
+      category: category.name,
+    });
 
-  /* Sets the category to "", updates and validates with save() */
-  for (let transaction of transactions) {
-    transaction.category = "";
-    transaction.save();
+    /* Sets the category to "", updates and validates with save() */
+    for (let transaction of transactions) {
+      transaction.category = "";
+      transaction.save();
+    }
+
+    /* Deletes the category by _id and userId */
+    const result = await Category.findByIdAndDelete({ _id: categoryId, userId });
+    return result;
+  } catch (error) {
+    console.log(error);
   }
-
-  /* Deletes the category by _id and userId */
-  const result = await Category.findByIdAndDelete({ _id: categoryId, userId });
-  return result;
 };
