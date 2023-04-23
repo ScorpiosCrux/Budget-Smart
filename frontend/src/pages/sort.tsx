@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useData } from "hooks/useData";
-import MenuContext from "components/core/ContextMenu";
 
 export default function Sort() {
   const data = useData();
@@ -43,5 +42,7 @@ export default function Sort() {
 
 const SortWrapper = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 2rem;
 `;

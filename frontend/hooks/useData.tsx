@@ -69,6 +69,7 @@ export const useData = () => {
     }
   };
 
+  // TODO: move functions that are not state dependent out of here.
   const uploadCSV = async (file: File, retry?: boolean) => {
     try {
       await transactionHook.uploadTransactionsCSV(user, file);

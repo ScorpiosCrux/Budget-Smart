@@ -30,8 +30,7 @@ const TransactionsWidget = (props: Props) => {
 	const { clicked, setClicked, points, setPoints, target, setTarget } = useContextMenu();
 
 	return (
-		<StyledWidget>
-			<StyledContainer width="800px" height="900px">
+			<StyledContainer width="800px" height="90vh">
 				<StyledContent>
 					<StyledHeader>
 						<div className="main">
@@ -110,7 +109,6 @@ const TransactionsWidget = (props: Props) => {
 					</StyledTransactions>
 				</StyledContent>
 			</StyledContainer>
-		</StyledWidget>
 	);
 };
 
