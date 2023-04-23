@@ -7,7 +7,7 @@ import { useTransactions } from "./useTransactions";
 
 export const useData = () => {
   const { user, refreshToken } = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); //The isLoading flag is used to trigger functions and component rendering
 
   const categoryHook = useCategories();
   const categories = categoryHook.categories;
@@ -50,9 +50,10 @@ export const useData = () => {
   /* Is ran on when transactions change */
   useEffect(() => {
     if (isLoading === false) {
+      console.log("test");
       categoryHook.calculateCategories(transactionHook.transactions);
     }
-  }, [transactionHook.transactions]);
+  }, [transactionHook.transactions, isLoading]);
 
   const sort = async (_id: string, categoryName: string, retry?: boolean) => {
     try {
@@ -97,30 +98,47 @@ export const useData = () => {
     }
   };
 
-  const deleteCategory = async (_id: string, retry?: boolean) => {
+  /**
+   * Deletes the category using backend API call.
+   * @param _id Category Id
+   * @param _retry Should only be used internally
+   */
+  const deleteCategory = async (_id: string, _retry?: boolean) => {
     try {
+      setIsLoading(true);
       await categoryHook.deleteCategory(user, _id);
+      setIsLoading(false);
     } catch (error) {
-      console.log("error useData");
       if (isAxiosError(error)) {
         await refreshToken();
 
         /* If retry value is not present, then try again else 1 retry is enough */
-        if (!retry) await deleteCategory(_id, true);
+        if (!_retry) await deleteCategory(_id, true);
+      } else {
+        console.log("error useData");
       }
     }
   };
 
-  const addCategory = async (categoryName: string, budget: number, retry?: boolean) => {
+  /**
+   * Adds a category using backend API call.
+   * @param categoryName The name of the category
+   * @param budget The budget amount
+   * @param _retry An internal flag for retrying if the auth token is expired.
+   */
+  const addCategory = async (categoryName: string, budget: number, _retry?: boolean) => {
     try {
+      setIsLoading(true);
       await categoryHook.addCategory(user, categoryName, budget);
+      setIsLoading(false);
     } catch (error) {
-      console.log("error useData");
       if (isAxiosError(error)) {
         await refreshToken();
 
         /* If retry value is not present, then try again else 1 retry is enough */
-        if (!retry) await addCategory(categoryName, budget, true);
+        if (!_retry) await addCategory(categoryName, budget, true);
+      } else {
+        console.log("error useData");
       }
     }
   };

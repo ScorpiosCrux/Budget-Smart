@@ -2,7 +2,6 @@ import { themes, typography } from "@/theme";
 import styled from "styled-components";
 
 export const StyledTransactions = styled.div`
-	padding: 0 1.5rem;
 	overflow: hidden;
 	.header {
 		font-size: ${typography.bold.fontSize};

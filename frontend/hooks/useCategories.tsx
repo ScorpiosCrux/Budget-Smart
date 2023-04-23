@@ -23,10 +23,10 @@ export const useCategories = () => {
           authorization: "Bearer " + user?.token,
         },
       });
-      const categories: ICategory[] = response.data;
+      const newCategories: ICategory[] = response.data;
 
       /* Update categories state  */
-      setCategories(categories);
+      setCategories(newCategories);
       setIsLoading(false);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -58,10 +58,10 @@ export const useCategories = () => {
           budget: budget,
         },
       });
-      const categories: ICategory[] = response.data;
+      const newCategories: ICategory[] = response.data;
 
       /* Update categories  */
-      setCategories(categories);
+      setCategories(newCategories);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         throw error;
@@ -92,10 +92,11 @@ export const useCategories = () => {
           _id: _id,
         },
       });
-      const categories: ICategory[] = response.data;
+      const newCategories: ICategory[] = response.data;
+      // console.log(newCategories)
 
       /* Update categories  */
-      setCategories(categories);
+      setCategories(newCategories);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw error;
@@ -109,7 +110,7 @@ export const useCategories = () => {
    * Calculates the missing attributes of categories. Instead of storing these simple operations.
    * @param transactions Array of transactions to perform calculations with.
    */
-  const calculateCategories = (transactions: Transaction[]) => {
+  const calculateCategories = async (transactions: Transaction[]) => {
     /* If categories is undefined */
     if (!categories || !transactions) {
       console.log(categories);
@@ -144,6 +145,8 @@ export const useCategories = () => {
       category.totalSpent = Math.round(category.totalSpent * 100) / 100;
       category.remainingBudgetPerDay = Math.round(category.remainingBudgetPerDay * 100) / 100;
     }
+
+    console.log(newCategories);
 
     setCategories(newCategories);
   };
