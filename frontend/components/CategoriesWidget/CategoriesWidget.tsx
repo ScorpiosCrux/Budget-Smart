@@ -1,11 +1,9 @@
 import StyledContainer from "components/core/StyledContainer";
 import StyledHeader from "components/core/StyledHeader";
 import CategoryComponent from "./Category";
-
 import { Category, TargetType } from "@/types";
 import { StyledCategories } from "./CategoryStyledComponents";
 import StyledContent from "components/core/StyledContent";
-
 import trashIcon from "public/assets/icons/trash-solid.svg";
 import editIcon from "public/assets/icons/pencil-solid.svg";
 import addIcon from "public/assets/icons/plus-solid.svg";

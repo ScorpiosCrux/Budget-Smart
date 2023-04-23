@@ -20,7 +20,7 @@ interface Props {
 const Modal = (props: Props) => {
 	return (
 		<ModalContainer>
-			<StyledContainer width="400px" height="500px">
+			<StyledContainer width="400px" height="auto">
 				<ModalContent>
 					<CategoryForm closeModal={props.closeModal} addCategory={props.addCategory} />
 				</ModalContent>

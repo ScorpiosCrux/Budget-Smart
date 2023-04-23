@@ -6,7 +6,6 @@ import { useCategories } from "./useCategories";
 import { useTransactions } from "./useTransactions";
 
 export const useData = () => {
-  // TODO: Not too fond of categories: oldCategories
   const { user, refreshToken } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
