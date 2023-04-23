@@ -1,7 +1,6 @@
 import TransactionComponent from "./TransactionComponent";
 import StyledHeader from "../core/StyledHeader";
 import StyledContainer from "../core/StyledContainer";
-import StyledWidget from "../core/StyledWidget";
 import { Transaction } from "@/types";
 import StyledContent from "components/core/StyledContent";
 import {

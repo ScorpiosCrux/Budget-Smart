@@ -1,6 +1,5 @@
 import StyledContainer from "components/core/StyledContainer";
 import StyledHeader from "components/core/StyledHeader";
-import StyledWidget from "components/core/StyledWidget";
 import CategoryComponent from "./Category";
 
 import { Category, TargetType } from "@/types";
