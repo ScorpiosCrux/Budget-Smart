@@ -1,20 +1,23 @@
-import { Category, ICategory, ICategoryPartial, Transaction } from "@/types";
+import { Category, ICategory, Transaction } from "@/types";
 import axios, { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
-import { useAuth } from "./useAuth";
+import { useState } from "react";
 
+/**
+ * This is a custom react hook with logic related to categories.
+ * IMPORTANT: When calling useCategories(), you are DUPLICATING states!
+ * @returns exposed functions and states.
+ */
 export const useCategories = () => {
-  /* 
-	IMPORTANT NOTE: When creating a copy of this hook, you are DUPLICATING the states!! 
-	https://stackoverflow.com/questions/57130413/changes-to-state-issued-from-custom-hook-not-causing-re-render-even-though-added
-	*/
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState<Category[] | undefined>();
 
+  /**
+   * An API call to the backend to get the user's categories!
+   * @param user the user state that contains their accessToken and _id
+   */
   const getCategories = async (user: any) => {
     try {
       /* Generate GET request */
-      // https://stackoverflow.com/questions/57629111/how-to-use-a-type-for-the-response-from-axios-get
       const response: AxiosResponse<ICategory[]> = await axios({
         method: "GET",
         withCredentials: true,
@@ -41,7 +44,7 @@ export const useCategories = () => {
 
   /**
    * This function is an API call to the backend which adds a category
-   * @param user the user object
+   * @param user the user state that contains their accessToken and _id
    */
   const addCategory = async (user: any, categoryName: string, budget: number) => {
     try {
@@ -74,10 +77,10 @@ export const useCategories = () => {
   };
 
   /**
-   *
-   * @param user
-   * @param _id
-   * @returns
+   * Deletes a category by calling the backend API.
+   * @param user the user state that contains their accessToken and _id
+   * @param _id the categoryId we want to delete
+   * @returns Possible feedback to the user.
    */
   const deleteCategory = async (user: any, _id: string) => {
     try {
@@ -93,7 +96,6 @@ export const useCategories = () => {
         },
       });
       const newCategories: ICategory[] = response.data;
-      // console.log(newCategories)
 
       /* Update categories  */
       setCategories(newCategories);
@@ -145,8 +147,6 @@ export const useCategories = () => {
       category.totalSpent = Math.round(category.totalSpent * 100) / 100;
       category.remainingBudgetPerDay = Math.round(category.remainingBudgetPerDay * 100) / 100;
     }
-
-    console.log(newCategories);
 
     setCategories(newCategories);
   };
