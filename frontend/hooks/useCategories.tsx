@@ -20,7 +20,7 @@ export const useCategories = () => {
         withCredentials: true,
         url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/categories",
         headers: {
-          authorization: "Bearer " + user?.token,
+          authorization: "Bearer " + user?.accessToken,
         },
       });
       const newCategories: ICategory[] = response.data;
@@ -51,7 +51,7 @@ export const useCategories = () => {
         withCredentials: true,
         url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/categories/new",
         headers: {
-          authorization: "Bearer " + user?.token,
+          authorization: "Bearer " + user?.accessToken,
         },
         data: {
           categoryName: categoryName,
@@ -86,7 +86,7 @@ export const useCategories = () => {
         withCredentials: true,
         url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/categories",
         headers: {
-          authorization: "Bearer " + user?.token,
+          authorization: "Bearer " + user?.accessToken,
         },
         data: {
           _id: _id,

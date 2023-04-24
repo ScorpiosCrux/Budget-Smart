@@ -73,8 +73,6 @@ export const useAuth = () => {
 			const authUser: AuthUser = {
 				...response.data,
 				isLoggedIn: true,
-				displayName: "Display Name",
-				username: "Username",
 			};
 			addUser(authUser);
 		} catch (error) {
@@ -115,8 +113,8 @@ export const useAuth = () => {
 		}
 
 		setIsLoading(true);
-		const token = user?.token;
-		if (token && isExpired(token)) {
+		const accessToken = user?.accessToken;
+		if (accessToken && isExpired(accessToken)) {
 			console.log("refreshToken call");
 			try {
 				const response = await axios({
@@ -126,7 +124,7 @@ export const useAuth = () => {
 				});
 
 				let newUser = user;
-				newUser.token = response.data.token;
+				newUser.accessToken = response.data.accessToken;
 
 				addUser(newUser);
 				setIsLoading(false);

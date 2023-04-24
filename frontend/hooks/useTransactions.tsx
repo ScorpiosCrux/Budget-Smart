@@ -17,7 +17,7 @@ export const useTransactions = () => {
 				withCredentials: true,
 				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions",
 				headers: {
-					authorization: "Bearer " + user?.token,
+					authorization: "Bearer " + user?.accessToken,
 				},
 			});
 
@@ -47,7 +47,7 @@ export const useTransactions = () => {
 				withCredentials: true,
 				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions/upload",
 				headers: {
-					authorization: "Bearer " + user?.token,
+					authorization: "Bearer " + user?.accessToken,
 				},
 				data: fileData,
 			});
@@ -74,7 +74,7 @@ export const useTransactions = () => {
 				withCredentials: true,
 				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions/sort",
 				headers: {
-					authorization: "Bearer " + user?.token,
+					authorization: "Bearer " + user?.accessToken,
 				},
 				data: {
 					_id: _id,
@@ -99,7 +99,7 @@ export const useTransactions = () => {
 				withCredentials: true,
 				url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/transactions",
 				headers: {
-					authorization: "Bearer " + user?.token,
+					authorization: "Bearer " + user?.accessToken,
 				},
 				data: {
 					_id: _id,
