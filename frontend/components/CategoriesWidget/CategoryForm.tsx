@@ -1,6 +1,5 @@
 import { themes } from "@/theme";
 import { Button, TextField } from "@mui/material";
-import { StyledInputContainer } from "components/AuthWidgets/AuthWidgetStyledComponents";
 import { StyledH2 } from "components/core/StyledHeadings";
 import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
