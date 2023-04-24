@@ -145,6 +145,8 @@ export const useAuth = () => {
 					return "Oops Something Went Wrong!";
 				}
 			}
+		} else {
+			console.log("Access Token Missing!")
 		}
 	};
 
