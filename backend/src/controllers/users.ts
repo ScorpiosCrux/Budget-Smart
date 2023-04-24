@@ -22,7 +22,7 @@ export const registerNewUser = async (req: Request, res: Response) => {
       _id: registeredUser._id,
       displayName: registeredUser.displayName,
       email: registeredUser.email,
-      token: accessToken,
+      accessToken: accessToken,
     });
   } catch (error) {
     console.log(error);
@@ -67,6 +67,8 @@ export const refreshToken = (req: Request, res: Response) => {
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
 
+  console.log("refresh Token")
+  
   if (refreshToken) {
     try {
       const payload = jwt.verify(refreshToken, process.env.SECRET_REFRESH_TOKEN);
@@ -95,7 +97,8 @@ export const refreshToken = (req: Request, res: Response) => {
                 res.send(error);
               } else {
                 res.cookie("refreshToken", newRefreshToken, COOKIE_OPTIONS);
-                res.status(200).json({ token: accessToken });
+                console.log({ accessToken: accessToken });
+                res.status(200).json({ accessToken: accessToken });
               }
             });
           }
