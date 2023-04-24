@@ -14,8 +14,8 @@ const categorySchema = yup.object().shape({
 });
 
 const initialFormikValues = {
-  categoryName: "Category #Num",
-  budget: 100,
+  categoryName: "",
+  budget: 0,
 };
 
 interface FormValues {
@@ -34,18 +34,6 @@ interface Props {
  */
 const CategoryForm = (props: Props) => {
   const [errorMsg, setErrorMsg] = useState<null | string>(null);
-
-  // /* Handler Functions */
-  // const handleLogin = async (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
-  // 	setSubmitting(true);
-  // 	const error = await login(values.email, values.password);
-  // 	if (error) {
-  // 		setErrorMsg(error);
-  // 		setSubmitting(false);
-  // 	} else {
-  // 		router.push("/");
-  // 	}
-  // };
 
   const handleAddCategory = async (
     values: FormValues,
@@ -156,11 +144,11 @@ const ModalBody = styled.div`
 `;
 
 const FormContainer = styled.form`
-	height: 100%;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const ButtonContainer = styled.div`

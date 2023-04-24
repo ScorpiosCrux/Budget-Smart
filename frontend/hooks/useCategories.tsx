@@ -9,7 +9,7 @@ import { useState } from "react";
  */
 export const useCategories = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [categories, setCategories] = useState<Category[] | undefined>();
+  const [categories, setCategories] = useState<Category[]>();
 
   /**
    * An API call to the backend to get the user's categories!
