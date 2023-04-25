@@ -9,8 +9,8 @@ services:
   express:
     build: backend/.
     ports:
-      - 5050:5050
+      - 5070:5070
   frontend:
     build: frontend/.
     ports:
-      - 5051:5051
+      - 5071:3000

@@ -6,4 +6,4 @@ RUN npm i
 RUN npm run build
 
 CMD ["npm", "run", "start"]
-EXPOSE 5050
+EXPOSE 5070
