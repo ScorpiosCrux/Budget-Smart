@@ -21,18 +21,20 @@ stages:
 #   --name : name of the container
 #   $CI_REGISTRY_IMAGE: environment variable set by GitLab Runner
 #   5000 on host, 3000 inside the container
+
+before_script:
+  - export DB_CONNECTION_STRING=$DB_CONNECTION_STRING
+  - export DB_CONNECTION_STRING=$DB_CONNECTION_STRING
+  - export SECRET_JWT=$SECRET_JWT
+  - export SECRET_REFRESH_TOKEN=$SECRET_REFRESH_TOKEN
+  - export SECRET_COOKIE=$SECRET_COOKIE
+  - export BACKEND_PORT=$BACKEND_PORT
+  - export FRONTEND_PORT=$FRONTEND_PORT
+
 deploy:
   stage: deploy
   image: docker:latest
   script:
-    - echo $FRONTEND_PORT
-    - export DB_CONNECTION_STRING=$DB_CONNECTION_STRING
-    - export DB_CONNECTION_STRING=$DB_CONNECTION_STRING
-    - export SECRET_JWT=$SECRET_JWT
-    - export SECRET_REFRESH_TOKEN=$SECRET_REFRESH_TOKEN
-    - export SECRET_COOKIE=$SECRET_COOKIE
-    - export BACKEND_PORT=$BACKEND_PORT
-    - export FRONTEND_PORT=$FRONTEND_PORT
     - docker-compose up -d
     # - docker build --pull -t $CI_REGISTRY_IMAGE .
     # - docker run -d --restart unless-stopped -p 5000:3000 --name personal-website $CI_REGISTRY_IMAGE:latest
