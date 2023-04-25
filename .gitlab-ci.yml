@@ -25,6 +25,7 @@ deploy:
   stage: deploy
   image: docker:latest
   script:
+    - echo $FRONTEND_PORT
     - export DB_CONNECTION_STRING=$DB_CONNECTION_STRING
     - export DB_CONNECTION_STRING=$DB_CONNECTION_STRING
     - export SECRET_JWT=$SECRET_JWT
