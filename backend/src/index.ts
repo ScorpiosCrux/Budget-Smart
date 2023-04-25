@@ -19,7 +19,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: __dirname + "/.env" });
-const port = 4000;
+const port = process.env.BACKEND_PORT;
 const app: Express = express();
 
 function initExpressApp() {
@@ -28,7 +28,10 @@ function initExpressApp() {
 	app.use(express.urlencoded({ extended: true }));
 	app.use(
 		cors({
-			origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
+			origin: [
+				`http://localhost:${process.env.FRONTEND_PORT}`,
+				`http://127.0.0.1:${process.env.FRONTEND_PORT}`,
+			],
 			credentials: true,
 		})
 	);
@@ -64,7 +67,7 @@ function addRoutes() {
 
 	app.use("/api/auth", userRoutes);
 	app.use("/api/transactions", transactionRoutes);
-	app.use("/api/categories", categoryRoutes)
+	app.use("/api/categories", categoryRoutes);
 }
 
 function startUp() {

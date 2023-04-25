@@ -18,13 +18,13 @@ const Navbar = () => {
 			<div className="links">
 				<div className="nav-button">
 					<StyledLink href={"/"}>
-						<img src="home.svg" alt="home" />
+						<img src="assets/icons/home.svg" alt="home" />
 					</StyledLink>
 				</div>
 
 				<div className="nav-button">
 					<StyledLink href={"/sort"}>
-						<img src="sort.svg" alt="home" />
+						<img src="assets/icons/sort.svg" alt="home" />
 					</StyledLink>
 				</div>
 			</div>
