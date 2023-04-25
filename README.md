@@ -102,6 +102,19 @@ to be continued...
 
 You need .env files for both the frontend and backend.
 
+## Continuous Integration and Deployment
+
+### Front-End
+- Docker is used to run the project on port 5051.
+  - `docker build -t test .`
+    - `-t` - tag
+    - `.` current directory (with the Dockerfile)
+
+
+### Back-End
+
+
+
 ## Todo
 
 - There are `TODO:` tags where I am planning to change.

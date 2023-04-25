@@ -1,0 +1,16 @@
+version: "0.01"
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+  express:
+    build: backend/.
+    ports:
+      - 5050:5050
+  frontend:
+    build: frontend/.
+    ports:
+      - 5051:5051
