@@ -4,8 +4,8 @@ import { useDrag } from "react-dnd";
 import StyledIcon from "../core/StyledIcon";
 import { Category, Transaction } from "@/types";
 import { StyledTransactionGrid, StyledTransactionWrapper } from "./TransactionStyledComponents";
-import { useContextMenu } from "hooks/useContextMenu";
-import MenuContext from "components/core/ContextMenu";
+import { useContextMenu } from "@/hooks/useContextMenu";
+import MenuContext from "@/components/core/ContextMenu";
 
 /* MOVE THIS TO ANOTHER FILE */
 const ItemTypes = {

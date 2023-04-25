@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { StaticImageData } from "next/image";
-import StyledIcon from "components/core/StyledIcon";
+import StyledIcon from "@/components/core/StyledIcon";
 import { themes } from "@/theme";
 import React from "react";
 

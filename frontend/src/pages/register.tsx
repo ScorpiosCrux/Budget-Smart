@@ -3,14 +3,14 @@ import { Button } from "@mui/material";
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from "hooks/useAuth";
-import { StyledPageContent } from "components/core/StyledPageContent";
-import StyledContainer from "components/core/StyledContainer";
+import { useAuth } from "@/hooks/useAuth";
+import { StyledPageContent } from "@/components/core/StyledPageContent";
+import StyledContainer from "@/components/core/StyledContainer";
 import {
 	AuthContent,
 	StyledInputContainer,
-} from "components/AuthWidgets/AuthWidgetStyledComponents";
-import { StyledH1 } from "components/core/StyledHeadings";
+} from "@/components/AuthWidgets/AuthWidgetStyledComponents";
+import { StyledH1 } from "@/components/core/StyledHeadings";
 import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
 import { themes } from "@/theme";

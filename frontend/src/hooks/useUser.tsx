@@ -1,7 +1,7 @@
 /* Building your own Hooks lets you extract component login into reusable functions */
 
 import { AuthUser } from "@/types";
-import { AuthContext } from "contexts/AuthContext";
+import { AuthContext } from "@/contexts/AuthContext";
 import { useContext, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 

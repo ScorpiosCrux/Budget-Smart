@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useRef } from "react";
-import { useTransactions } from "hooks/useTransactions";
+import { useTransactions } from "@/hooks/useTransactions";
 import Button from "./Button";
 import uploadIcon from "public/assets/icons/upload-solid.svg";
 

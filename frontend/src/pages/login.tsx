@@ -5,14 +5,14 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import * as yup from "yup";
 import { Formik, FormikHelpers } from "formik";
-import { useAuth } from "hooks/useAuth";
-import StyledContainer from "components/core/StyledContainer";
-import { StyledPageContent } from "components/core/StyledPageContent";
+import { useAuth } from "@/hooks/useAuth";
+import StyledContainer from "@/components/core/StyledContainer";
+import { StyledPageContent } from "@/components/core/StyledPageContent";
 import {
 	AuthContent,
 	StyledInputContainer,
-} from "components/AuthWidgets/AuthWidgetStyledComponents";
-import { StyledH1 } from "components/core/StyledHeadings";
+} from "@/components/AuthWidgets/AuthWidgetStyledComponents";
+import { StyledH1 } from "@/components/core/StyledHeadings";
 import { themes } from "@/theme";
 
 const loginSchema = yup.object().shape({

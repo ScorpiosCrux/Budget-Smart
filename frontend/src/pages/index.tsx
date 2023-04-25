@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Inter } from "@next/font/google";
-import Modal from "components/core/Modal";
-import { useModal } from "hooks/useModal";
+import Modal from "@/components/core/Modal";
+import { useModal } from "@/hooks/useModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
