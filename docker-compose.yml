@@ -8,8 +8,6 @@ services:
       - 27017:27017
   express:
     build: backend/.
-    ports:
-      - 5070:5070
     environment:
       - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
       - SECRET_JWT=${SECRET_JWT}
@@ -17,7 +15,11 @@ services:
       - SECRET_COOKIE=${SECRET_COOKIE}
       - BACKEND_PORT=${BACKEND_PORT}
       - FRONTEND_PORT=${FRONTEND_PORT}
+    ports:
+      - 5070:5070
   frontend:
     build: frontend/.
+    environment:
+      - NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
     ports:
       - 5071:3000
