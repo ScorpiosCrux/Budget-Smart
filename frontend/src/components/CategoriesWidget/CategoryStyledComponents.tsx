@@ -41,7 +41,7 @@ export const StyledCategoryHeader = styled.div`
 	justify-content: space-between;
 	align-items: center;
 
-	& > span {
+	& .title {
 		text-transform: capitalize;
 		font-weight: 600;
 		font-size: 1rem;
