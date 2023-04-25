@@ -1,4 +1,4 @@
-FROM node
+FROM node:lts
 RUN mkdir -p /home/app/
 WORKDIR /home/app/
 COPY ./ /home/app/
