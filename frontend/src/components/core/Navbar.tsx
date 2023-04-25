@@ -12,7 +12,7 @@ const Navbar = () => {
 	return (
 		<StyledNavbar>
 			<div className="logo">
-				<Link href={"/"}> SMART BUDGET </Link>
+				<Link href={"/"}> BUDGET SMART </Link>
 			</div>
 
 			<div className="links">
