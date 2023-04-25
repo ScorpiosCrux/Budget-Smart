@@ -7,15 +7,17 @@ import styled from "styled-components";
 export const StyledCategories = styled.div`
 	display: grid;
 	gap: inherit;
-	grid-template-rows: repeat(5, 1fr);
 	grid-template-columns: repeat(2, 1fr);
+	grid-auto-rows: min-content;
+	overflow-y: auto;
+	padding: 4px;
 `;
 
 /* ========= Category Components =========*/
 
 export const StyledCategory = styled.div<{ index: number }>`
 	width: 100%;
-	height: 100%;
+	height: 10rem;
 
 	display: flex;
 	flex-direction: column;
