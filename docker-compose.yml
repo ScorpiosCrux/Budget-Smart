@@ -1,7 +1,5 @@
 version: "0.01"
 
-
-
 services:
   mongo:
     image: mongo
@@ -13,12 +11,12 @@ services:
     ports:
       - 5070:5070
     environment:
-      - $DB_CONNECTION_STRING
-      - $SECRET_JWT
-      - $SECRET_REFRESH_TOKEN
-      - $SECRET_COOKIE
-      - $BACKEND_PORT
-      - $FRONTEND_PORT
+      - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
+      - SECRET_JWT=${SECRET_JWT}
+      - SECRET_REFRESH_TOKEN=${SECRET_REFRESH_TOKEN}
+      - SECRET_COOKIE=${SECRET_COOKIE}
+      - BACKEND_PORT=${BACKEND_PORT}
+      - FRONTEND_PORT=${FRONTEND_PORT}
   frontend:
     build: frontend/.
     ports:
