@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc && cp .env build/.env",
+    "build": "tsc",
     "start": "node build/index.js",
     "dev": "concurrently \"tsc --watch\" \"nodemon --inspect -q build/index.js\""
   },
