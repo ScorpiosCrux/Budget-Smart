@@ -23,8 +23,7 @@ stages:
 #   5000 on host, 3000 inside the container
 
 before_script:
-  - echo test
-  - echo $BACKEND_PORT
+  # BACKEND
   - export DB_CONNECTION_STRING=$DB_CONNECTION_STRING
   - export DB_CONNECTION_STRING=$DB_CONNECTION_STRING
   - export SECRET_JWT=$SECRET_JWT
@@ -32,6 +31,8 @@ before_script:
   - export SECRET_COOKIE=$SECRET_COOKIE
   - export BACKEND_PORT=$BACKEND_PORT
   - export FRONTEND_PORT=$FRONTEND_PORT
+  # FRONTEND
+  - export NEXT_PUBLIC_API_ENDPOINT=$NEXT_PUBLIC_API_ENDPOINT
 
 deploy:
   stage: deploy
