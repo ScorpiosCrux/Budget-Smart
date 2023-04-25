@@ -1,3 +1,4 @@
+# lts is version 18 at the moment
 FROM node:lts
 RUN mkdir -p /home/app/
 WORKDIR /home/app/
