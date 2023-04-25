@@ -2,8 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import StyledContainer from "./StyledContainer";
 import { TargetType } from "@/types";
-import CategoryForm from "@/components/CategoriesWidget/CategoryForm";
-import TransactionForm from "@/components/TransactionsWidget/TransactionForm";
+import CategoryForm from "@/components/widgets/CategoriesWidget/CategoryForm";
+import TransactionForm from "@/components/widgets/TransactionsWidget/TransactionForm";
 
 interface Props {
 	closeModal(): void;

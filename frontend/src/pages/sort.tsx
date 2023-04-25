@@ -1,5 +1,5 @@
-import CategoriesWidget from "@/components/CategoriesWidget/CategoriesWidget";
-import TransactionsWidget from "@/components/TransactionsWidget/TransactionsWidget";
+import CategoriesWidget from "@/components/widgets/CategoriesWidget/CategoriesWidget";
+import TransactionsWidget from "@/components/widgets/TransactionsWidget/TransactionsWidget";
 import Head from "next/head";
 import styled from "styled-components";
 import { DndProvider } from "react-dnd";

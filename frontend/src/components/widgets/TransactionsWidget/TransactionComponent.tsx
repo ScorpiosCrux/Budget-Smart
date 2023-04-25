@@ -1,7 +1,7 @@
 import { themes } from "@/theme";
 import styled from "styled-components";
 import { useDrag } from "react-dnd";
-import StyledIcon from "../core/StyledIcon";
+import StyledIcon from "../../core/StyledIcon";
 import { Category, Transaction } from "@/types";
 import { StyledTransactionGrid, StyledTransactionWrapper } from "./TransactionStyledComponents";
 import { useContextMenu } from "@/hooks/useContextMenu";

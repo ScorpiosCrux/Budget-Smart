@@ -103,7 +103,7 @@ const CategoryForm = (props: Props) => {
 									disabled={isSubmitting}
 									type={"submit"}
 									sx={{ background: themes.lightMode.accent.background }}>
-									Add Category
+									Add
 								</StyledMUIButton>
 							</ButtonContainer>
 						</FormContainer>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { useContext, useEffect } from "react";
-import { themes } from "../theme.js";
+import { themes } from "../../theme.js";
 
 import { useAuth } from "@/hooks/useAuth";
 

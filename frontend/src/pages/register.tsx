@@ -9,7 +9,7 @@ import StyledContainer from "@/components/core/StyledContainer";
 import {
 	AuthContent,
 	StyledInputContainer,
-} from "@/components/AuthWidgets/AuthWidgetStyledComponents";
+} from "@/components/widgets/AuthWidgets/AuthWidgetStyledComponents";
 import { StyledH1 } from "@/components/core/StyledHeadings";
 import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";

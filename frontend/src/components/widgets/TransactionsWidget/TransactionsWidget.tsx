@@ -1,6 +1,6 @@
 import TransactionComponent from "./TransactionComponent";
-import StyledHeader from "../core/StyledHeader";
-import StyledContainer from "../core/StyledContainer";
+import StyledHeader from "../../core/StyledHeader";
+import StyledContainer from "../../core/StyledContainer";
 import { TargetType, Transaction } from "@/types";
 
 import {
@@ -19,7 +19,7 @@ import Button from "@/components/buttons/Button";
 import UploadFileButton from "@/components/buttons/UploadFileButton";
 import { useModal } from "@/hooks/useModal";
 import Modal from "@/components/core/Modal";
-import StyledContent from "../core/StyledContent";
+import StyledContent from "../../core/StyledContent";
 
 interface Props {
 	transactions: Transaction[];

@@ -11,7 +11,7 @@ import { StyledPageContent } from "@/components/core/StyledPageContent";
 import {
 	AuthContent,
 	StyledInputContainer,
-} from "@/components/AuthWidgets/AuthWidgetStyledComponents";
+} from "@/components/widgets/AuthWidgets/AuthWidgetStyledComponents";
 import { StyledH1 } from "@/components/core/StyledHeadings";
 import { themes } from "@/theme";
 
