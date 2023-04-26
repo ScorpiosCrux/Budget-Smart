@@ -10,10 +10,7 @@ ENV NODE_ENV production
 RUN npm i
 
 ARG NEXT_PUBLIC_API_ENDPOINT
-# RUN export NEXT_PUBLIC_API_ENDPOINT='http://api.budgetsmart.ca/api'
-# RUN echo ${NEXT_PUBLIC_API_ENDPOINT}
 
-# RUN NEXT_PUBLIC_API_ENDPOINT='http://api.budgetsmart.ca/api' npm run build
 RUN NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT} npm run build
 
 CMD ["npm", "run", "start"]

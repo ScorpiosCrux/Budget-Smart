@@ -38,6 +38,8 @@ I use React because it allows me to write reusable code. It also has great featu
 
 <img src="https://gitlab.tylerchen.ca/tylerchen/smart-budget/-/raw/main/images/sort.png">
 <img src="https://gitlab.tylerchen.ca/tylerchen/smart-budget/-/raw/main/images/drag.png">
+<img src="https://gitlab.tylerchen.ca/tylerchen/smart-budget/-/raw/main/images/modal.png">
+<img src="https://gitlab.tylerchen.ca/tylerchen/smart-budget/-/raw/main/images/context-menu.png">
 
 ## Database Considerations
 
