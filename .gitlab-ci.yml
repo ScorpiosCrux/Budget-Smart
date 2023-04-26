@@ -41,6 +41,6 @@ deploy:
   stage: deploy
   image: docker:latest
   script:
-    - docker compose up --build --force-recreate --no-deps express frontend
+    - docker compose up --build --force-recreate --no-deps -d 
     # - docker build --pull -t $CI_REGISTRY_IMAGE .
     # - docker run -d --restart unless-stopped -p 5000:3000 --name personal-website $CI_REGISTRY_IMAGE:latest
