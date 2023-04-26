@@ -34,6 +34,7 @@ before_script:
   - export FRONTEND_PORT=$FRONTEND_PORT
   - export SESSION_EXPIRY=$SESSION_EXPIRY
   - export REFRESH_TOKEN_EXPIRY=$REFRESH_TOKEN_EXPIRY
+  - echo ${SESSION_EXPIRY}
   # FRONTEND
   - export NEXT_PUBLIC_API_ENDPOINT=$NEXT_PUBLIC_API_ENDPOINT
 
@@ -41,6 +42,6 @@ deploy:
   stage: deploy
   image: docker:latest
   script:
-    - docker compose up --build --force-recreate --no-deps -d 
+    - docker compose up --build --force-recreate --no-deps -d
     # - docker build --pull -t $CI_REGISTRY_IMAGE .
     # - docker run -d --restart unless-stopped -p 5000:3000 --name personal-website $CI_REGISTRY_IMAGE:latest
