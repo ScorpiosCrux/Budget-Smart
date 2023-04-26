@@ -13,7 +13,7 @@ clean:
     - docker stop smart-budget-express-1
     - docker stop smart-budget-mongo-1
     - docker container prune -f # Deletes all non running containers
-    - docker image prune -fa # Doesn't remove images
+    - docker image prune -af # Doesn't remove images
 
 # Builds a docker image that is connected to the docker socket where the runner is located.
 # Runs the container with:
