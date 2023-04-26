@@ -1,4 +1,5 @@
 version: "0.01"
+name: budget-smart
 
 # clean:
 #   stage: clean
@@ -11,11 +12,14 @@ version: "0.01"
 
 services:
   mongo:
+    container_name: budget-smart-mongo
     image: mongo
     restart: always
     ports:
       - 27017:27017
   express:
+    container_name: budget-smart-express
+    image: budget-smart-express
     build: backend/.
     environment:
       - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
@@ -29,6 +33,8 @@ services:
     ports:
       - 5070:5070
   frontend:
+    container_name: budget-smart-frontend
+    image: budget-smart-frontend
     build:
       context: frontend/.
       args:
