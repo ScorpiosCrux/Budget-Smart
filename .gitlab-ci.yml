@@ -9,9 +9,9 @@ clean:
   image: docker:latest
   allow_failure: true
   script:
-    - docker stop smart-budget-frontend-1
-    - docker stop smart-budget-express-1
-    - docker stop smart-budget-mongo-1
+    - docker stop smart-budget-frontend
+    - docker stop smart-budget-express
+    - docker stop smart-budget-mongo
     - docker container prune -f # Deletes all non running containers
     - docker image prune -af # Doesn't remove images
 
@@ -41,6 +41,6 @@ deploy:
   stage: deploy
   image: docker:latest
   script:
-    - docker-compose up -d --build
+    - docker compose up -d --no-deps --build express frontend
     # - docker build --pull -t $CI_REGISTRY_IMAGE .
     # - docker run -d --restart unless-stopped -p 5000:3000 --name personal-website $CI_REGISTRY_IMAGE:latest
