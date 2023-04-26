@@ -1,5 +1,14 @@
 version: "0.01"
 
+# clean:
+#   stage: clean
+#   image: docker:latest
+#   allow_failure: true
+#   script:
+#     - docker stop personal-website
+#     - docker image prune -f
+#     - docker container prune -f
+
 services:
   mongo:
     image: mongo

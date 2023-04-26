@@ -4,14 +4,16 @@ stages:
 
 # Stops or removes previous containers that allows deploy to run.
 # Some commands can fail if the container does not exist
-# clean:
-#   stage: clean
-#   image: docker:latest
-#   allow_failure: true
-#   script:
-#     - docker stop personal-website
-#     - docker image prune -f
-#     - docker container prune -f
+clean:
+  stage: clean
+  image: docker:latest
+  allow_failure: true
+  script:
+    - docker stop smart-budget-frontend
+    - docker stop smart-budget-express
+    - docker stop mongo
+    - docker container prune -f
+    - docker image prune -f
 
 # Builds a docker image that is connected to the docker socket where the runner is located.
 # Runs the container with:
