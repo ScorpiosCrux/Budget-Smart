@@ -31,7 +31,7 @@ function initExpressApp() {
 			origin: [
 				`http://localhost:${process.env.FRONTEND_PORT}`,
 				`http://127.0.0.1:${process.env.FRONTEND_PORT}`,
-				"http://alpha.budgetsmart.ca",
+				"https://alpha.budgetsmart.ca",
 			],
 			credentials: true,
 		})
