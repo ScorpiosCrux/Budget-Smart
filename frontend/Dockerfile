@@ -8,7 +8,13 @@ COPY ./ /home/app/
 ENV NODE_ENV production
 
 RUN npm i
-RUN npm run build
+
+ARG NEXT_PUBLIC_API_ENDPOINT
+# RUN export NEXT_PUBLIC_API_ENDPOINT='http://api.budgetsmart.ca/api'
+# RUN echo ${NEXT_PUBLIC_API_ENDPOINT}
+
+# RUN NEXT_PUBLIC_API_ENDPOINT='http://api.budgetsmart.ca/api' npm run build
+RUN NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT} npm run build
 
 CMD ["npm", "run", "start"]
 EXPOSE 3000

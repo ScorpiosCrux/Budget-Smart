@@ -18,8 +18,11 @@ services:
     ports:
       - 5070:5070
   frontend:
-    build: frontend/.
-    environment:
-      - NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
+    build:
+      context: frontend/.
+      args:
+        NEXT_PUBLIC_API_ENDPOINT: ${NEXT_PUBLIC_API_ENDPOINT}
+    # environment:
+    #   - NEXT_PUBLIC_API_ENDPOINT=http://api.budgetsmart.ca/api
     ports:
       - 5071:3000

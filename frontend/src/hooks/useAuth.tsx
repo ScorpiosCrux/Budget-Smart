@@ -56,6 +56,7 @@ export const useAuth = () => {
 		Logs the user in and updates the AuthContext.
 	*/
 	const login = async (email: string, password: string) => {
+		console.log(process.env.NEXT_PUBLIC_API_ENDPOINT);
 		try {
 			const response = await axios({
 				method: "POST",
@@ -146,7 +147,7 @@ export const useAuth = () => {
 				}
 			}
 		} else {
-			console.log("Access Token Missing!")
+			console.log("Access Token Missing!");
 		}
 	};
 
