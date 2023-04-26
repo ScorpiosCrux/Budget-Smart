@@ -1,5 +1,5 @@
 stages:
-  # - clean
+  - clean
   - deploy
 
 # Stops or removes previous containers that allows deploy to run.
