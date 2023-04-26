@@ -12,8 +12,8 @@ clean:
     - docker stop smart-budget-frontend-1
     - docker stop smart-budget-express-1
     - docker stop smart-budget-mongo-1
-    - docker container prune -f
-    - docker image prune -f
+    - docker container prune -f # Deletes all non running containers
+    - docker image prune -fa # Doesn't remove images
 
 # Builds a docker image that is connected to the docker socket where the runner is located.
 # Runs the container with:
@@ -40,6 +40,6 @@ deploy:
   stage: deploy
   image: docker:latest
   script:
-    - docker-compose up -d
+    - docker-compose up -d --build
     # - docker build --pull -t $CI_REGISTRY_IMAGE .
     # - docker run -d --restart unless-stopped -p 5000:3000 --name personal-website $CI_REGISTRY_IMAGE:latest
