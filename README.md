@@ -106,11 +106,10 @@ You need .env files for both the frontend and backend.
 
 ## Continuous Integration and Deployment
 
-### Front-End
-- Docker is used to run the project on port 5051.
-  - `docker build -t test .`
-    - `-t` - tag
-    - `.` current directory (with the Dockerfile)
+### Docker
+- Docker is used to containerize the frontend NextTS application, exposing port 5071.
+- Docker is used to containerize the backend ExpressTS application, exposing port 5070.
+
 
 
 ### Back-End
