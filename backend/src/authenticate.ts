@@ -1,10 +1,11 @@
 import passport from "passport";
 import jwt from "jsonwebtoken";
 import { CookieOptions } from "express";
-import dotenv from "dotenv"
-
+import dotenv from "dotenv";
 
 dotenv.config();
+
+console.log(eval(process.env.SESSION_EXPIRY));
 
 // const dev = process.env.NODE_ENV !== "production";
 
