@@ -1,4 +1,4 @@
-import { ICategory, Transaction } from "@/types";
+import { ICategory, ITransaction } from "@/types";
 import { ICreateCategory, IDeleteCategory, IReadCategories } from "./Categories";
 import * as CategoryAPI from "./Categories";
 import { SetStateAction } from "react";
@@ -65,7 +65,7 @@ export const deleteCategory = async (props: IDeleteCategoryHandler) => {
  */
 export interface ICalculateCategories {
   categories: ICategory[];
-  transactions: Transaction[];
+  transactions: ITransaction[];
 }
 export const calculateCategories = (props: ICalculateCategories) => {
   const { categories, transactions } = props;
