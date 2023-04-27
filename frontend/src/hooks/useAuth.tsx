@@ -1,12 +1,13 @@
 import { IAuthUser } from "@/types";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { useUser } from "./useUser";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { IRegister, ISignIn, login, register } from "@/utils/Auth";
 import { FormikHelpers } from "formik";
 import { useRouter } from "next/router";
+import { UserContext } from "@/contexts/AuthContext";
 
 /**
  * Only states and functions that are necessary to be here on each render of each component
@@ -14,10 +15,11 @@ import { useRouter } from "next/router";
  * @returns
  */
 export const useAuth = () => {
+	const { user, setUser } = useContext(UserContext);
+	const { setItem } = useLocalStorage();
+
 	const router = useRouter();
 	const [error, setError] = useState<string>("");
-
-	const { user, addUser, removeUser } = useUser();
 
 	// const [value, setItem, getItem, removeItem] = useLocalStorage();
 
@@ -38,7 +40,8 @@ export const useAuth = () => {
 			setSubmitting(true);
 			const user = await register(values);
 			if (user) {
-				addUser(user);
+				setUser(user);
+				setItem("user", JSON.stringify(user));
 			}
 
 			console.log(user);
@@ -55,6 +58,12 @@ export const useAuth = () => {
 		try {
 			setSubmitting(true);
 			const user = await login(values);
+
+			if (user) {
+				setUser(user);
+
+				setItem("user", JSON.stringify(user));
+			}
 			console.log(user);
 
 			router.push("/");

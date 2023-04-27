@@ -64,27 +64,28 @@ export const login = async (props: { email: string; password: string }) => {
 		};
 		return authUser;
 	} catch (error: any) {
-		if (axios.isAxiosError(error)) {
-			if (error.response) {
-				console.log("Response");
-				console.log(error.response);
-			} else if (error.request) {
-				console.log("Request");
-				console.log(error.request);
-			} else if (error.message) {
-				console.log("Message");
+		// 	if (axios.isAxiosError(error)) {
+		// 		if (error.response) {
+		// 			console.log("Response");
+		// 			console.log(error.response);
+		// 		} else if (error.request) {
+		// 			console.log("Request");
+		// 			console.log(error.request);
+		// 		} else if (error.message) {
+		// 			console.log("Message");
 
-				console.log(error.message);
-			}
+		// 			console.log(error.message);
+		// 		}
 
-			if (error.response?.status === 401) {
-				return "Incorrect Username or Password!";
-				// add throws?
-			}
-		} else {
-			console.log(error);
-			return "Oops Something Went Wrong!";
-		}
+		// 		if (error.response?.status === 401) {
+		// 			return "Incorrect Username or Password!";
+		// 			// add throws?
+		// 		}
+		// 	} else {
+		// 		console.log(error);
+		// 		return "Oops Something Went Wrong!";
+		// 	}
+		throw "error in Auth";
 	}
 };
 
