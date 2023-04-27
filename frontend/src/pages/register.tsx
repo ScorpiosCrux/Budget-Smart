@@ -14,18 +14,14 @@ import { StyledH1 } from "@/components/core/StyledHeadings";
 import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
 import { themes } from "@/theme";
+import { IRegister, register } from "@/utils/Auth";
+import { useUser } from "@/hooks/useUser";
 
 const registerSchema = yup.object().shape({
 	displayName: yup.string().required("required"),
 	email: yup.string().email().required("required"),
 	password: yup.string().required("required"),
 });
-
-interface FormValues {
-	displayName: string;
-	email: string;
-	password: string;
-}
 
 const initialFormikValues = {
 	displayName: "",
@@ -35,21 +31,22 @@ const initialFormikValues = {
 
 const Register = () => {
 	/* Hooks */
-	const { register } = useAuth();
+	const { addUser } = useUser();
 	const router = useRouter();
-	const [errorMsg, setErrorMsg] = useState<null | string>(null);
+	const [errorMsg, setErrorMsg] = useState<string>("");
 
-	const handleRegister = async (
-		values: FormValues,
-		{ setSubmitting }: FormikHelpers<FormValues>
-	) => {
-		setSubmitting(true);
-		const error = await register(values.displayName, values.email, values.password);
-		if (error) {
-			setErrorMsg(error);
-			setSubmitting(false);
-		} else {
+	const handleRegister = async (values: IRegister, { setSubmitting }: FormikHelpers<IRegister>) => {
+		try {
+			setSubmitting(true);
+			const user = await register(values);
+			if (user) {
+				addUser(user);
+			}
+
 			router.push("/");
+		} catch (error: any) {
+			setSubmitting(false);
+			setErrorMsg(error.message);
 		}
 	};
 
