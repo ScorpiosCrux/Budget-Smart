@@ -1,9 +1,5 @@
-
-
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
-import { useUser } from "./useUser";
-import jwt, { JwtPayload } from "jsonwebtoken";
 import { IRegister, ISignIn, login, register } from "@/utils/Auth";
 import { FormikHelpers } from "formik";
 import { useRouter } from "next/router";
@@ -17,11 +13,8 @@ import { UserContext } from "@/contexts/AuthContext";
 export const useAuth = () => {
 	const { user, setUser } = useContext(UserContext);
 	const { setItem } = useLocalStorage();
-
-	const router = useRouter();
 	const [error, setError] = useState<string>("");
-
-
+	const router = useRouter();
 
 	const handleRegister = async (values: IRegister, { setSubmitting }: FormikHelpers<IRegister>) => {
 		try {

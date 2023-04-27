@@ -1,20 +1,19 @@
 import { Category } from "@/types";
 import axios, { AxiosError, isAxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
 import { useCategories } from "./useCategories";
 import { useTransactions } from "./useTransactions";
 import { refreshToken } from "@/utils/Auth";
+import { UserContext } from "@/contexts/AuthContext";
 
 export const useData = () => {
-	const { user } = useAuth();
-  
-	const [isLoading, setIsLoading] = useState(true); //The isLoading flag is used to trigger functions and component rendering
-
+	const { user } = useContext(UserContext);
 	const categoryHook = useCategories();
 	const categories = categoryHook.categories;
 	const transactionHook = useTransactions();
 	const transactions = transactionHook.transactions;
+	const [isLoading, setIsLoading] = useState(true); //The isLoading flag is used to trigger functions and component rendering
 
 	// useEffect(() => {
 	//   fetchData();
