@@ -1,7 +1,11 @@
 import { ICategory, ITransaction } from "@/types";
 import { ICreateCategory, IDeleteCategory, IReadCategories } from "./Categories";
 import * as CategoryAPI from "./Categories";
+import * as TransactionAPI from "./Transactions";
 import { SetStateAction } from "react";
+import { IReadTransactions } from "./Transactions";
+
+// ================== CATEGORIES ==================
 
 /**
  * CREATE
@@ -57,6 +61,23 @@ export const deleteCategory = async (props: IDeleteCategoryHandler) => {
   setCategories(newCategories);
   setIsCategoriesLoading(false);
 };
+
+// ================== END OF CATEGORIES ==================
+
+// ================== TRANSACTIONS ==================
+export interface IReadTransactionsHandler extends IReadTransactions {
+  setTransactions: React.Dispatch<SetStateAction<ITransaction[]>>;
+  setIsTransactionsLoading: React.Dispatch<SetStateAction<boolean>>;
+}
+export const getTransactions = async (props: IReadTransactionsHandler) => {
+  const { setTransactions, setIsTransactionsLoading } = props;
+  setIsTransactionsLoading(true);
+  const newTransactions: ITransaction[] = await TransactionAPI.readTransactions(props);
+  setTransactions(newTransactions);
+  setIsTransactionsLoading(false);
+};
+
+// ================== END OF TRANSACTIONS ==================
 
 /**
  * Calculates the missing attributes of categories.
