@@ -1,6 +1,5 @@
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
-import styled from "@emotion/styled";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "@/hooks/useAuth";
@@ -22,12 +21,6 @@ const registerSchema = yup.object().shape({
 	email: yup.string().email().required("required"),
 	password: yup.string().required("required"),
 });
-
-const initialFormikValues = {
-	displayName: "",
-	email: "",
-	password: "",
-};
 
 const Register = () => {
 	/* Hooks */
@@ -55,7 +48,11 @@ const Register = () => {
 			<StyledContainer width="400px" height="500px" padding="3rem">
 				<AuthContent>
 					<Formik
-						initialValues={initialFormikValues}
+						initialValues={{
+							displayName: "",
+							email: "",
+							password: "",
+						}}
 						validationSchema={registerSchema}
 						onSubmit={handleRegister}>
 						{({
@@ -142,7 +139,7 @@ const Register = () => {
 											border: 0,
 										},
 									}}>
-									{isSubmitting ? "Registering" : "Register"}
+									{isSubmitting ? "Signing Up" : "Sign Up"}
 								</Button>
 							</form>
 						)}
