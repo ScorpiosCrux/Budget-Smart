@@ -1,9 +1,7 @@
 import { ICategory, ITransaction } from "@/types";
-import { ICreateCategory, IDeleteCategory, IReadCategories } from "./Categories";
 import * as CategoryAPI from "./Categories";
 import * as TransactionAPI from "./Transactions";
 import { SetStateAction } from "react";
-import { IReadTransactions } from "./Transactions";
 
 // ================== CATEGORIES ==================
 
@@ -13,7 +11,7 @@ import { IReadTransactions } from "./Transactions";
  * This method is here to avoid prop drilling. A component that needs this
  * method can simply import it.
  */
-export interface ICreateCategoryHandler extends ICreateCategory {
+export interface ICreateCategoryHandler extends CategoryAPI.ICreateCategory {
   setCategories: React.Dispatch<SetStateAction<ICategory[]>>;
   setIsCategoriesLoading: React.Dispatch<SetStateAction<boolean>>;
 }
@@ -31,7 +29,7 @@ export const createCategory = async (props: ICreateCategoryHandler) => {
  * This method is here to avoid prop drilling. A component that needs this
  * method can simply import it.
  */
-export interface IReadCategoryHandler extends IReadCategories {
+export interface IReadCategoryHandler extends CategoryAPI.IReadCategories {
   setCategories: React.Dispatch<SetStateAction<ICategory[]>>;
   setIsCategoriesLoading: React.Dispatch<SetStateAction<boolean>>;
 }
@@ -49,7 +47,7 @@ export const getCategories = async (props: IReadCategoryHandler) => {
  * This method is here to avoid prop drilling. A component that needs this
  * method can simply import it.
  */
-export interface IDeleteCategoryHandler extends IDeleteCategory {
+export interface IDeleteCategoryHandler extends CategoryAPI.IDeleteCategory {
   setCategories: React.Dispatch<SetStateAction<ICategory[]>>;
   setIsCategoriesLoading: React.Dispatch<SetStateAction<boolean>>;
 }
@@ -65,7 +63,7 @@ export const deleteCategory = async (props: IDeleteCategoryHandler) => {
 // ================== END OF CATEGORIES ==================
 
 // ================== TRANSACTIONS ==================
-export interface IReadTransactionsHandler extends IReadTransactions {
+export interface IReadTransactionsHandler extends TransactionAPI.IReadTransactions {
   setTransactions: React.Dispatch<SetStateAction<ITransaction[]>>;
   setIsTransactionsLoading: React.Dispatch<SetStateAction<boolean>>;
 }
@@ -73,6 +71,42 @@ export const getTransactions = async (props: IReadTransactionsHandler) => {
   const { setTransactions, setIsTransactionsLoading } = props;
   setIsTransactionsLoading(true);
   const newTransactions: ITransaction[] = await TransactionAPI.readTransactions(props);
+  setTransactions(newTransactions);
+  setIsTransactionsLoading(false);
+};
+
+export interface IUpdateTransactionHandler extends TransactionAPI.IUpdateTransaction {
+  setTransactions: React.Dispatch<SetStateAction<ITransaction[]>>;
+  setIsTransactionsLoading: React.Dispatch<SetStateAction<boolean>>;
+}
+export const updateTransaction = async (props: IUpdateTransactionHandler) => {
+  const { setTransactions, setIsTransactionsLoading } = props;
+  setIsTransactionsLoading(true);
+  const newTransactions: ITransaction[] = await TransactionAPI.updateTransaction(props);
+  setTransactions(newTransactions);
+  setIsTransactionsLoading(false);
+};
+
+export interface IUploadTransactionsHandler extends TransactionAPI.IUploadTransactions {
+  setTransactions: React.Dispatch<SetStateAction<ITransaction[]>>;
+  setIsTransactionsLoading: React.Dispatch<SetStateAction<boolean>>;
+}
+export const uploadTransactions = async (props: IUploadTransactionsHandler) => {
+  const { setTransactions, setIsTransactionsLoading } = props;
+  setIsTransactionsLoading(true);
+  const newTransactions: ITransaction[] = await TransactionAPI.uploadTransactions(props);
+  setTransactions(newTransactions);
+  setIsTransactionsLoading(false);
+};
+
+export interface IDeleteTransactionHandler extends TransactionAPI.IDeleteTransaction {
+  setTransactions: React.Dispatch<SetStateAction<ITransaction[]>>;
+  setIsTransactionsLoading: React.Dispatch<SetStateAction<boolean>>;
+}
+export const deleteTransaction = async (props: IDeleteTransactionHandler) => {
+  const { setTransactions, setIsTransactionsLoading } = props;
+  setIsTransactionsLoading(true);
+  const newTransactions: ITransaction[] = await TransactionAPI.deleteTransaction(props);
   setTransactions(newTransactions);
   setIsTransactionsLoading(false);
 };
