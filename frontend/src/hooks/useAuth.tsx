@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { useUser } from "./useUser";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { ISignIn, login } from "@/utils/Auth";
+import { IRegister, ISignIn, login, register } from "@/utils/Auth";
 import { FormikHelpers } from "formik";
 import { useRouter } from "next/router";
 
@@ -33,24 +33,38 @@ export const useAuth = () => {
 	// 	}
 	// });
 
-	
+	const handleRegister = async (values: IRegister, { setSubmitting }: FormikHelpers<IRegister>) => {
+		try {
+			setSubmitting(true);
+			const user = await register(values);
+			if (user) {
+				addUser(user);
+			}
 
+			console.log(user);
 
+			router.push("/");
+		} catch (error: any) {
+			setSubmitting(false);
+			setError(error.message);
+		}
+	};
 
 	/* Handler Functions */
 	const handleLogin = async (values: ISignIn, { setSubmitting }: FormikHelpers<ISignIn>) => {
 		try {
 			setSubmitting(true);
 			const user = await login(values);
+			console.log(user);
 
 			router.push("/");
 		} catch (error: any) {
-			console.log()
-			console.log(error.message)
+			console.log();
+			console.log(error.message);
 			setError(error.message);
 			setSubmitting(false);
 		}
 	};
 
-	return { user, error, handleLogin };
+	return { user, error, handleLogin, handleRegister };
 };

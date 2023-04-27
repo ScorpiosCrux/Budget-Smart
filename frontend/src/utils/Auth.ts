@@ -62,7 +62,6 @@ export const login = async (props: { email: string; password: string }) => {
 		const authUser: IAuthUser = {
 			...response.data,
 		};
-		console.log(authUser);
 		return authUser;
 	} catch (error: any) {
 		if (axios.isAxiosError(error)) {

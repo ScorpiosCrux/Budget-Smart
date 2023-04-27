@@ -25,23 +25,10 @@ const registerSchema = yup.object().shape({
 const Register = () => {
 	/* Hooks */
 	const { addUser } = useUser();
-	const router = useRouter();
-	const [errorMsg, setErrorMsg] = useState<string>("");
 
-	const handleRegister = async (values: IRegister, { setSubmitting }: FormikHelpers<IRegister>) => {
-		try {
-			setSubmitting(true);
-			const user = await register(values);
-			if (user) {
-				addUser(user);
-			}
+	const { error, handleRegister } = useAuth();
 
-			router.push("/");
-		} catch (error: any) {
-			setSubmitting(false);
-			setErrorMsg(error.message);
-		}
-	};
+	
 
 	return (
 		<StyledPageContent>
@@ -68,7 +55,7 @@ const Register = () => {
 								<StyledH1>SMART BUDGET</StyledH1>
 
 								<StyledInputContainer>
-									{errorMsg && <p>{errorMsg}</p>}
+									{error && <p>{error}</p>}
 
 									<TextField
 										label="Display name"
