@@ -5,9 +5,10 @@ import { useContext, useEffect } from "react";
 import { themes } from "../../theme.js";
 
 import { useAuth } from "@/hooks/useAuth";
+import { UserContext } from "@/contexts/AuthContext";
 
 const Navbar = () => {
-	const { user } = useAuth();
+	const { user } = useContext(UserContext);
 
 	return (
 		<StyledNavbar>
@@ -30,7 +31,7 @@ const Navbar = () => {
 			</div>
 			<UserLinks>
 				{/* TODO: loading context */}
-				{user?.isLoggedIn ? (
+				{user?._id ? (
 					<>
 						<NavLink href={"/user"}>{user.displayName}</NavLink>
 						<NavLink href={"/logout"}>Logout</NavLink>
