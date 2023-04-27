@@ -21,19 +21,7 @@ export const useAuth = () => {
 	const router = useRouter();
 	const [error, setError] = useState<string>("");
 
-	// const [value, setItem, getItem, removeItem] = useLocalStorage();
 
-	/**
-	 * Runs on each render of each component.
-	 */
-	// useEffect(() => {
-	// 	/* Gets the user from local storage */
-	// 	const user = getItem("user");
-	// 	if (user) {
-	// 		/* Adds the user to the user context  */
-	// 		addUser(JSON.parse(user));
-	// 	}
-	// });
 
 	const handleRegister = async (values: IRegister, { setSubmitting }: FormikHelpers<IRegister>) => {
 		try {

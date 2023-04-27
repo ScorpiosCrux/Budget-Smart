@@ -13,11 +13,6 @@ export interface IUser extends ObjectKeys {
 	token: string;
 }
 
-// export interface IAuthUser extends User {
-// 	isLoggedIn: boolean;
-// 	token: string;
-// }
-
 export interface Transaction {
 	// discriminator: "transaction";
 	_id: string;
@@ -43,28 +38,27 @@ export interface Category {
 	remainingBudgetPerDay: number;
 }
 
-
 /**
  * Only necessary data is saved to the database.
  */
 export interface ICategoryPartial {
-  _id: string;
-  userId: string;
-  name: string;
-  budget: number;
+	_id: string;
+	userId: string;
+	name: string;
+	budget: number;
 }
 
 /**
  * This is the complete category type
  */
 export interface ICategory {
-  _id: string;
-  userId: string;
-  name: string;
-  budget: number;
-  remainingBudget: number;
-  totalSpent: number;
-  remainingBudgetPerDay: number;
+	_id: string;
+	userId: string;
+	name: string;
+	budget: number;
+	remainingBudget: number;
+	totalSpent: number;
+	remainingBudgetPerDay: number;
 }
 
 /**

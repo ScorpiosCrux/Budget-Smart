@@ -1,7 +1,5 @@
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
-import { useState } from "react";
-import { useRouter } from "next/router";
 import { useAuth } from "@/hooks/useAuth";
 import { StyledPageContent } from "@/components/core/StyledPageContent";
 import StyledContainer from "@/components/core/StyledContainer";
@@ -10,11 +8,9 @@ import {
 	StyledInputContainer,
 } from "@/components/widgets/AuthWidgets/AuthWidgetStyledComponents";
 import { StyledH1 } from "@/components/core/StyledHeadings";
-import { Formik, FormikHelpers } from "formik";
+import { Formik } from "formik";
 import * as yup from "yup";
 import { themes } from "@/theme";
-import { IRegister, register } from "@/utils/Auth";
-import { useUser } from "@/hooks/useUser";
 
 const registerSchema = yup.object().shape({
 	displayName: yup.string().required("required"),
@@ -24,11 +20,7 @@ const registerSchema = yup.object().shape({
 
 const Register = () => {
 	/* Hooks */
-	const { addUser } = useUser();
-
 	const { error, handleRegister } = useAuth();
-
-	
 
 	return (
 		<StyledPageContent>
