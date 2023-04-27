@@ -21,13 +21,12 @@ export const AxiosErrorHandler = (error: AxiosError) => {
         return "Oops Something Went Wrong!";
     }
   } else if (error.request) {
-    console.log("Request");
-    console.log(error.request);
-    return "AxiosErrorHandler(Request): Oops Something Went Wrong!";
-  } else if (error.message) {
-    console.log("Message");
-    console.log(error.message);
-    return "AxiosErrorHandler(Message): Oops Something Went Wrong!";
-
+    /* The request was made but no response was received
+    `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+    http.ClientRequest in node.js */
+    return "No response was received!";
+  } else {
+    /* Something happened in setting up the request that triggered an Error */
+    console.log("Error", error.message);
   }
 };
