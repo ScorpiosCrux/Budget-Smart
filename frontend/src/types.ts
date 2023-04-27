@@ -26,18 +26,6 @@ export interface Transaction {
 // 	return object.discriminator === "transaction";
 // }
 
-export interface Category {
-	_id: string;
-	userId: string;
-	name: string;
-	budget: number;
-
-	/* The following are calculated after query */
-	remainingBudget: number;
-	totalSpent: number;
-	remainingBudgetPerDay: number;
-}
-
 /**
  * Only necessary data is saved to the database.
  */
