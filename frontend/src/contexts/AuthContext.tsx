@@ -1,9 +1,9 @@
-import { AuthUser } from "@/types";
+import { IAuthUser } from "@/types";
 import { createContext, useState } from "react";
 
 interface AuthContext {
-	user: AuthUser | null;
-	setUser: (user: AuthUser | null) => void;
+	user: IAuthUser | null;
+	setUser: (user: IAuthUser | null) => void;
 }
 
 const defaultValue: AuthContext = {
@@ -24,7 +24,7 @@ type Props = {
 /* 
 	Default state for user state.
 */
-const defaultState: AuthUser = {
+const defaultState: IAuthUser = {
 	isLoggedIn: false,
 	_id: "",
 	email: "",
@@ -37,7 +37,7 @@ const defaultState: AuthUser = {
 	Here we create the Provider that contains the actual state of the user
 */
 export const AuthContextProvider = (props: Props) => {
-	const [user, setUser] = useState<AuthUser | null>(defaultState);
+	const [user, setUser] = useState<IAuthUser | null>(defaultState);
 
 	/* 
 		All consumers that are descendants of a Provider will re-render whenevser the

@@ -13,7 +13,7 @@ export interface User extends ObjectKeys {
 	username: string;
 }
 
-export interface AuthUser extends User {
+export interface IAuthUser extends User {
 	isLoggedIn: boolean;
 	token: string;
 }
