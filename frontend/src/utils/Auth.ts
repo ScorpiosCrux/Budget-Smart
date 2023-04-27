@@ -1,5 +1,5 @@
 import { IAuthUser } from "@/types";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 export interface IRegister {
@@ -16,7 +16,7 @@ export const register = async (props: { displayName: string; email: string; pass
 			method: "POST",
 			data: {
 				displayName,
-				email,
+				username: email,
 				password,
 			},
 			withCredentials: true,
@@ -41,23 +41,43 @@ export const register = async (props: { displayName: string; email: string; pass
 	}
 };
 
+export interface ISignIn {
+	email: string;
+	password: string;
+}
+
 export const login = async (props: { email: string; password: string }) => {
 	try {
 		const { email, password } = props;
 		const response = await axios({
 			method: "POST",
-			data: { email, password },
+			data: {
+				username: email,
+				password,
+			},
 			withCredentials: true,
 			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/login",
 		});
 
 		const authUser: IAuthUser = {
 			...response.data,
-			isLoggedIn: true,
 		};
+		console.log(authUser);
 		return authUser;
-	} catch (error) {
+	} catch (error: any) {
 		if (axios.isAxiosError(error)) {
+			if (error.response) {
+				console.log("Response");
+				console.log(error.response);
+			} else if (error.request) {
+				console.log("Request");
+				console.log(error.request);
+			} else if (error.message) {
+				console.log("Message");
+
+				console.log(error.message);
+			}
+
 			if (error.response?.status === 401) {
 				return "Incorrect Username or Password!";
 				// add throws?

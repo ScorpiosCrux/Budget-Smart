@@ -6,10 +6,10 @@ import { getAccessToken, COOKIE_OPTIONS, getRefreshToken } from "../authenticate
 export const registerNewUser = async (req: Request, res: Response) => {
 	try {
 		// Get Inputs
-		const { displayName, email, password } = req.body;
+		const { displayName, username, password } = req.body;
 
 		// Create User, token, refreshToken and append to user
-		const user = new User({ displayName, email, username: email, password });
+		const user = new User({ displayName, email: username, username, password });
 		const accessToken = getAccessToken({ _id: user._id });
 		const refreshToken = getRefreshToken({ _id: user._id });
 		user.refreshToken.push({ refreshToken });
@@ -32,6 +32,7 @@ export const registerNewUser = async (req: Request, res: Response) => {
 };
 
 /**
+ * Needs the previous middleware to populate _id in req.user
  * Logs in the user and adds a refresh token to the user's refresh token array.
  * @param req the request object created by the browser (Axios)
  * @param res the response object that we return.

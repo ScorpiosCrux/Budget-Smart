@@ -1,10 +1,7 @@
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
-import styled from "@emotion/styled";
-import { useState } from "react";
-import { useRouter } from "next/router";
 import * as yup from "yup";
-import { Formik, FormikHelpers } from "formik";
+import { Formik } from "formik";
 import { useAuth } from "@/hooks/useAuth";
 import StyledContainer from "@/components/core/StyledContainer";
 import { StyledPageContent } from "@/components/core/StyledPageContent";
@@ -20,40 +17,18 @@ const loginSchema = yup.object().shape({
 	password: yup.string().required("required"),
 });
 
-const initialFormikValues = {
-	email: "",
-	password: "",
-};
-
-interface FormValues {
-	email: string;
-	password: string;
-}
-
 const Login = () => {
-	/* Hooks */
-	const router = useRouter();
-	const { login } = useAuth();
-	const [errorMsg, setErrorMsg] = useState<null | string>(null);
-
-	/* Handler Functions */
-	const handleLogin = async (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
-		setSubmitting(true);
-		const error = await login(values.email, values.password);
-		if (error) {
-			setErrorMsg(error);
-			setSubmitting(false);
-		} else {
-			router.push("/");
-		}
-	};
+	const { error, handleLogin } = useAuth();
 
 	return (
 		<StyledPageContent>
 			<StyledContainer width="400px" height="400px" padding="3rem">
 				<AuthContent>
 					<Formik
-						initialValues={initialFormikValues}
+						initialValues={{
+							email: "",
+							password: "",
+						}}
 						validationSchema={loginSchema}
 						onSubmit={handleLogin}>
 						{({
@@ -69,7 +44,7 @@ const Login = () => {
 								<StyledH1>SMART BUDGET</StyledH1>
 
 								<StyledInputContainer>
-									{errorMsg && <p>{errorMsg}</p>}
+									{error && <p>{error}</p>}
 									<TextField
 										label="Email"
 										type="email"
