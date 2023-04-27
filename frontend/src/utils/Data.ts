@@ -1,7 +1,65 @@
 import { ICategory, Transaction } from "@/types";
+import { ICreateCategory, IDeleteCategory, IReadCategories } from "./Categories";
+import * as CategoryAPI from "./Categories";
+import { SetStateAction } from "react";
 
 /**
- * Calculates the missing attributes of categories. 
+ * CREATE
+ * Updates the categories after deleting it. Also updates the isLoading state.
+ * This method is here to avoid prop drilling. A component that needs this
+ * method can simply import it.
+ */
+export interface ICreateCategoryHandler extends ICreateCategory {
+  setCategories: React.Dispatch<SetStateAction<ICategory[]>>;
+  setIsCategoriesLoading: React.Dispatch<SetStateAction<boolean>>;
+}
+export const createCategory = async (props: ICreateCategoryHandler) => {
+  const { setCategories, setIsCategoriesLoading } = props;
+  setIsCategoriesLoading(true);
+  const newCategories: ICategory[] = await CategoryAPI.createCategory(props);
+  setCategories(newCategories);
+  setIsCategoriesLoading(false);
+};
+
+/**
+ * READ
+ * Updates the categories after deleting it. Also updates the isLoading state.
+ * This method is here to avoid prop drilling. A component that needs this
+ * method can simply import it.
+ */
+export interface IReadCategoryHandler extends IReadCategories {
+  setCategories: React.Dispatch<SetStateAction<ICategory[]>>;
+  setIsCategoriesLoading: React.Dispatch<SetStateAction<boolean>>;
+}
+export const getCategories = async (props: IReadCategoryHandler) => {
+  const { setCategories, setIsCategoriesLoading } = props;
+  setIsCategoriesLoading(true);
+  const newCategories: ICategory[] = await CategoryAPI.readCategories(props);
+  setCategories(newCategories);
+  setIsCategoriesLoading(false);
+};
+
+/**
+ * DELETE
+ * Updates the categories after deleting it. Also updates the isLoading state.
+ * This method is here to avoid prop drilling. A component that needs this
+ * method can simply import it.
+ */
+export interface IDeleteCategoryHandler extends IDeleteCategory {
+  setCategories: React.Dispatch<SetStateAction<ICategory[]>>;
+  setIsCategoriesLoading: React.Dispatch<SetStateAction<boolean>>;
+}
+export const deleteCategory = async (props: IDeleteCategoryHandler) => {
+  const { setCategories, setIsCategoriesLoading } = props;
+  setIsCategoriesLoading(true);
+
+  const newCategories: ICategory[] = await CategoryAPI.deleteCategory(props);
+  setCategories(newCategories);
+  setIsCategoriesLoading(false);
+};
+
+/**
+ * Calculates the missing attributes of categories.
  * Instead of storing these simple operations.
  * @param transactions Array of transactions to perform calculations with.
  */
@@ -9,7 +67,8 @@ export interface ICalculateCategories {
   categories: ICategory[];
   transactions: Transaction[];
 }
-export const calculateCategories = async (categories: ICategory[], transactions: Transaction[]) => {
+export const calculateCategories = (props: ICalculateCategories) => {
+  const { categories, transactions } = props;
   if (!categories) {
     throw "Categories is undefined";
   }
