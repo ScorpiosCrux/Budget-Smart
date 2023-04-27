@@ -1,4 +1,4 @@
-import { IAuthUser } from "@/types";
+import { IUser } from "@/types";
 import axios, { AxiosError } from "axios";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
@@ -23,7 +23,7 @@ export const register = async (props: { displayName: string; email: string; pass
 			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/register",
 		});
 
-		const authUser: IAuthUser = {
+		const authUser: IUser = {
 			...response.data,
 		};
 
@@ -59,7 +59,7 @@ export const login = async (props: { email: string; password: string }) => {
 			url: process.env.NEXT_PUBLIC_API_ENDPOINT + "/auth/login",
 		});
 
-		const authUser: IAuthUser = {
+		const authUser: IUser = {
 			...response.data,
 		};
 		return authUser;

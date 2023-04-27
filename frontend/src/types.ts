@@ -6,17 +6,17 @@ export interface ObjectKeys {
 	[key: string]: any;
 }
 
-export interface User extends ObjectKeys {
+export interface IUser extends ObjectKeys {
 	_id: string;
 	email: string;
 	displayName: string;
-	username: string;
-}
-
-export interface IAuthUser extends User {
-	isLoggedIn: boolean;
 	token: string;
 }
+
+// export interface IAuthUser extends User {
+// 	isLoggedIn: boolean;
+// 	token: string;
+// }
 
 export interface Transaction {
 	// discriminator: "transaction";

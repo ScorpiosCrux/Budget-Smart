@@ -1,5 +1,5 @@
-import { IAuthUser } from "@/types";
-import axios from "axios";
+
+
 import { useContext, useEffect, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { useUser } from "./useUser";

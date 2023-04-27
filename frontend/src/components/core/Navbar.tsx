@@ -10,6 +10,10 @@ import { UserContext } from "@/contexts/AuthContext";
 const Navbar = () => {
 	const { user } = useContext(UserContext);
 
+	// useEffect(() => {
+	// 	console.log("user nav", user)
+	// }, [user]);
+
 	return (
 		<StyledNavbar>
 			<div className="logo">
