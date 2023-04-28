@@ -6,7 +6,7 @@ import {
   IUser,
 } from "@/types";
 import { deleteTransaction, updateTransaction, uploadTransactions } from "@/utils/Data";
-import { SetStateAction, useContext } from "react";
+import { SetStateAction } from "react";
 import { useAuth } from "./useAuth";
 
 /**

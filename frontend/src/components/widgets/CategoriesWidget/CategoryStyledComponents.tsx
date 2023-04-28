@@ -1,4 +1,4 @@
-import { typography } from "@/theme";
+
 import { themes } from "@/theme";
 import styled from "styled-components";
 
