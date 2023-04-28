@@ -3,7 +3,6 @@ import { refreshToken } from "@/utils/Auth";
 import { UserContext } from "@/contexts/AuthContext";
 import { ICategory, ITransaction } from "@/types";
 import { calculateCategories, getCategories, getTransactions } from "@/utils/Data";
-import { isAxiosError } from "axios";
 
 export const useData = () => {
   const { user, setUser } = useContext(UserContext);
@@ -52,19 +51,6 @@ export const useData = () => {
     }
   }, [isCategoriesLoading, isTransactionsLoading]);
 
-
-  const deleteTransaction = async (_id: string, retry?: boolean) => {
-    // try {
-    //   await transactionHook.deleteTransaction(user, _id);
-    // } catch (error) {
-    //   console.log("error useData");
-    //   if (isAxiosError(error)) {
-    //     await refreshToken();
-    //     /* If retry value is not present, then try again else 1 retry is enough */
-    //     if (!retry) await deleteTransaction(_id, true);
-    //   }
-    // }
-  };
 
   /**
    * Deletes the category using backend API call.
@@ -117,7 +103,6 @@ export const useData = () => {
     transactions,
     setTransactions,
     setIsTransactionsLoading,
-    deleteTransaction,
     deleteCategory,
     addCategory,
   };

@@ -1,8 +1,7 @@
 import TransactionComponent from "./TransactionComponent";
 import StyledHeader from "../../core/StyledHeader";
 import StyledContainer from "../../core/StyledContainer";
-import { TargetType, ITransaction, ICategory } from "@/types";
-
+import { TargetType, ITransaction } from "@/types";
 import {
   StyledTransactionGrid,
   StyledTransactions,
