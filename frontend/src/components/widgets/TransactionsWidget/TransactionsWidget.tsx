@@ -14,7 +14,6 @@ import ContextMenu from "@/components/core/ContextMenu";
 import trashIcon from "public/assets/icons/trash-solid.svg";
 import editIcon from "public/assets/icons/pencil-solid.svg";
 import addIcon from "public/assets/icons/plus-solid.svg";
-
 import Button from "@/components/buttons/Button";
 import UploadFileButton from "@/components/buttons/UploadFileButton";
 import { useModal } from "@/hooks/useModal";
@@ -26,7 +25,7 @@ interface Props {
   transactions: ITransaction[];
   setTransactions: React.Dispatch<React.SetStateAction<ITransaction[]>>;
   setIsTransactionsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  uploadTransactionCSVHelper(file: File, retry?: boolean): void;
+  uploadTransactionCSVHelper(file: File): void;
   deleteTransaction(_id: string): void;
 }
 
@@ -35,11 +34,6 @@ const TransactionsWidget = (props: Props) => {
   const { clicked, setClicked, points, setPoints, target, setTarget } = useContextMenu();
   const { showModal, setShowModal } = useModal();
   const { handleSortTransaction } = useTransactions({ setTransactions, setIsTransactionsLoading });
-
-  const sortTransaction = (transaction: ITransaction, category: ICategory) => {
-    const newTransaction = { ...transaction, category: category._id };
-    handleSortTransaction({ transaction: newTransaction });
-  };
 
   return (
     <StyledContainer width="800px" height="90vh">
@@ -89,7 +83,7 @@ const TransactionsWidget = (props: Props) => {
                 >
                   <TransactionComponent
                     transaction={transaction}
-                    sortTransaction={sortTransaction}
+                    handleSortTransaction={handleSortTransaction}
                   />
                 </div>
               );

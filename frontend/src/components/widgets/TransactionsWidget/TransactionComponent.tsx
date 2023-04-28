@@ -1,5 +1,5 @@
 import { useDrag } from "react-dnd";
-import { ICategory, ITransaction } from "@/types";
+import { ICategory, IHandleSortTransaction, ITransaction } from "@/types";
 import { StyledTransactionGrid, StyledTransactionWrapper } from "./TransactionStyledComponents";
 
 /* MOVE THIS TO ANOTHER FILE */
@@ -15,11 +15,10 @@ interface DropResult {
 
 interface Props {
   transaction: ITransaction;
-  sortTransaction(transaction: ITransaction, category: ICategory): void;
-  // deleteTransaction(_id: string): void;
+  handleSortTransaction(transaction: IHandleSortTransaction): Promise<void>;
 }
 const TransactionComponent = (props: Props) => {
-  const { transaction, sortTransaction } = props;
+  const { transaction, handleSortTransaction } = props;
   const { _id, date, description, price, category } = transaction;
 
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -28,7 +27,8 @@ const TransactionComponent = (props: Props) => {
     end(item, monitor) {
       const dropResult = monitor.getDropResult() as DropResult;
       if (item && dropResult) {
-        sortTransaction(transaction, dropResult.category);
+        const newTransaction: ITransaction = { ...transaction, category: dropResult.category.name };
+        handleSortTransaction({ transaction: newTransaction });
       }
     },
     collect: (monitor) => ({

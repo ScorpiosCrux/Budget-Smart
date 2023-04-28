@@ -1,5 +1,5 @@
 import { UserContext } from "@/contexts/AuthContext";
-import { ITransaction, IUser } from "@/types";
+import { IHandleSortTransaction, ITransaction, IUser } from "@/types";
 import { IUpdateTransaction } from "@/utils/Transactions";
 import { updateTransaction } from "@/utils/Data";
 import { SetStateAction, useContext } from "react";
@@ -20,10 +20,8 @@ export const useTransactions = (props: IUseTransactions) => {
   const { user, handleTokenRefresh } = useAuth();
   const { setTransactions, setIsTransactionsLoading } = props;
 
-  interface ISortTransaction extends Omit<IUpdateTransaction, "user"> {
-    retry?: boolean;
-  }
-  const handleSortTransaction = async (props: ISortTransaction) => {
+
+  const handleSortTransaction = async (props: IHandleSortTransaction) => {
     try {
       await updateTransaction({ user, ...props, setTransactions, setIsTransactionsLoading });
     } catch (error) {
