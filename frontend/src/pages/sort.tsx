@@ -15,7 +15,6 @@ export default function Sort() {
     transactions,
     setTransactions,
     setIsTransactionsLoading,
-    deleteTransaction,
     deleteCategory,
     addCategory,
   } = useData();
@@ -41,7 +40,6 @@ export default function Sort() {
                 transactions={transactions}
                 setTransactions={setTransactions}
 								setIsTransactionsLoading={setIsTransactionsLoading}
-                deleteTransaction={deleteTransaction}
               />
             </>
           )}

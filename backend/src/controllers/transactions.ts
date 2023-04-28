@@ -65,7 +65,7 @@ export const updateTransaction = async (req: Request, res: Response) => {
  */
 export const deleteTransaction = async (req: Request, res: Response) => {
   const userId = req.user._id;
-  const transactionId = req.body._id;
+  const transactionId = req.body.transactionId;
 
   const result = await TransactionQuerries.deleteTransaction(userId, transactionId);
   const transactions: ITransaction[] = await TransactionQuerries.readTransactions(userId);

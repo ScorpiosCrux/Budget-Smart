@@ -25,17 +25,17 @@ interface Props {
   transactions: ITransaction[];
   setTransactions: React.Dispatch<React.SetStateAction<ITransaction[]>>;
   setIsTransactionsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  deleteTransaction(_id: string): void;
 }
 
 const TransactionsWidget = (props: Props) => {
   const { transactions, setTransactions, setIsTransactionsLoading } = props;
   const { clicked, setClicked, points, setPoints, target, setTarget } = useContextMenu();
   const { showModal, setShowModal } = useModal();
-  const { handleSortTransaction, handleUploadTransactions } = useTransactions({
-    setTransactions,
-    setIsTransactionsLoading,
-  });
+  const { handleSortTransaction, handleUploadTransactions, handleDeleteTransaction } =
+    useTransactions({
+      setTransactions,
+      setIsTransactionsLoading,
+    });
 
   return (
     <StyledContainer width="800px" height="90vh">
@@ -109,8 +109,11 @@ const TransactionsWidget = (props: Props) => {
                     icon: trashIcon,
                     action: () => {
                       console.log("Delete Clicked");
-                      console.log(target);
-                      if (target) props.deleteTransaction(target?._id);
+                      console.log(target?._id);
+                      if (target) {
+                        const transactionId = target._id;
+                        handleDeleteTransaction({ transactionId });
+                      }
                     },
                     key: "MenuItemDelete",
                   },

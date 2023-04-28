@@ -1,7 +1,13 @@
 import { UserContext } from "@/contexts/AuthContext";
-import { IHandleSortTransaction, IHandleUploadTransactions, ITransaction, IUser } from "@/types";
+import {
+  IHandleDeleteTransaction,
+  IHandleSortTransaction,
+  IHandleUploadTransactions,
+  ITransaction,
+  IUser,
+} from "@/types";
 import { IUpdateTransaction } from "@/utils/Transactions";
-import { updateTransaction, uploadTransactions } from "@/utils/Data";
+import { deleteTransaction, updateTransaction, uploadTransactions } from "@/utils/Data";
 import { SetStateAction, useContext } from "react";
 import { useAuth } from "./useAuth";
 import { refreshToken } from "@/utils/Auth";
@@ -48,9 +54,19 @@ export const useTransactions = (props: IUseTransactions) => {
     }
   };
 
-  // const handleDeleteTransactions = async (props: IHandleDeleteTransactions) => {
+  const handleDeleteTransaction = async (props: IHandleDeleteTransaction) => {
+    try {
+      await deleteTransaction({ user, ...props, setTransactions, setIsTransactionsLoading });
+    } catch (error) {
+      const { retry } = props;
+      if (error === "Unauthorized!" && retry !== true) {
+        await handleTokenRefresh();
+        handleDeleteTransaction({ ...props, retry: true });
+      } else {
+        console.log(error);
+      }
+    }
+  };
 
-  // }
-
-  return { handleSortTransaction, handleUploadTransactions };
+  return { handleSortTransaction, handleUploadTransactions, handleDeleteTransaction };
 };

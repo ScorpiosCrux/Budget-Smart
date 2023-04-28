@@ -36,15 +36,6 @@ const TransactionComponent = (props: Props) => {
     }),
   }));
 
-  // const deleteTransactionHelper = () => {
-  //   console.log(_id);
-  //   props.deleteTransaction(_id);
-  // };
-
-  // const editTransactionHelper = () => {
-  //   console.log("edit");
-  // };
-
   return (
     <StyledTransactionWrapper ref={drag} isDragging={isDragging}>
       <StyledTransactionGrid>
