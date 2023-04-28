@@ -1,6 +1,6 @@
 import { themes } from "@/theme";
 import { useDrop } from "react-dnd";
-import { Category } from "@/types";
+import { ICategory } from "@/types";
 import StyledLine from "@/components/core/StyledLine";
 import {
 	StyledCategoryHeader,
@@ -12,7 +12,7 @@ import {
 
 interface Props {
 	index: number;
-	category: Category;
+	category: ICategory;
 }
 
 /* MOVE THIS TO ANOTHER FILE */
