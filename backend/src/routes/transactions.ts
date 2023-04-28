@@ -10,8 +10,8 @@ const router = express.Router({ mergeParams: true });
 router
   .route("/")
   .get(verifyUser, Transactions.readTransactions)
+  .put(verifyUser, Transactions.updateTransaction)
   .delete(verifyUser, Transactions.deleteTransaction);
-router.route("/sort").post(verifyUser, Transactions.sortTransaction);
 router
   .route("/upload")
   .post(verifyUser, upload.single("transactions"), Transactions.createTransactions);

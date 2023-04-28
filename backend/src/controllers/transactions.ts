@@ -46,17 +46,12 @@ export const readTransactions = async (req: Request, res: Response) => {
  * @param res the response object that we return to the browser.
  * @returns the response with status code and the new list of transactions.
  */
-export const sortTransaction = async (req: Request, res: Response) => {
+export const updateTransaction = async (req: Request, res: Response) => {
   const userId = req.user._id;
-  const transactionId = req.body._id;
-  const categoryName = req.body.categoryName;
-
-  /* Creates an object for updating the Transaction db document */
-  const update: object = {
-    category: categoryName,
-  };
-
-  await TransactionQuerries.updateTransaction(userId, transactionId, update);
+  const transaction: ITransaction = { ...req.body };
+  const transactionId = transaction._id;
+  
+  await TransactionQuerries.updateTransaction(userId, transactionId, transaction);
 
   const transactions: ITransaction[] = await TransactionQuerries.readTransactions(userId);
   return res.status(200).json(transactions);

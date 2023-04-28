@@ -53,9 +53,13 @@ export const readTransactions = async (userId: string) => {
  * @param transactionId The id of the transaction from the database
  * @param update The parts of the transaction we want to update
  */
-export const updateTransaction = async (userId: string, transactionId: string, update: object) => {
+export const updateTransaction = async (
+  userId: string,
+  transactionId: string,
+  transaction: ITransaction
+) => {
   try {
-    await Transaction.updateOne({ userId: userId, _id: transactionId }, update);
+    await Transaction.updateOne({ userId: userId, _id: transactionId }, transaction);
   } catch (error) {
     console.log(error);
   }
