@@ -2,7 +2,7 @@
 	This file contains any high reuse types and interfaces
 */
 
-import { IUpdateTransaction } from "./utils/Transactions";
+import { IUpdateTransaction, IUploadTransactions } from "./utils/Transactions";
 
 export interface ObjectKeys {
   [key: string]: any;
@@ -27,6 +27,12 @@ export interface ITransaction {
 export interface IHandleSortTransaction extends Omit<IUpdateTransaction, "user"> {
   retry?: boolean;
 }
+
+
+export interface IHandleUploadTransactions extends Omit<IUploadTransactions, "user"> {
+  retry?: boolean;
+}
+
 
 // export function instanceOfTransaction(object: any): object is Transaction {
 // 	return object.discriminator === "transaction";

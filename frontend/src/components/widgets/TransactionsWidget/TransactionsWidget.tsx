@@ -25,7 +25,6 @@ interface Props {
   transactions: ITransaction[];
   setTransactions: React.Dispatch<React.SetStateAction<ITransaction[]>>;
   setIsTransactionsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  uploadTransactionCSVHelper(file: File): void;
   deleteTransaction(_id: string): void;
 }
 
@@ -33,7 +32,10 @@ const TransactionsWidget = (props: Props) => {
   const { transactions, setTransactions, setIsTransactionsLoading } = props;
   const { clicked, setClicked, points, setPoints, target, setTarget } = useContextMenu();
   const { showModal, setShowModal } = useModal();
-  const { handleSortTransaction } = useTransactions({ setTransactions, setIsTransactionsLoading });
+  const { handleSortTransaction, handleUploadTransactions } = useTransactions({
+    setTransactions,
+    setIsTransactionsLoading,
+  });
 
   return (
     <StyledContainer width="800px" height="90vh">
@@ -44,7 +46,7 @@ const TransactionsWidget = (props: Props) => {
             <span className="helper-text">drag to sort</span>
           </div>
           <div className="headerButtons">
-            <UploadFileButton action={props.uploadTransactionCSVHelper} />
+            <UploadFileButton handleUploadTransactions={handleUploadTransactions} />
             <Button
               icon={addIcon}
               height="2rem"

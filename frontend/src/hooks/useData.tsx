@@ -52,32 +52,6 @@ export const useData = () => {
     }
   }, [isCategoriesLoading, isTransactionsLoading]);
 
-  const sort = async (_id: string, categoryName: string, retry?: boolean) => {
-    // try {
-    //   await transactionHook.sortTransaction(user, _id, categoryName);
-    // } catch (error) {
-    //   console.log("error useData");
-    //   if (isAxiosError(error)) {
-    //     await refreshToken();
-    //     /* If retry value is not present, then try again else 1 retry is enough */
-    //     if (!retry) await sort(_id, categoryName, true);
-    //   }
-    // }
-  };
-
-  // TODO: move functions that are not state dependent out of here.
-  const uploadCSV = async (file: File, retry?: boolean) => {
-    // try {
-    //   await transactionHook.uploadTransactionsCSV(user, file);
-    // } catch (error) {
-    //   console.log("error useData");
-    //   if (isAxiosError(error)) {
-    //     await refreshToken();
-    //     /* If retry value is not present, then try again else 1 retry is enough */
-    //     if (!retry) await uploadCSV(file, true);
-    //   }
-    // }
-  };
 
   const deleteTransaction = async (_id: string, retry?: boolean) => {
     // try {
@@ -143,7 +117,6 @@ export const useData = () => {
     transactions,
     setTransactions,
     setIsTransactionsLoading,
-    uploadCSV,
     deleteTransaction,
     deleteCategory,
     addCategory,

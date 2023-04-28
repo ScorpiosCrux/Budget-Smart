@@ -18,7 +18,6 @@ export interface IUploadTransactions {
 export const uploadTransactions = async (props: IUploadTransactions) => {
   try {
     const { user, file } = props;
-
     let fileData = new FormData();
     fileData.append("transactions", file);
 

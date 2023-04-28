@@ -1,7 +1,7 @@
 import { UserContext } from "@/contexts/AuthContext";
-import { IHandleSortTransaction, ITransaction, IUser } from "@/types";
+import { IHandleSortTransaction, IHandleUploadTransactions, ITransaction, IUser } from "@/types";
 import { IUpdateTransaction } from "@/utils/Transactions";
-import { updateTransaction } from "@/utils/Data";
+import { updateTransaction, uploadTransactions } from "@/utils/Data";
 import { SetStateAction, useContext } from "react";
 import { useAuth } from "./useAuth";
 import { refreshToken } from "@/utils/Auth";
@@ -20,7 +20,6 @@ export const useTransactions = (props: IUseTransactions) => {
   const { user, handleTokenRefresh } = useAuth();
   const { setTransactions, setIsTransactionsLoading } = props;
 
-
   const handleSortTransaction = async (props: IHandleSortTransaction) => {
     try {
       await updateTransaction({ user, ...props, setTransactions, setIsTransactionsLoading });
@@ -35,5 +34,23 @@ export const useTransactions = (props: IUseTransactions) => {
     }
   };
 
-  return { handleSortTransaction };
+  const handleUploadTransactions = async (props: IHandleUploadTransactions) => {
+    try {
+      await uploadTransactions({ user, ...props, setTransactions, setIsTransactionsLoading });
+    } catch (error) {
+      const { retry } = props;
+      if (error === "Unauthorized!" && retry !== true) {
+        await handleTokenRefresh();
+        handleUploadTransactions({ ...props, retry: true });
+      } else {
+        console.log(error);
+      }
+    }
+  };
+
+  // const handleDeleteTransactions = async (props: IHandleDeleteTransactions) => {
+
+  // }
+
+  return { handleSortTransaction, handleUploadTransactions };
 };

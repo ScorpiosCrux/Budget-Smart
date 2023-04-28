@@ -15,7 +15,6 @@ export default function Sort() {
     transactions,
     setTransactions,
     setIsTransactionsLoading,
-    uploadCSV,
     deleteTransaction,
     deleteCategory,
     addCategory,
@@ -42,7 +41,6 @@ export default function Sort() {
                 transactions={transactions}
                 setTransactions={setTransactions}
 								setIsTransactionsLoading={setIsTransactionsLoading}
-                uploadTransactionCSVHelper={uploadCSV}
                 deleteTransaction={deleteTransaction}
               />
             </>
