@@ -1,4 +1,3 @@
-import { UserContext } from "@/contexts/AuthContext";
 import {
   IHandleDeleteTransaction,
   IHandleSortTransaction,
@@ -6,11 +5,9 @@ import {
   ITransaction,
   IUser,
 } from "@/types";
-import { IUpdateTransaction } from "@/utils/Transactions";
 import { deleteTransaction, updateTransaction, uploadTransactions } from "@/utils/Data";
 import { SetStateAction, useContext } from "react";
 import { useAuth } from "./useAuth";
-import { refreshToken } from "@/utils/Auth";
 
 /**
  * This file contains all the functions that are used to manipulate the transactions.
