@@ -61,7 +61,7 @@ const CategoriesWidget = (props: Props) => {
                 }}
                 key={category._id}
               >
-                <CategoryComponent index={i} category={category} />
+                <CategoryComponent category={category} />
               </div>
             );
           })}
