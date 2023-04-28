@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { useTransactions } from "./useTransactions";
 import { refreshToken } from "@/utils/Auth";
 import { UserContext } from "@/contexts/AuthContext";
-import { ICategory } from "@/types";
-import { calculateCategories, getCategories } from "@/utils/Data";
+import { ICategory, ITransaction } from "@/types";
+import { calculateCategories, getCategories, getTransactions } from "@/utils/Data";
 import { isAxiosError } from "axios";
 
 export const useData = () => {
@@ -12,9 +11,7 @@ export const useData = () => {
   const [isTransactionsLoading, setIsTransactionsLoading] = useState(true); //The isFetching flag is used to trigger functions and component rendering
   const [isLoading, setIsLoading] = useState(true); //The isLoading flag is used to trigger functions and component rendering
   const [categories, setCategories] = useState<ICategory[]>([]);
-
-  const transactionHook = useTransactions();
-  const transactions = transactionHook.transactions;
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
 
   /**
    * Fetches the categories and transactions from the backend.
@@ -24,8 +21,7 @@ export const useData = () => {
       if (user?._id) {
         try {
           await getCategories({ user, setCategories, setIsCategoriesLoading });
-          await transactionHook.getTransactions(user);
-          setIsTransactionsLoading(false);
+          await getTransactions({ user, setTransactions, setIsTransactionsLoading });
         } catch (error) {
           if (error === "Unauthorized!") {
             // TODO: this is a temporary fix we should update user
@@ -57,46 +53,43 @@ export const useData = () => {
   }, [isCategoriesLoading, isTransactionsLoading]);
 
   const sort = async (_id: string, categoryName: string, retry?: boolean) => {
-    try {
-      await transactionHook.sortTransaction(user, _id, categoryName);
-    } catch (error) {
-      console.log("error useData");
-      if (isAxiosError(error)) {
-        await refreshToken();
-
-        /* If retry value is not present, then try again else 1 retry is enough */
-        if (!retry) await sort(_id, categoryName, true);
-      }
-    }
+    // try {
+    //   await transactionHook.sortTransaction(user, _id, categoryName);
+    // } catch (error) {
+    //   console.log("error useData");
+    //   if (isAxiosError(error)) {
+    //     await refreshToken();
+    //     /* If retry value is not present, then try again else 1 retry is enough */
+    //     if (!retry) await sort(_id, categoryName, true);
+    //   }
+    // }
   };
 
   // TODO: move functions that are not state dependent out of here.
   const uploadCSV = async (file: File, retry?: boolean) => {
-    try {
-      await transactionHook.uploadTransactionsCSV(user, file);
-    } catch (error) {
-      console.log("error useData");
-      if (isAxiosError(error)) {
-        await refreshToken();
-
-        /* If retry value is not present, then try again else 1 retry is enough */
-        if (!retry) await uploadCSV(file, true);
-      }
-    }
+    // try {
+    //   await transactionHook.uploadTransactionsCSV(user, file);
+    // } catch (error) {
+    //   console.log("error useData");
+    //   if (isAxiosError(error)) {
+    //     await refreshToken();
+    //     /* If retry value is not present, then try again else 1 retry is enough */
+    //     if (!retry) await uploadCSV(file, true);
+    //   }
+    // }
   };
 
   const deleteTransaction = async (_id: string, retry?: boolean) => {
-    try {
-      await transactionHook.deleteTransaction(user, _id);
-    } catch (error) {
-      console.log("error useData");
-      if (isAxiosError(error)) {
-        await refreshToken();
-
-        /* If retry value is not present, then try again else 1 retry is enough */
-        if (!retry) await deleteTransaction(_id, true);
-      }
-    }
+    // try {
+    //   await transactionHook.deleteTransaction(user, _id);
+    // } catch (error) {
+    //   console.log("error useData");
+    //   if (isAxiosError(error)) {
+    //     await refreshToken();
+    //     /* If retry value is not present, then try again else 1 retry is enough */
+    //     if (!retry) await deleteTransaction(_id, true);
+    //   }
+    // }
   };
 
   /**
@@ -145,9 +138,12 @@ export const useData = () => {
   return {
     isLoading,
     categories,
+    setCategories,
+    setIsCategoriesLoading,
     transactions,
+    setTransactions,
+    setIsTransactionsLoading,
     uploadCSV,
-    sort,
     deleteTransaction,
     deleteCategory,
     addCategory,

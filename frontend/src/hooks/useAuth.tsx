@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
-import { IRegister, ISignIn, login, register } from "@/utils/Auth";
+import { IRegister, ISignIn, login, refreshToken, register } from "@/utils/Auth";
 import { FormikHelpers } from "formik";
 import { useRouter } from "next/router";
 import { UserContext } from "@/contexts/AuthContext";
@@ -11,50 +11,59 @@ import { UserContext } from "@/contexts/AuthContext";
  * @returns
  */
 export const useAuth = () => {
-	const { user, setUser } = useContext(UserContext);
-	const { setItem } = useLocalStorage();
-	const [error, setError] = useState<string>("");
-	const router = useRouter();
+  const { user, setUser } = useContext(UserContext);
+  const { setItem } = useLocalStorage();
+  const [error, setError] = useState<string>("");
+  const router = useRouter();
 
-	const handleRegister = async (values: IRegister, { setSubmitting }: FormikHelpers<IRegister>) => {
-		try {
-			setSubmitting(true);
-			const user = await register(values);
-			if (user) {
-				setUser(user);
-				setItem("user", JSON.stringify(user));
-			}
+  const handleTokenRefresh = async () => {
+    try {
+      const accessToken = await refreshToken();
+      setUser({ ...user, accessToken });
+    } catch (error) {
+      // logout user?
+    }
+  };
 
-			console.log(user);
+  const handleRegister = async (values: IRegister, { setSubmitting }: FormikHelpers<IRegister>) => {
+    try {
+      setSubmitting(true);
+      const user = await register(values);
+      if (user) {
+        setUser(user);
+        setItem("user", JSON.stringify(user));
+      }
 
-			router.push("/");
-		} catch (error: any) {
-			setSubmitting(false);
-			setError(error.message);
-		}
-	};
+      console.log(user);
 
-	/* Handler Functions */
-	const handleLogin = async (values: ISignIn, { setSubmitting }: FormikHelpers<ISignIn>) => {
-		try {
-			setSubmitting(true);
-			const user = await login(values);
+      router.push("/");
+    } catch (error: any) {
+      setSubmitting(false);
+      setError(error.message);
+    }
+  };
 
-			if (user) {
-				setUser(user);
+  /* Handler Functions */
+  const handleLogin = async (values: ISignIn, { setSubmitting }: FormikHelpers<ISignIn>) => {
+    try {
+      setSubmitting(true);
+      const user = await login(values);
 
-				setItem("user", JSON.stringify(user));
-			}
-			console.log(user);
+      if (user) {
+        setUser(user);
 
-			router.push("/");
-		} catch (error: any) {
-			console.log();
-			console.log(error.message);
-			setError(error.message);
-			setSubmitting(false);
-		}
-	};
+        setItem("user", JSON.stringify(user));
+      }
+      console.log(user);
 
-	return { user, error, handleLogin, handleRegister };
+      router.push("/");
+    } catch (error: any) {
+      console.log();
+      console.log(error.message);
+      setError(error.message);
+      setSubmitting(false);
+    }
+  };
+
+  return { user, error, handleTokenRefresh, handleLogin, handleRegister };
 };

@@ -1,7 +1,7 @@
 import TransactionComponent from "./TransactionComponent";
 import StyledHeader from "../../core/StyledHeader";
 import StyledContainer from "../../core/StyledContainer";
-import { TargetType, ITransaction } from "@/types";
+import { TargetType, ITransaction, ICategory } from "@/types";
 
 import {
   StyledTransactionGrid,
@@ -20,17 +20,26 @@ import UploadFileButton from "@/components/buttons/UploadFileButton";
 import { useModal } from "@/hooks/useModal";
 import Modal from "@/components/core/Modal";
 import StyledContent from "../../core/StyledContent";
+import { useTransactions } from "@/hooks/useTransactions";
 
 interface Props {
   transactions: ITransaction[];
-  sortTransactionHelper(_id: string, categoryName: string): void;
+  setTransactions: React.Dispatch<React.SetStateAction<ITransaction[]>>;
+  setIsTransactionsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   uploadTransactionCSVHelper(file: File, retry?: boolean): void;
   deleteTransaction(_id: string): void;
 }
 
 const TransactionsWidget = (props: Props) => {
+  const { transactions, setTransactions, setIsTransactionsLoading } = props;
   const { clicked, setClicked, points, setPoints, target, setTarget } = useContextMenu();
   const { showModal, setShowModal } = useModal();
+  const { handleSortTransaction } = useTransactions({ setTransactions, setIsTransactionsLoading });
+
+  const sortTransaction = (transaction: ITransaction, category: ICategory) => {
+    const newTransaction = { ...transaction, category: category._id };
+    handleSortTransaction({ transaction: newTransaction });
+  };
 
   return (
     <StyledContainer width="800px" height="90vh">
@@ -64,7 +73,7 @@ const TransactionsWidget = (props: Props) => {
             </StyledTransactionGrid>
           </StyledTransactionsHeader>
           <StyledTransactionsContainer>
-            {props.transactions.map((transaction: ITransaction) => {
+            {transactions.map((transaction: ITransaction) => {
               return (
                 <div
                   onContextMenu={(e) => {
@@ -79,13 +88,8 @@ const TransactionsWidget = (props: Props) => {
                   key={transaction._id}
                 >
                   <TransactionComponent
-                    sortTransactionHelper={props.sortTransactionHelper}
-                    deleteTransaction={props.deleteTransaction}
-                    _id={transaction._id}
-                    date={transaction.date}
-                    description={transaction.description}
-                    category={transaction.category}
-                    price={transaction.price}
+                    transaction={transaction}
+                    sortTransaction={sortTransaction}
                   />
                 </div>
               );

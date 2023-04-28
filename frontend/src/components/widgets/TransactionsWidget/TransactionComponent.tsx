@@ -1,11 +1,6 @@
-import { themes } from "@/theme";
-import styled from "styled-components";
 import { useDrag } from "react-dnd";
-import StyledIcon from "../../core/StyledIcon";
-import { Category, ITransaction } from "@/types";
+import { ICategory, ITransaction } from "@/types";
 import { StyledTransactionGrid, StyledTransactionWrapper } from "./TransactionStyledComponents";
-import { useContextMenu } from "@/hooks/useContextMenu";
-import MenuContext from "@/components/core/ContextMenu";
 
 /* MOVE THIS TO ANOTHER FILE */
 const ItemTypes = {
@@ -15,22 +10,25 @@ const ItemTypes = {
 interface DropResult {
   allowedDropEffect: string;
   dropEffect: string;
-  category: Category;
+  category: ICategory;
 }
 
-interface Props extends ITransaction {
-  sortTransactionHelper(_id: string, categoryName: string): void;
-  deleteTransaction(_id: string): void;
+interface Props {
+  transaction: ITransaction;
+  sortTransaction(transaction: ITransaction, category: ICategory): void;
+  // deleteTransaction(_id: string): void;
 }
-
 const TransactionComponent = (props: Props) => {
+  const { transaction, sortTransaction } = props;
+  const { _id, date, description, price, category } = transaction;
+
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.TRANSACTION,
     item: props, // unsure how the item is used here
     end(item, monitor) {
       const dropResult = monitor.getDropResult() as DropResult;
       if (item && dropResult) {
-        props.sortTransactionHelper(props._id, dropResult.category.name);
+        sortTransaction(transaction, dropResult.category);
       }
     },
     collect: (monitor) => ({
@@ -38,22 +36,22 @@ const TransactionComponent = (props: Props) => {
     }),
   }));
 
-  const deleteTransactionHelper = () => {
-    console.log(props._id);
-    props.deleteTransaction(props._id);
-  };
+  // const deleteTransactionHelper = () => {
+  //   console.log(_id);
+  //   props.deleteTransaction(_id);
+  // };
 
-  const editTransactionHelper = () => {
-    console.log("edit");
-  };
+  // const editTransactionHelper = () => {
+  //   console.log("edit");
+  // };
 
   return (
     <StyledTransactionWrapper ref={drag} isDragging={isDragging}>
       <StyledTransactionGrid>
-        <div className="date">{props.date}</div>
-        <div className="description">{props.description}</div>
-        <div className="category">{props.category}</div>
-        <div className="price">${props.price.toFixed(2)}</div>
+        <div className="date">{date}</div>
+        <div className="description">{description}</div>
+        <div className="category">{category}</div>
+        <div className="price">${price.toFixed(2)}</div>
       </StyledTransactionGrid>
     </StyledTransactionWrapper>
   );
