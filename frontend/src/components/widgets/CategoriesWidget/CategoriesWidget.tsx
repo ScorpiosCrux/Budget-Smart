@@ -12,19 +12,22 @@ import { useContextMenu } from "@/hooks/useContextMenu";
 import ContextMenu from "@/components/core/ContextMenu";
 import { useModal } from "@/hooks/useModal";
 import Modal from "@/components/core/Modal";
-import { useEffect } from "react";
+import { SetStateAction, useEffect } from "react";
+import { useCategories } from "@/hooks/useCategories";
 
 interface Props {
   categories: ICategory[];
-  addCategory(categoryName: string, budget: number): void;
-  deleteCategory(_id: string): void;
+  setCategories: React.Dispatch<SetStateAction<ICategory[]>>;
+  setIsCategoriesLoading: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const CategoriesWidget = (props: Props) => {
+  const { categories, setCategories, setIsCategoriesLoading } = props;
+  const { handleDeleteCategory, handleCreateCategory } = useCategories({ setCategories, setIsCategoriesLoading });
   const { clicked, setClicked, points, setPoints, target, setTarget } = useContextMenu();
   const { showModal, setShowModal } = useModal();
 
-  useEffect(() => {}, [props.categories]);
+  useEffect(() => {}, [categories]);
 
   return (
     <StyledContainer width="500px" height="90vh">
@@ -86,7 +89,10 @@ const CategoriesWidget = (props: Props) => {
                   action: () => {
                     console.log("Delete Clicked");
                     console.log(target);
-                    if (target) props.deleteCategory(target?._id);
+                    if (target) {
+                      const categoryId = target._id;
+                      handleDeleteCategory({ categoryId });
+                    }
                   },
                   key: "MenuItemDelete",
                 },
@@ -101,7 +107,7 @@ const CategoriesWidget = (props: Props) => {
                 setShowModal(false);
               }}
               targetType={TargetType.Category}
-              addCategory={props.addCategory}
+              handleCreateCategory={handleCreateCategory}
             />
           )}
         </StyledCategories>

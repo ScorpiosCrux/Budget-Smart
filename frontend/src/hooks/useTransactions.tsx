@@ -3,7 +3,6 @@ import {
   IHandleSortTransaction,
   IHandleUploadTransactions,
   ITransaction,
-  IUser,
 } from "@/types";
 import { deleteTransaction, updateTransaction, uploadTransactions } from "@/utils/Data";
 import { SetStateAction } from "react";
@@ -20,8 +19,8 @@ interface IUseTransactions {
 }
 
 export const useTransactions = (props: IUseTransactions) => {
-  const { user, handleTokenRefresh } = useAuth();
   const { setTransactions, setIsTransactionsLoading } = props;
+  const { user, handleTokenRefresh } = useAuth();
 
   const handleSortTransaction = async (props: IHandleSortTransaction) => {
     try {

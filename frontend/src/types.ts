@@ -2,6 +2,7 @@
 	This file contains any high reuse types and interfaces
 */
 
+import { ICreateCategory, IDeleteCategory } from "./utils/Categories";
 import { IDeleteTransaction, IUpdateTransaction, IUploadTransactions } from "./utils/Transactions";
 
 export interface ObjectKeys {
@@ -35,6 +36,16 @@ export interface IHandleUploadTransactions extends Omit<IUploadTransactions, "us
 export interface IHandleDeleteTransaction extends Omit<IDeleteTransaction, "user"> {
   retry?: boolean;
 }
+
+export interface IHandleDeleteCategory extends Omit<IDeleteCategory, "user"> {
+  retry?: boolean;
+}
+
+export interface IHandleCreateCategory extends Omit<ICreateCategory, "user"> {
+  retry?: boolean;
+}
+
+
 // export function instanceOfTransaction(object: any): object is Transaction {
 // 	return object.discriminator === "transaction";
 // }

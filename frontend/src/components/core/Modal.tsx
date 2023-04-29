@@ -1,14 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
 import StyledContainer from "./StyledContainer";
-import { TargetType } from "@/types";
+import { IHandleCreateCategory, TargetType } from "@/types";
 import CategoryForm from "@/components/widgets/CategoriesWidget/CategoryForm";
 import TransactionForm from "@/components/widgets/TransactionsWidget/TransactionForm";
 
 interface Props {
 	closeModal(): void;
 	targetType: TargetType;
-	addCategory?(categoryName: string, budget: number): void;
+	handleCreateCategory?(props: IHandleCreateCategory): void;
 	addTransaction?(): void;
 }
 
@@ -16,12 +16,13 @@ interface Props {
  * Creates a popup
  */
 const Modal = (props: Props) => {
+	const { handleCreateCategory } = props;
 	return (
 		<ModalContainer>
 			<StyledContainer width="400px" height="auto">
 				<ModalContent>
 					{props.targetType === TargetType.Category ? (
-						<CategoryForm closeModal={props.closeModal} addCategory={props.addCategory!} />
+						<CategoryForm closeModal={props.closeModal} handleCreateCategory={handleCreateCategory} />
 					) : (
 						<TransactionForm closeModal={props.closeModal} addCategory={props.addCategory!} />
 					)}

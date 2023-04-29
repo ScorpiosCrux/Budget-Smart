@@ -4,7 +4,6 @@ import { StyledH2 } from "@/components/core/StyledHeadings";
 import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
 import styled from "styled-components";
-
 import { useState } from "react";
 
 const transactionSchema = yup.object().shape({

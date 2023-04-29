@@ -15,7 +15,6 @@ export default function Sort() {
     transactions,
     setTransactions,
     setIsTransactionsLoading,
-    deleteCategory,
     addCategory,
   } = useData();
 
@@ -33,8 +32,8 @@ export default function Sort() {
             <>
               <CategoriesWidget
                 categories={categories}
-                addCategory={addCategory}
-                deleteCategory={deleteCategory}
+                setCategories={setCategories}
+                setIsCategoriesLoading={setIsCategoriesLoading}
               />
               <TransactionsWidget
                 transactions={transactions}

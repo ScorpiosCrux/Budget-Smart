@@ -57,7 +57,7 @@ export const useData = () => {
    * @param _id Category Id
    * @param _retry Should only be used internally
    */
-  const deleteCategory = async (_id: string, _retry?: boolean) => {
+  // const deleteCategory = async (_id: string, _retry?: boolean) => {
     // try {
     //   setIsLoading(true);
     //   await categoryHook.deleteCategory(user, _id);
@@ -71,7 +71,7 @@ export const useData = () => {
     //     console.log("error useData");
     //   }
     // }
-  };
+  // };
 
   /**
    * Adds a category using backend API call.
@@ -103,7 +103,6 @@ export const useData = () => {
     transactions,
     setTransactions,
     setIsTransactionsLoading,
-    deleteCategory,
     addCategory,
   };
 };
