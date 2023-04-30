@@ -16,104 +16,106 @@ import { SetStateAction, useEffect } from "react";
 import { useCategories } from "@/hooks/useCategories";
 
 interface Props {
-  categories: ICategory[];
-  setCategories: React.Dispatch<SetStateAction<ICategory[]>>;
-  setIsCategoriesLoading: React.Dispatch<SetStateAction<boolean>>;
+	categories: ICategory[];
+	setCategories: React.Dispatch<SetStateAction<ICategory[]>>;
+	setIsCategoriesLoading: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const CategoriesWidget = (props: Props) => {
-  const { categories, setCategories, setIsCategoriesLoading } = props;
-  const { handleDeleteCategory, handleCreateCategory } = useCategories({ setCategories, setIsCategoriesLoading });
-  const { clicked, setClicked, points, setPoints, target, setTarget } = useContextMenu();
-  const { showModal, setShowModal } = useModal();
+	const { categories, setCategories, setIsCategoriesLoading } = props;
+	const { handleDeleteCategory, handleCreateCategory } = useCategories({
+		setCategories,
+		setIsCategoriesLoading,
+	});
+	const { clicked, setClicked, points, setPoints, target, setTarget } = useContextMenu();
+	const { showModal, setShowModal } = useModal();
 
-  useEffect(() => {}, [categories]);
+	useEffect(() => {}, [categories]);
 
-  return (
-    <StyledContainer width="500px" height="90vh">
-      <StyledContent>
-        <StyledHeader>
-          <div className="main">
-            <div className="title">Categories</div>
-            {/* <span className="helper-text">drag transactions below</span> */}
-          </div>
-          <div className="headerButtons">
-            <Button
-              icon={addIcon}
-              height="2rem"
-              isSquare={true}
-              onClick={(e) => {
-                e.preventDefault();
-                setShowModal(true);
-              }}
-            />
-          </div>
-        </StyledHeader>
-        <StyledCategories>
-          {props.categories.map((category: ICategory, i) => {
-            return (
-              <div
-                onContextMenu={(e) => {
-                  e.preventDefault();
-                  setClicked(true);
-                  setPoints({
-                    x: e.pageX,
-                    y: e.pageY,
-                  });
-                  setTarget(category);
-                }}
-                key={category._id}
-              >
-                <CategoryComponent category={category} />
-              </div>
-            );
-          })}
+	return (
+		<StyledContainer width="500px" height="90vh">
+			<StyledContent>
+				<StyledHeader>
+					<div className="main">
+						<div className="title">Categories</div>
+						{/* <span className="helper-text">drag transactions below</span> */}
+					</div>
+					<div className="headerButtons">
+						<Button
+							icon={addIcon}
+							height="2rem"
+							isSquare={true}
+							onClick={(e) => {
+								e.preventDefault();
+								setShowModal(true);
+							}}
+						/>
+					</div>
+				</StyledHeader>
+				<StyledCategories>
+					{props.categories.map((category: ICategory, i) => {
+						return (
+							<div
+								onContextMenu={(e) => {
+									e.preventDefault();
+									setClicked(true);
+									setPoints({
+										x: e.pageX,
+										y: e.pageY,
+									});
+									setTarget(category);
+								}}
+								key={category._id}>
+								<CategoryComponent category={category} />
+							</div>
+						);
+					})}
 
-          {/* Context Menu (right clicks on categories & transactions) */}
-          {clicked && (
-            <ContextMenu
-              pageX={points.x}
-              pageY={points.y}
-              menuItems={[
-                {
-                  title: "Edit",
-                  icon: editIcon,
-                  action: () => {
-                    console.log("Edit Clicked");
-                  },
-                  key: "MenuItemEdit",
-                },
-                {
-                  title: "Delete",
-                  icon: trashIcon,
-                  action: () => {
-                    console.log("Delete Clicked");
-                    console.log(target);
-                    if (target) {
-                      const categoryId = target._id;
-                      handleDeleteCategory({ categoryId });
-                    }
-                  },
-                  key: "MenuItemDelete",
-                },
-              ]}
-            />
-          )}
+					{/* Context Menu (right clicks on categories & transactions) */}
+					{clicked && (
+						<ContextMenu
+							pageX={points.x}
+							pageY={points.y}
+							menuItems={[
+								{
+									title: "Edit",
+									icon: editIcon,
+									action: () => {
+										console.log("Edit Clicked");
+									},
+									key: "MenuItemEdit",
+								},
+								{
+									title: "Delete",
+									icon: trashIcon,
+									action: () => {
+										console.log("Delete Clicked");
+										console.log(target);
+										if (target) {
+											const categoryId = target._id;
+											handleDeleteCategory({ categoryId });
+										}
+									},
+									key: "MenuItemDelete",
+								},
+							]}
+						/>
+					)}
 
-          {/* Modal for adding categories */}
-          {showModal && (
-            <Modal
-              closeModal={() => {
-                setShowModal(false);
-              }}
-              targetType={TargetType.Category}
-              handleCreateCategory={handleCreateCategory}
-            />
-          )}
-        </StyledCategories>
-      </StyledContent>
-    </StyledContainer>
-  );
+					{/* Modal for adding categories */}
+					{showModal && (
+						<Modal
+							closeModal={() => {
+								setShowModal(false);
+							}}
+							targetType={TargetType.Category}
+							handleCreateCategory={handleCreateCategory}
+						/>
+					)}
+				</StyledCategories>
+			</StyledContent>
+		</StyledContainer>
+	);
 };
 
 export default CategoriesWidget;

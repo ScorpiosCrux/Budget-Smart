@@ -54,7 +54,6 @@ export interface IDeleteCategoryHandler extends CategoryAPI.IDeleteCategory {
 export const deleteCategory = async (props: IDeleteCategoryHandler) => {
   const { setCategories, setIsCategoriesLoading } = props;
   setIsCategoriesLoading(true);
-
   const newCategories: ICategory[] = await CategoryAPI.deleteCategory(props);
   setCategories(newCategories);
   setIsCategoriesLoading(false);

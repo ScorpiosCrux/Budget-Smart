@@ -22,9 +22,9 @@ const Modal = (props: Props) => {
 			<StyledContainer width="400px" height="auto">
 				<ModalContent>
 					{props.targetType === TargetType.Category ? (
-						<CategoryForm closeModal={props.closeModal} handleCreateCategory={handleCreateCategory} />
+						<CategoryForm closeModal={props.closeModal} handleCreateCategory={handleCreateCategory!} />
 					) : (
-						<TransactionForm closeModal={props.closeModal} addCategory={props.addCategory!} />
+						<TransactionForm closeModal={props.closeModal} addCategory={props.addTransaction!} />
 					)}
 				</ModalContent>
 			</StyledContainer>

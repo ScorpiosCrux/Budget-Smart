@@ -15,7 +15,6 @@ export default function Sort() {
     transactions,
     setTransactions,
     setIsTransactionsLoading,
-    addCategory,
   } = useData();
 
   return (

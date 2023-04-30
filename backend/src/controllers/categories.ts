@@ -46,10 +46,9 @@ export const createCategory = async (req: Request, res: Response) => {
  */
 export const deleteCategory = async (req: Request, res: Response) => {
   const userId = req.user._id;
-  const categoryId = req.body._id;
+  const categoryId = req.body.categoryId;
 
   const result = await CategoryQueries.deleteCategory(userId, categoryId);
-
   const categories = await CategoryQueries.readCategories(userId);
 
   /* If nothing was deleted */
