@@ -5,6 +5,7 @@ import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
 import styled from "styled-components";
 import { useState } from "react";
+import { DatePickerField } from "@/components/core/DatePicker";
 
 const transactionSchema = yup.object().shape({
 	date: yup.string().required("required"),
@@ -59,7 +60,17 @@ const TransactionForm = (props: Props) => {
 					{({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
 						<FormContainer onSubmit={handleSubmit}>
 							{errorMsg && <p>{errorMsg}</p>}
-							<StyledMUITextField
+
+							<DatePickerField name="Test1" />
+
+							{/* <DatePicker
+								label="Date"
+								onChange={handleChange}
+								value={values.date}
+							>
+							</DatePicker> */}
+
+							{/* <StyledMUITextField
 								label="Date"
 								type="text"
 								id="date"
@@ -71,7 +82,7 @@ const TransactionForm = (props: Props) => {
 									Boolean(touched.date) && Boolean(errors.date) ? touched.date && errors.date : " "
 								}
 								value={values.date}
-							/>
+							/> */}
 
 							<StyledMUITextField
 								label="Description"
