@@ -19,7 +19,7 @@ const initialFormikValues = {
 	price: 0,
 };
 
-interface FormValues {
+export interface FormValues {
 	date: string;
 	description: string;
 	price: number;
@@ -61,7 +61,19 @@ const TransactionForm = (props: Props) => {
 						<FormContainer onSubmit={handleSubmit}>
 							{errorMsg && <p>{errorMsg}</p>}
 
-							<DatePickerField name="Test1" />
+							<DatePickerField
+								name="date"
+								// value={values.date}
+								// onChange={handleChange}
+								// onBlur={handleBlur} // id="date"
+								// touched={false} 
+								// initialTouched={false}
+								// error={Boolean(touched.date) && Boolean(errors.date)}
+								// helperText={
+								// 	Boolean(touched.date) && Boolean(errors.date) ? touched.date && errors.date : " "
+								// }
+								// value={values.date}
+							/>
 
 							{/* <DatePicker
 								label="Date"

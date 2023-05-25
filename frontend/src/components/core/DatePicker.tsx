@@ -1,15 +1,21 @@
 import { DatePicker } from "@mui/x-date-pickers";
-import { useField, useFormikContext } from "formik";
+import { FieldHookConfig, FieldInputProps, FieldMetaProps, FormikProps, useField, useFormikContext } from "formik";
 import { StyledDatePicker } from "./StyledMUI";
+import { FormValues } from "../widgets/TransactionsWidget/TransactionForm";
 
-export const DatePickerField = (props: any) => {
+interface Props {
+	name: string;
+}
+
+export const DatePickerField = (props: Props) => {
+	const { name } = props;
 	const { setFieldValue } = useFormikContext();
-	const [field] = useField(props);
+	const [field, meta, helpers] = useField(name);
 	return (
-		<StyledDatePicker
+		<DatePicker
 			{...field}
 			{...props}
-			selected={(field.value && new Date(field.value)) || null}
+			// error={true}
 			onChange={(value: any) => {
 				setFieldValue(field.name, value);
 			}}

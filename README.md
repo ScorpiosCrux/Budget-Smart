@@ -18,6 +18,10 @@ I decided to use NextJS because it allows server sided rendering and improved SE
 
 MongoDB is a NoSQL database that is great for development as it allows me to have flexible schemas. It allows me to scale my database horizontally across multiple servers through sharding. In SQL databases, we organize based on tables and the computation to join tables can become very expensive, but with NoSQL databases, data that is accessed together should be stored together.
 
+### `Mongoose`
+Mongoose is an ODM (Object Document Mapping). It is like an ORM (Object Relational Mapping) for relational databases, but it is for document databases.
+
+
 ### `JWT Auth`
 
 Since the backend API and frontend are separate entities, I used JSON Web Tokens to authenticate the user. It can verify that the JWT is authentic since inside the token, it has the user id and we can verify that no one has tampered with the token by checking the signature with our secret. We can also expire the token after a period of time, which means if someone steals the token, that token can't make changes to the user forever. Finally, JWT is awesome because we can store their JWTs inside a database and the user and revoke their refresh tokens if they decide to!
