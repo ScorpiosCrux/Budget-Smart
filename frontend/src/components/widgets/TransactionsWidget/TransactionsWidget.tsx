@@ -127,9 +127,6 @@ const TransactionsWidget = (props: Props) => {
                   setShowModal(false);
                 }}
                 targetType={TargetType.Transaction}
-                addCategory={() => {
-                  console.log("tewoijfw");
-                }}
               />
             )}
           </StyledTransactionsContainer>
